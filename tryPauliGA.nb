@@ -1,0 +1,150 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3880,        142]
+NotebookOptionsPosition[      3404,        120]
+NotebookOutlinePosition[      3763,        136]
+CellTagsIndexPosition[      3720,        133]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"<<", " ", "pauliGA`"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"v", " ", "=", " ", 
+   RowBox[{"Vector", "[", 
+    RowBox[{"3", ",", "1"}], "]"}]}], " ", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"b", " ", "=", " ", 
+    RowBox[{"Bivector", "[", 
+     RowBox[{"7", ",", " ", "2", ",", " ", "1"}], "]"}]}], " ", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"v", " ", "//", " ", "GAdisplay"}], "\[IndentingNewLine]", 
+ RowBox[{"b", " ", "//", " ", "GAdisplay"}]}], "Input",
+ CellChangeTimes->{{3.691458228860703*^9, 3.6914582343769913`*^9}, {
+  3.691458518940753*^9, 3.691458519250626*^9}, {3.6914596858697567`*^9, 
+  3.6914596863167467`*^9}, {3.691460672585093*^9, 3.691460672655138*^9}, {
+  3.691460770973916*^9, 3.691460783291792*^9}, {3.691460850353894*^9, 
+  3.691460866473959*^9}, {3.691461134944964*^9, 3.691461145059186*^9}}],
+
+Cell[BoxData[
+ RowBox[{"3", " ", 
+  SubscriptBox[
+   StyleBox["\<\"e\"\>",
+    StripOnInput->False,
+    FontWeight->Bold], "1"]}]], "Output",
+ CellChangeTimes->{3.6914611461996927`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "7"}], " ", 
+  SubscriptBox[
+   StyleBox["\<\"e\"\>",
+    StripOnInput->False,
+    FontWeight->Bold], "\<\"12\"\>"]}]], "Output",
+ CellChangeTimes->{3.6914611462076607`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"#", " ", "//", " ", "Last"}], ")"}], " ", "&"}], "/@", " ", 
+    "displayMapping"}], ")"}], "//", " ", "Column"}]], "Input",
+ CellChangeTimes->{{3.691460106684656*^9, 3.691460142771648*^9}}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "1"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "2"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "3"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"12\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"23\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"31\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"123\"\>"]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{{3.691460116549505*^9, 3.691460143182148*^9}, 
+   3.6914601856247063`*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 713},
+WindowMargins->{{Automatic, 275}, {Automatic, 6}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 923, 19, 138, "Input"],
+Cell[1506, 43, 185, 6, 32, "Output"],
+Cell[1694, 51, 212, 7, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1943, 63, 289, 8, 32, "Input"],
+Cell[2235, 73, 1153, 44, 155, "Output"]
+}, Open  ]]
+}
+]
+*)
+
