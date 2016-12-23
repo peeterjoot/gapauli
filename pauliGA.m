@@ -4,7 +4,7 @@
 BeginPackage["pauliGA`"]
 pauliGA::usage = "An attempt to use the Pauli representation to compactly implement 3D Euclidean Geometric Algebra operations.";
 
-Begin["`Private`"]
+(*Begin["`Private`"]*)
 ClearAll[ scalarType, vectorType, bivectorType, trivectorType, multivectorType ]
 {scalarType, vectorType, bivectorType, trivectorType, multivectorType} = Range[5];
 
@@ -46,10 +46,8 @@ gaPlus[ v1_, v2_, f1_ : 1, f2_ : 1 ] := Module[
 gaMinus[ v1_, v2_ ] := gaPlus[ v1, v2, 1, -1 ] ;
 gaNegate[ v_ ] := { v // First, - (v // Last) } ;
 
-magnitude[ v_?pScalarQ ] := v[[1,1]] ;
-End[]
-
-Begin["pauliGA`"]
+magnitude[ v_?pScalarQ ] := (v // Last)[[1, 1]] ;
+(*End[]*) (* private *)
 
 ClearAll[ Scalar, Vector, Bivector, Trivector ]
 
@@ -101,6 +99,7 @@ WedgeProduct[ v1_?pTrivectorQ, v2_?pTrivectorQ ] := Scalar[0] ;
 
 GeometricProduct[ v1_, v2_ ] := directProduct[ multivectorType, v1, v2 ] ;
 
+
 ClearAll[ GradeSelection, ScalarSelection, PseudoScalarSelection ]
 GradeSelection[ v_, n_Integer /; n == 0 ] := Scalar[ (v // Last) // grade0 ] ;
 GradeSelection[ v_, n_Integer /; n == 1 ] := Vector[ (v // Last) // grade1 ] ;
@@ -110,6 +109,8 @@ ScalarSelection[ v_ ] := GradeSelection[ v, 0 ] ;
 VectorSelection[ v_ ] := GradeSelection[ v, 1 ] ;
 BivectorSelection[ v_ ] := GradeSelection[ v, 2 ] ;
 PseudoScalarSelection[ v_ ] := GradeSelection[ v, 3 ] ;
+
+ScalarMagnitude[ v_ ] := (GradeSelection[ v, 0 ] // magnitude) ;
 
 DotProduct[ v1_?pMultivectorQ, v2_?pScalarQ ] := directproduct[ multivectorType, v1, v2 ] ;
 DotProduct[ v1_?pMultivectorQ, v2_?pBladeQ ] := Module[{g0, g1, g2, g3},
@@ -139,8 +140,29 @@ DotProduct[ v1_, v2_?pMultivectorQ ] := Module[{g0, g1, g2, g3},
    ]
 ]
 
+(*Begin["`Private`"]*)
+ClearAll[ displayMapping, bold, esub ]
+bold = Style[ #, Bold] &;
+esub = Subscript[ bold["e"], # ] & ;
+displayMapping = {
+   {Scalar[ 1 ], 1},
+   {Vector[ 1, 1 ], esub[1] },
+   {Vector[ 1, 2 ], esub[2] },
+   {Vector[ 1, 3 ], esub[3] },
+(* -1 : reversal for dot product selection *)
+   {Bivector[ -1, 1, 2 ], esub["12"] },
+   {Bivector[ -1, 2, 3 ], esub["23"] },
+   {Bivector[ -1, 3, 1 ], esub["31"] },
+   {Trivector[ -1 ], esub["123"] }
+} ;
+(*End[]  private *)
+
+GAdisplay[v_] := Total[ (Times[DotProduct[# // First, v] // ScalarMagnitude, # // Last]) & /@ displayMapping] ;
+
+(*
 Protect[ Scalar, Vector, Bivector, Trivector,
-         GeometricProduct, DotProduct, WedgeProduct, GradeSelection, 
+         GeometricProduct, DotProduct, WedgeProduct, GradeSelection, ScalarMagnitude,
          ScalarSelection, VectorSelection, BivectorSelection, PseudoScalarSelection ]
+*)
 
 EndPackage[]
