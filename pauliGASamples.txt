@@ -1,0 +1,36 @@
+t1 = Scalar[1] ;
+t2 = Vector[1, 2];
+t3 = Bivector[1, 2, 1];
+t4 = Trivector[1];
+pScalarQ[t1]
+pScalarQ[t2]
+pScalarQ[t3]
+pScalarQ[t4]
+
+pVectorQ[t1]
+pVectorQ[t2]
+pVectorQ[t3]
+pVectorQ[t4]
+
+pBivectorQ[t1]
+pBivectorQ[t2]
+pBivectorQ[t3]
+pBivectorQ[t4]
+
+pTrivectorQ[t1]
+pTrivectorQ[t2]
+pTrivectorQ[t3]
+pTrivectorQ[t4]
+
+
+
+Bivector[1, 5]
+Vector[1, 0]
+Vector[1, 1]
+Vector[1, 2]
+Vector[1, 3]
+Vector[1, 4]
+Bivector[1, 5, 4]
+Bivector[1, 3, 1]
+
+

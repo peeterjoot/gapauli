@@ -1,5 +1,9 @@
 (* ::Package:: *)
 
+(* copy this module to a directory in $Path.  Then invoke with <<pauliGA` *)
+BeginPackage["pauliGA`"]
+pauliGA::usage = "An attempt to use the Pauli representation to compactly implement 3D Euclidean Geometric Algebra operations.";
+
 Begin["`Private`"]
 ClearAll[ scalarType, vectorType, bivectorType, trivectorType, multivectorType ]
 {scalarType, vectorType, bivectorType, trivectorType, multivectorType} = Range[5];
@@ -45,7 +49,6 @@ gaNegate[ v_ ] := { v // First, - (v // Last) } ;
 magnitude[ v_?pScalarQ ] := v[[1,1]] ;
 End[]
 
-(* copy this module to a directory in $Path.  Then invoke with <<peeters` *)
 Begin["pauliGA`"]
 
 ClearAll[ Scalar, Vector, Bivector, Trivector ]
@@ -136,44 +139,8 @@ DotProduct[ v1_, v2_?pMultivectorQ ] := Module[{g0, g1, g2, g3},
    ]
 ]
 
+Protect[ Scalar, Vector, Bivector, Trivector,
+         GeometricProduct, DotProduct, WedgeProduct, GradeSelection, 
+         ScalarSelection, VectorSelection, BivectorSelection, PseudoScalarSelection ]
 
-
-
-
-
-(*
-t1 = Scalar[1] ;
-t2 = Vector[1, 2];
-t3 = Bivector[1, 2, 1];
-t4 = Trivector[1];
-pScalarQ[t1]
-pScalarQ[t2]
-pScalarQ[t3]
-pScalarQ[t4]
-
-pVectorQ[t1]
-pVectorQ[t2]
-pVectorQ[t3]
-pVectorQ[t4]
-
-pBivectorQ[t1]
-pBivectorQ[t2]
-pBivectorQ[t3]
-pBivectorQ[t4]
-
-pTrivectorQ[t1]
-pTrivectorQ[t2]
-pTrivectorQ[t3]
-pTrivectorQ[t4]
-*)
-
-(*Bivector[1, 5]
-Vector[1, 0]
-Vector[1, 1]
-Vector[1, 2]
-Vector[1, 3]
-Vector[1, 4]
-Bivector[1, 5, 4]
-Bivector[1, 3, 1]*)
-
-End[]
+EndPackage[]
