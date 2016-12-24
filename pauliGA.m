@@ -79,15 +79,20 @@ signedSymmetric[ t_, v1_, v2_, s_ ] := Module[ {a = (v1 // Last), b = (v2 // Las
     symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
 antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 
-(* These operator on just the Pauli matrix portions x of grade[, x] *)
-ClearAll[ grade0, grade1, grade2, grade3, grade01, grade23 ]
-grade0 := IdentityMatrix[2] ( #/2 // Tr // matrixreal // Simplify) &;
-grade3 := complexI IdentityMatrix[2] ( #/2 // Tr // matriximag // Simplify) &;
-grade01 := (((# + (# // conjugateTranspose))/2) // Simplify)  &;
-grade23 := (((# - (# // conjugateTranspose))/2) // Simplify)  &;
-grade1 := ((grade01[#] - grade0[#]) // Simplify) &;
-grade2 := ((grade23[#] - grade3[#]) // Simplify) &;
+(* These operator on just the Pauli matrix portions x of pauliGradeSelect[, x] *)
+ClearAll[ pauliGradeSelect01, pauliGradeSelect23, pauliGradeSelect ]
+pauliGradeSelect01 := (((# + (# // conjugateTranspose))/2) // Simplify)  &;
+pauliGradeSelect23 := (((# - (# // conjugateTranspose))/2) // Simplify)  &;
+pauliGradeSelect[m_, 0] := IdentityMatrix[2] ( m/2 // Tr // matrixreal // Simplify) &;
+pauliGradeSelect[m_, 1] := ((pauliGradeSelect01[m] - pauliGradeSelect[m, 0]) // Simplify) &;
+pauliGradeSelect[m_, 2] := ((pauliGradeSelect23[m] - pauliGradeSelect[m, 3]) // Simplify) &;
+pauliGradeSelect[m_, 3] := complexI IdentityMatrix[2] ( m/2 // Tr // matriximag // Simplify) &;
 
+ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2, pauliGradeSelect3 ]
+pauliGradeSelect0 := pauliGradeSelect[#, 0] & ;
+pauliGradeSelect1 := pauliGradeSelect[#, 1] & ;
+pauliGradeSelect2 := pauliGradeSelect[#, 2] & ;
+pauliGradeSelect3 := pauliGradeSelect[#, 3] & ;
 
 
 (*
