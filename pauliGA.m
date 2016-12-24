@@ -11,19 +11,26 @@ ClearAll[ scalarType, vectorType, bivectorType, trivectorType, multivectorType ]
 complex::usage = "A limited use complex number implementation to use internally in Pauli basis representation, independent of any Complex" ;
 ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ];
 
-complex[0,0] := 0;
+(*complex[0,0] := 0;*)
 complex /: complex[r1_, i1_] + complex[r2_, i2_] := complex[r1 + r2, i1 + i2 ] ;
 complex /: r1_ + complex[r2_, i2_] := complex[r1 + r2, i2 ] ;
 
 complex /: - complex[re_, im_] := complex[-re, -im];
 
-complex /: complex[re_] := complex[re, 0] ;
+complex /: complex[re_] := re ;
+complex /: complex[re_, 0] := re ;
 
-complex /: complex[re_] := complex[re, 0] ;
+(*complex /: complex[re_] := complex[re, 0] ;*)
 
 complex /: complex[r1_, i1_]  complex[r2_, i2_] := complex[r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
 
+norm[z_complex] := ((z//First)^2 + (z//Last)^2) ;
+
+(* special case this one to deal with the sort of products that are generated multiplying pauli matrices *)
 complex /: Power[z_complex, 2] := complex[z] complex[z] ;
+complex /: Power[z_complex, n_] :=
+  Module[{r = norm[z]^(n/2), theta = n ArcTan[z // First, z // Last]},
+    r complex[Cos[theta], Sin[theta]]] ;
 
 complexQ[z_complex] := True ;
 complexQ[_] := False ;
@@ -59,7 +66,7 @@ StandardForm[z_complex] := (((z // real) + I (z // imag)) // StandardForm)
 Protect[TraditionalForm, DisplayForm, StandardForm];
 
 
-ClearAll[vector, scalar, bivector, multivector, grade] 
+ClearAll[vector, scalar, bivector, multivector, grade]
 scalar[v_]                                                                 := grade[0, v IdentityMatrix[2] ] ;
 vector[v_, k_Integer /; k >= 1 && k <= 3]                                  := grade[1, v pauliMatrix[k]] ;
 bivector[v_, k_Integer /; k >= 1 && k <= 3, j_Integer /; j >= 1 && j <= 3] := grade[2, v pauliMatrix[k].pauliMatrix[j]];
@@ -81,18 +88,37 @@ antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 
 (* These operator on just the Pauli matrix portions x of pauliGradeSelect[, x] *)
 ClearAll[ pauliGradeSelect01, pauliGradeSelect23, pauliGradeSelect ]
-pauliGradeSelect01 := (((# + (# // conjugateTranspose))/2) // Simplify)  &;
-pauliGradeSelect23 := (((# - (# // conjugateTranspose))/2) // Simplify)  &;
-pauliGradeSelect[m_, 0] := IdentityMatrix[2] ( m/2 // Tr // matrixreal // Simplify) &;
-pauliGradeSelect[m_, 1] := ((pauliGradeSelect01[m] - pauliGradeSelect[m, 0]) // Simplify) &;
-pauliGradeSelect[m_, 2] := ((pauliGradeSelect23[m] - pauliGradeSelect[m, 3]) // Simplify) &;
-pauliGradeSelect[m_, 3] := complexI IdentityMatrix[2] ( m/2 // Tr // matriximag // Simplify) &;
+pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) & ;
+pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) & ;
+pauliGradeSelect[m_, 0] := IdentityMatrix[2] ( m/2 // Tr // real // Simplify) ;
+pauliGradeSelect[m_, 1] := ((pauliGradeSelect01[m] - pauliGradeSelect[m, 0]) // Simplify) ;
+pauliGradeSelect[m_, 2] := ((pauliGradeSelect23[m] - pauliGradeSelect[m, 3]) // Simplify) ;
+pauliGradeSelect[m_, 3] := complexI IdentityMatrix[2] ( m/2 // Tr // imag // Simplify) ;
 
 ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2, pauliGradeSelect3 ]
 pauliGradeSelect0 := pauliGradeSelect[#, 0] & ;
 pauliGradeSelect1 := pauliGradeSelect[#, 1] & ;
 pauliGradeSelect2 := pauliGradeSelect[#, 2] & ;
 pauliGradeSelect3 := pauliGradeSelect[#, 3] & ;
+
+
+(* Addition operations *)
+grade /: grade[0, v1_] + grade[0, v2_] := grade[0, v1 + v2] ;
+grade /: grade[1, v1_] + grade[1, v2_] := grade[1, v1 + v2] ;
+grade /: grade[2, v1_] + grade[2, v2_] := grade[2, v1 + v2] ;
+grade /: grade[3, v1_] + grade[3, v2_] := grade[3, v1 + v2] ;
+grade /: grade[_, v1_] + grade[_, v2_] := grade[-1, v1 + v2] ;
+
+ClearAll[ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection ]
+GradeSelection[m_?scalarQ, 0] := m ;
+GradeSelection[m_?vectorQ, 1] := m ;
+GradeSelection[m_?bivectorQ, 2] := m ;
+GradeSelection[m_?trivectorQ, 3] := m ;
+GradeSelection[m_, k_Integer /; k >= 1 && k <= 3] := grade[k, pauliGradeSelect[m // Last, k]] ;
+ScalarSelection := GradeSelection[ #, 0 ] &;
+VectorSelection := GradeSelection[ #, 1 ] &;
+BivectorSelection := GradeSelection[ #, 2 ] &;
+TrivectorSelection  := GradeSelection[ #, 3 ] &;
 
 
 (*
