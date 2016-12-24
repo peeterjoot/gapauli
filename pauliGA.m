@@ -118,9 +118,9 @@ NonCommutativeMultiply[ v1_?pScalarQ, v2_?pScalarQ]    := directProduct[ scalarT
 NonCommutativeMultiply[ v1_?pScalarQ, v2_?pVectorQ]    := directProduct[ vectorType, v1 , v2  ] ;
 NonCommutativeMultiply[ v1_?pScalarQ, v2_?pBivectorQ]  := directProduct[ bivectorType, v1 , v2  ] ;
 NonCommutativeMultiply[ v1_?pScalarQ, v2_?pTrivectorQ] := directProduct[ trivectorType, v1 , v2  ] ;
-NonCommutativeMultiply[ v1_?pScalarQ, v2_?pMultivectorQ] := directProduct[ trivectorType, v1 , v2  ] ;
+NonCommutativeMultiply[ v1_?pScalarQ, v2_?pMultivectorQ] := directProduct[ multivectorType, v1 , v2  ] ;
 (* multiplication of (scalar, expressions) pairs: *)
-NonCommutativeMultiply[ v1_?pScalarQ, v2_] := directProduct[ trivectorType, v1 v2 ] ;
+NonCommutativeMultiply[ v1_?pScalarQ, v2_] := directProduct[ scalarType, v1 v2 ] ;
 NonCommutativeMultiply[ v1_, v2_?pScalarQ] := NonCommutativeMultiply[ v2, v1 ] ;
 
 NonCommutativeMultiply[ v1_?pTrivectorQ, v2_?pScalarQ]    := directProduct[ trivectorType, v1 , v2  ] ;
