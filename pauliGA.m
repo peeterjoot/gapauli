@@ -58,31 +58,28 @@ DisplayForm[z_complex] := (((z // real) + I (z // imag)) // DisplayForm)
 StandardForm[z_complex] := (((z // real) + I (z // imag)) // StandardForm)
 Protect[TraditionalForm, DisplayForm, StandardForm];
 
-(*
-(* Unprotect functions that are used to define our rules *)
-protected = Unprotect [NonCommutativeMultiply]
+
+ClearAll[vector, scalar, bivector, multivector, grade] 
+scalar[v_]                                                                 := grade[0, v IdentityMatrix[2] ] ;
+vector[v_, k_Integer /; k >= 1 && k <= 3]                                  := grade[1, v pauliMatrix[k]] ;
+bivector[v_, k_Integer /; k >= 1 && k <= 3, j_Integer /; j >= 1 && j <= 3] := grade[2, v pauliMatrix[k].pauliMatrix[j]];
+trivector[v_]                                                              := grade[3, complexI v IdentityMatrix[2] ] ;
+
+ClearAll[ scalarQ, vectorQ, bivectorQ, trivectorQ ]
+gradeQ[m_grade, n_Integer] := ((m // First) == n)
+scalarQ[m_grade]           := gradeQ[m, 0]
+vectorQ[m_grade]           := gradeQ[m, 1]
+bivectorQ[m_grade]         := gradeQ[m, 2]
+trivectorQ[m_grade]        := gradeQ[m, 3]
 
 ClearAll[ directProduct, signedSymmetric, symmetric, antisymmetric ]
 
-directProduct[ t_, v1_, v2_ ] := { t, (v1 // Last). (v2 // Last) } ;
-signedSymmetric[ t_, v1_, v2_, s_ ] := Module[ {a = (v1 // Last), b = (v2 // Last)}, {scalarType, (a . b + s b . a)/2} ] ;
+directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last). (v2 // Last) ] ;
+signedSymmetric[ t_, v1_, v2_, s_ ] := Module[ {a = (v1 // Last), b = (v2 // Last)}, grade[t, (a . b + s b . a)/2] ] ;
     symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
 antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 
-ClearAll[ pScalarQ, pVectorQ, pBivectorQ, pTrivectorQ ]
-pScalarQ[m : {scalarType, _}] := True ;
-pScalarQ[m : {_Integer, _}] := False ;
-pVectorQ[m : {vectorType, _}] := True ;
-pVectorQ[m : {_Integer, _}] := False ;
-pBivectorQ[m : {bivectorType, _}] := True ;
-pBivectorQ[m : {_Integer, _}] := False ;
-pTrivectorQ[m : {trivectorType, _}] := True ;
-pTrivectorQ[m : {_Integer, _}] := False ;
-pMultivectorQ[m : {multivectorType, _}] := True ;
-pMultivectorQ[m : {_Integer, _}] := False ;
-pBladeQ[m : {multivectorType, _}] := False ;
-pBladeQ[m : {_Integer, _}] := True ;
-
+(* These operator on just the Pauli matrix portions x of grade[, x] *)
 ClearAll[ grade0, grade1, grade2, grade3, grade01, grade23 ]
 grade0 := IdentityMatrix[2] ( #/2 // Tr // matrixreal // Simplify) &;
 grade3 := complexI IdentityMatrix[2] ( #/2 // Tr // matriximag // Simplify) &;
@@ -90,6 +87,15 @@ grade01 := (((# + (# // conjugateTranspose))/2) // Simplify)  &;
 grade23 := (((# - (# // conjugateTranspose))/2) // Simplify)  &;
 grade1 := ((grade01[#] - grade0[#]) // Simplify) &;
 grade2 := ((grade23[#] - grade3[#]) // Simplify) &;
+
+
+
+(*
+(* Unprotect functions that are used to define our rules *)
+protected = Unprotect [NonCommutativeMultiply]
+
+pBladeQ[m : {multivectorType, _}] := False ;
+pBladeQ[m : {_Integer, _}] := True ;
 
 ClearAll[ gaPlus, gaminus, magnitude ]
 
