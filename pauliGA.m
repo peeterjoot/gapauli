@@ -2,277 +2,314 @@
 
 (* copy this module to a directory in $Path.  Then invoke with <<pauliGA` *)
 BeginPackage["pauliGA`"]
-pauliGA::usage = "An attempt to use the Pauli representation to compactly implement 3D Euclidean Geometric Algebra operations.";
+pauliGA::usage = "An attempt to use the Pauli representation to compactly but efficiently implement 3D Euclidean Geometric Algebra operations.";
 
 (*Begin["`Private`"]*)
-ClearAll[ scalarType, vectorType, bivectorType, trivectorType, multivectorType ]
-{scalarType, vectorType, bivectorType, trivectorType, multivectorType} = Range[5];
+complex::usage = 
+  "A limited use complex number implementation to use internally in \
+Pauli basis representation, independent of any Complex";
+ClearAll[complex, complexQ, notComplexQ, real, imag, conjugate];
 
-complex::usage = "A limited use complex number implementation to use internally in Pauli basis representation, independent of any Complex" ;
-ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ];
+(*complex[0,0]:=0;*)
 
-(*complex[0,0] := 0;*)
-complex /: complex[r1_, i1_] + complex[r2_, i2_] := complex[r1 + r2, i1 + i2 ] ;
-complex /: r1_ + complex[r2_, i2_] := complex[r1 + r2, i2 ] ;
+complex /: complex[r1_, i1_] + complex[r2_, i2_] := 
+  complex[r1 + r2, i1 + i2];
+complex /: r1_ + complex[r2_, i2_] := complex[r1 + r2, i2];
 
-complex /: - complex[re_, im_] := complex[-re, -im];
+complex /: -complex[re_, im_] := complex[-re, -im];
 
-complex /: complex[re_] := re ;
-complex /: complex[re_, 0] := re ;
+complex /: complex[re_] := re;
+complex /: complex[re_, 0] := re;
 
-(*complex /: complex[re_] := complex[re, 0] ;*)
+(*complex/:complex[re_]:=complex[re,0];*)
 
-complex /: complex[r1_, i1_]  complex[r2_, i2_] := complex[r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
+complex /: complex[r1_, i1_] complex[r2_, i2_] := 
+  complex[r1 r2 - i1 i2, r1 i2 + r2 i1];
 
-norm::usage = "Norm like function for complex[]" ;
-norm[z_complex] := ((z//First)^2 + (z//Last)^2) ;
+norm::usage = "Norm like function for complex[]";
+norm[z_complex] := ((z // First)^2 + (z // Last)^2);
 
-(* special case this one to deal with the sort of products that are generated multiplying pauli matrices *)
-complex /: Power[z_complex, 2] := complex[z] complex[z] ;
-complex /: Power[z_complex, n_] :=
+(*special case this one to deal with the sort of products that are \
+generated multiplying pauli matrices*)
+
+complex /: Power[z_complex, 2] := complex[z] complex[z];
+complex /: Power[z_complex, n_] := 
   Module[{r = norm[z]^(n/2), theta = n ArcTan[z // First, z // Last]},
-    r complex[Cos[theta], Sin[theta]]] ;
+    r complex[Cos[theta], Sin[theta]]];
 
-complexQ::usage = "predicate pattern match for complex[]" ;
-complexQ[z_complex] := True ;
-complexQ[_] := False ;
-notComplexQ::usage = "predicate pattern match for !complex[]" ;
-notComplexQ[v_] := Not[complexQ[v]] ;
+complexQ::usage = "predicate pattern match for complex[]";
+complexQ[z_complex] := True;
+complexQ[_] := False;
+notComplexQ::usage = "predicate pattern match for !complex[]";
+notComplexQ[v_] := Not[complexQ[v]];
 
-complex /: ( v_?notComplexQ ) complex[re_, im_] := complex[ v re, v im ];
+complex /: (v_?notComplexQ) complex[re_, im_] := complex[v re, v im];
 
-real::usage = "Re like function for complex[]" ;
-real[z_complex] := (z // First) ;
-imag::usage = "Im like function for complex[]" ;
-imag[z_complex] := (z // Last) ;
-real[ex_] := ex ;
-imag[ex_] := 0 ;
-conjugate::usage = "Conjugate like function for complex[]" ;
-conjugate[z_complex] := complex[z // First, -z // Last] ;
-conjugate[ex_] := ex ;
+real::usage = "Re like function for complex[]";
+real[z_complex] := (z // First);
+imag::usage = "Im like function for complex[]";
+imag[z_complex] := (z // Last);
+real[ex_] := ex;
+imag[ex_] := 0;
+conjugate::usage = "Conjugate like function for complex[]";
+conjugate[z_complex] := complex[z // First, -z // Last];
+conjugate[ex_] := ex;
 
-ClearAll[ complexI, fMatrix, matrixreal, matriximag, matrixconj ]
-complexI::usage = "I like unit imaginary for complex[]" ;
-complexI := complex[0, 1] ;
+ClearAll[complexI, fMatrix, matrixreal, matriximag, matrixconj]
+complexI::usage = "I like unit imaginary for complex[]";
+complexI := complex[0, 1];
 
-(* private *)
 fMatrix[p_, f_] := (Function[a, f@a, Listable]@p)
-matrixreal::usage = "method to apply real to all elements in matrix.  This is a hack.  Can probably set an attribute on the real function to do this." ;
+matrixreal::usage = 
+  "method to apply real to all elements in matrix.  This is a hack.  \
+Can probably set an attribute on the real function to do this.";
 matrixreal[m_] := fMatrix[m, real];
-matriximag::usage = "method to apply imag to all elements in matrix.  This is a hack.  Can probably set an attribute on the imag function to do this." ;
+matriximag::usage = 
+  "method to apply imag to all elements in matrix.  This is a hack.  \
+Can probably set an attribute on the imag function to do this.";
 matriximag[m_] := fMatrix[m, imag];
-matrixconj::usage = "method to apply conjugate to all elements in matrix.  This is a hack.  Can probably set an attribute on the conj function to do this." ;
+matrixconj::usage = 
+  "method to apply conjugate to all elements in matrix.  This is a \
+hack.  Can probably set an attribute on the conj function to do this.";
 matrixconj[m_] := fMatrix[m, conjugate];
 
 ClearAll[pauliMatrix, conjugateTranspose]
-pauliMatrix::usage = "PauliMatrix implemented with complex[], instead of Complex[]." ;
-pauliMatrix[1] := PauliMatrix[1] ;
-pauliMatrix[2] := (PauliMatrix[2] /. {Complex[0, 1] -> complexI, Complex[0, -1] -> -complexI}) ;
-pauliMatrix[3] := PauliMatrix[3] ;
-conjugateTranspose::usage = "ConjugateTranspose like operation for pauliMatrix." ;
-conjugateTranspose[m_List] := Transpose[matrixconj[m]] ;
+pauliMatrix::usage = 
+  "PauliMatrix implemented with complex[], instead of Complex[].";
+pauliMatrix[1] := PauliMatrix[1];
+pauliMatrix[
+   2] := (PauliMatrix[2] /. {Complex[0, 1] -> complexI, 
+     Complex[0, -1] -> -complexI});
+pauliMatrix[3] := PauliMatrix[3];
+conjugateTranspose::usage = 
+  "ConjugateTranspose like operation for pauliMatrix.";
+conjugateTranspose[m_List] := Transpose[matrixconj[m]];
+(*End["`Private`"]*)
 
 Unprotect[TraditionalForm, DisplayForm, StandardForm];
-TraditionalForm[z_complex] := (((z // real) + I (z // imag)) // TraditionalForm)
-DisplayForm[z_complex] := (((z // real) + I (z // imag)) // DisplayForm)
-StandardForm[z_complex] := (((z // real) + I (z // imag)) // StandardForm)
+TraditionalForm[
+  z_complex] := (((z // real) + I (z // imag)) // TraditionalForm)
+DisplayForm[
+  z_complex] := (((z // real) + I (z // imag)) // DisplayForm)
+StandardForm[
+  z_complex] := (((z // real) + I (z // imag)) // StandardForm)
 Protect[TraditionalForm, DisplayForm, StandardForm];
 
+(* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
+ClearAll[Vector, Scalar, Bivector, Trivector, grade]
+Scalar[v_] := grade[0, v IdentityMatrix[2]];
+Vector[v_, k_Integer /; k >= 1 && k <= 3] := 
+  grade[1, v pauliMatrix[k]];
+Bivector[v_, k_Integer /; k >= 1 && k <= 3, 
+   j_Integer /; j >= 1 && j <= 3] := 
+  grade[2, v pauliMatrix[k].pauliMatrix[j]];
+Trivector[v_] := grade[3, complexI v IdentityMatrix[2]];
 
-
-
-ClearAll[vector, scalar, bivector, multivector, grade]
-scalar[v_]                                                                 := grade[0, v IdentityMatrix[2] ] ;
-vector[v_, k_Integer /; k >= 1 && k <= 3]                                  := grade[1, v pauliMatrix[k]] ;
-bivector[v_, k_Integer /; k >= 1 && k <= 3, j_Integer /; j >= 1 && j <= 3] := grade[2, v pauliMatrix[k].pauliMatrix[j]];
-trivector[v_]                                                              := grade[3, complexI v IdentityMatrix[2] ] ;
-
-ClearAll[ scalarQ, vectorQ, bivectorQ, trivectorQ, bladeQ ]
+ClearAll[scalarQ, vectorQ, bivectorQ, trivectorQ, bladeQ]
 gradeQ[m_grade, n_Integer] := ((m // First) == n)
-scalarQ[m_grade]           := gradeQ[m, 0]
-vectorQ[m_grade]           := gradeQ[m, 1]
-bivectorQ[m_grade]         := gradeQ[m, 2]
-trivectorQ[m_grade]        := gradeQ[m, 3]
-bladeQ[m_grade]            := ((m // First) >= 0)
+scalarQ[m_grade] := gradeQ[m, 0]
+vectorQ[m_grade] := gradeQ[m, 1]
+bivectorQ[m_grade] := gradeQ[m, 2]
+trivectorQ[m_grade] := gradeQ[m, 3]
+bladeQ[m_grade] := ((m // First) >= 0)
 
-ClearAll[ directProduct, signedSymmetric, symmetric, antisymmetric ]
+ClearAll[directProduct, signedSymmetric, symmetric, antisymmetric]
 
-directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last). (v2 // Last) ] ;
-signedSymmetric[ t_, v1_, v2_, s_ ] := Module[ {a = (v1 // Last), b = (v2 // Last)}, grade[t, (a . b + s b . a)/2] ] ;
-    symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
-antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
+directProduct[t_, v1_, v2_] := grade[t, (v1 // Last).(v2 // Last)];
+signedSymmetric[t_, v1_, v2_, s_] := 
+  Module[{a = (v1 // Last), b = (v2 // Last)}, 
+   grade[t, (a.b + s b.a)/2]];
+symmetric[t_, v1_, v2_] := signedSymmetric[t, v1, v2, 1];
+antisymmetric[t_, v1_, v2_] := signedSymmetric[t, v1, v2, -1];
 
-(* These operator on just the Pauli matrix portions x of pauliGradeSelect[, x] *)
-ClearAll[ pauliGradeSelect01, pauliGradeSelect23, pauliGradeSelect ]
-pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) & ;
-pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) & ;
-pauliGradeSelect[m_, 0] := IdentityMatrix[2] ( m/2 // Tr // real // Simplify) ;
-pauliGradeSelect[m_, 1] := ((pauliGradeSelect01[m] - pauliGradeSelect[m, 0]) // Simplify) ;
-pauliGradeSelect[m_, 2] := ((pauliGradeSelect23[m] - pauliGradeSelect[m, 3]) // Simplify) ;
-pauliGradeSelect[m_, 3] := complexI IdentityMatrix[2] ( m/2 // Tr // imag // Simplify) ;
+(*These operator on just the Pauli matrix portions x of \
+pauliGradeSelect[,x]*)
+ClearAll[pauliGradeSelect01, \
+pauliGradeSelect23, pauliGradeSelect]
+pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) &;
+pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) &;
+pauliGradeSelect[m_, 0] := 
+  IdentityMatrix[2] (m/2 // Tr // real // Simplify);
+pauliGradeSelect[m_, 
+   1] := ((pauliGradeSelect01[m] - pauliGradeSelect[m, 0]) // 
+    Simplify);
+pauliGradeSelect[m_, 
+   2] := ((pauliGradeSelect23[m] - pauliGradeSelect[m, 3]) // 
+    Simplify);
+pauliGradeSelect[m_, 3] := 
+  complexI IdentityMatrix[2] (m/2 // Tr // imag // Simplify);
 
-ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2, pauliGradeSelect3 ]
-pauliGradeSelect0 := pauliGradeSelect[#, 0] & ;
-pauliGradeSelect1 := pauliGradeSelect[#, 1] & ;
-pauliGradeSelect2 := pauliGradeSelect[#, 2] & ;
-pauliGradeSelect3 := pauliGradeSelect[#, 3] & ;
+ClearAll[pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2, \
+pauliGradeSelect3]
+pauliGradeSelect0 := pauliGradeSelect[#, 0] &;
+pauliGradeSelect1 := pauliGradeSelect[#, 1] &;
+pauliGradeSelect2 := pauliGradeSelect[#, 2] &;
+pauliGradeSelect3 := pauliGradeSelect[#, 3] &;
 
 
 
 
 
-(* Addition and Subtraction operations *)
-grade /: grade[0, v1_] + grade[0, v2_] := grade[0, v1 + v2] ;
-grade /: grade[1, v1_] + grade[1, v2_] := grade[1, v1 + v2] ;
-grade /: grade[2, v1_] + grade[2, v2_] := grade[2, v1 + v2] ;
-grade /: grade[3, v1_] + grade[3, v2_] := grade[3, v1 + v2] ;
-grade /: grade[_, v1_] + grade[_, v2_] := grade[-1, v1 + v2] ;
-grade /: - grade[k_, v_] := grade[k, -v ];
+(* Plus *)
+grade /: grade[0, v1_] + grade[0, v2_] := grade[0, v1 + v2];
+grade /: grade[1, v1_] + grade[1, v2_] := grade[1, v1 + v2];
+grade /: grade[2, v1_] + grade[2, v2_] := grade[2, v1 + v2];
+grade /: grade[3, v1_] + grade[3, v2_] := grade[3, v1 + v2];
+grade /: grade[_, v1_] + grade[_, v2_] := grade[-1, v1 + v2];
 
-ClearAll[ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection ]
-GradeSelection[m_?scalarQ, 0] := m ;
-GradeSelection[m_?vectorQ, 1] := m ;
-GradeSelection[m_?bivectorQ, 2] := m ;
-GradeSelection[m_?trivectorQ, 3] := m ;
-GradeSelection[m_, k_Integer /; k >= 1 && k <= 3] := grade[k, pauliGradeSelect[m // Last, k]] ;
-ScalarSelection := GradeSelection[ #, 0 ] &;
-VectorSelection := GradeSelection[ #, 1 ] &;
-BivectorSelection := GradeSelection[ #, 2 ] &;
-TrivectorSelection  := GradeSelection[ #, 3 ] &;
+(* Times[-1, _] *)
+grade /: -grade[k_, v_] := grade[k, -v];
 
-(* Unprotect functions that are used to define our rules *)
-protected = Unprotect [Times, NonCommutativeMultiply] ;
+(* Times *)
+grade /: grade[0, s_] grade[k_, m_] := grade[k, s*m];
+grade /: grade[3, p_] grade[1, m_] := grade[2, p*m];
+grade /: grade[3, p_] grade[2, m_] := grade[1, p*m];
+grade /: grade[3, p_] grade[3, m_] := grade[0, p*m];
+grade /: grade[3, p_] grade[_, m_] := grade[-1, p*m];
 
-Times[ s_?scalarQ, m_grade ]         := directProduct[ m // First, s, m  ] ;
-Times[ t_?trivectorQ, m_?vectorQ]    := directProduct[ 2, t, m ] ;
-Times[ t_?trivectorQ, m_?bivectorQ]  := directProduct[ 1, t, m ] ;
-Times[ t_?trivectorQ, m_?trivectorQ] := directProduct[ 0, t, m ] ;
-Times[ t_?trivectorQ, m_]            := directProduct[ -1, t, m ] ;
+(* NonCommutativeMultiply *)
 
-(* There is a built in multiply for non-commutative products:
-   http://reference.wolfram.com/language/ref/NonCommutativeMultiply.html
- *)
+grade /: grade[_, m1_] ** grade[_, m2_] := grade[-1, m1.m2];
 
-ClearAll[ GeometricProduct ]
-GeometricProduct[ m1_grade, m2_grade ]        := directProduct[ -1, m1, m2 ] ;
+(* Dot *)
+grade /: grade[0, s_].grade[k_, m_] := grade[k, s*m];
+grade /: grade[k_, m_].grade[0, s_] := grade[k, s*m];
 
-NonCommutativeMultiply[ v1_?vectorQ, v2_?vectorQ ] := GeometricProduct[ v1, v2 ] ;
-NonCommutativeMultiply[ v1_?vectorQ, v2_?bivectorQ ] := GeometricProduct[ v1, v2 ] ;
-NonCommutativeMultiply[ v1_?bivectorQ, v2_?vectorQ ] := GeometricProduct[ v1, v2 ] ;
+grade /: (t_?trivectorQ).m_grade := t m;
+grade /: m_grade.(t_?trivectorQ) := t m;
 
-Protect[Evaluate[protected]] ; (* Restore protection of the functions *)
+grade /: (v1_?vectorQ).grade[1, v2_] := symmetric[0, v1, grade[1, v2]];
+grade /: (v_?vectorQ).grade[2, b_] := antisymmetric[0, v, grade[2, b]];
+grade /: (b_?bivectorQ).grade[1, v_] := 
+  antisymmetric[0, b, grade[1, v]];
+grade /: (b1_?bivectorQ).grade[2, b2_] := 
+  symmetric[0, b1, grade[2, b2]];
 
-ClearAll[ DotProduct, WedgeProduct ]
+ClearAll[GradeSelection, ScalarSelection, VectorSelection, \
+BivectorSelection, TrivectorSelection]
+GradeSelection[m_?scalarQ, 0] := m;
+GradeSelection[m_?vectorQ, 1] := m;
+GradeSelection[m_?bivectorQ, 2] := m;
+GradeSelection[m_?trivectorQ, 3] := m;
+GradeSelection[m_, k_Integer /; k >= 0 && k <= 3] := 
+  grade[k, pauliGradeSelect[m // Last, k]];
+ScalarSelection := GradeSelection[#, 0] &;
+VectorSelection := GradeSelection[#, 1] &;
+BivectorSelection := GradeSelection[#, 2] &;
+TrivectorSelection := GradeSelection[#, 3] &;
 
-DotProduct[ s_?scalarQ, m_ ]                  := directProduct[ m // First, s, m  ] ;
-DotProduct[ m_, s_?scalarQ ]                  := DotProduct[ s, m ] ;
+(* Dot ; handle dot products where one or more factors is a \
+multivector.
+Fixme: there's probably a fancier "Mathematica" way to distribute the \
+sums of all these dots without temporaries. *)
+grade /: 
+ grade[k_, m_] . v2_?bladeQ := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[grade[k, m], #] & /@ (Range[4] - 1);
+  Total[{g0.v2, g1.v2, g2.v2, g3.v2}]]
 
-DotProduct[ v_?vectorQ, b_?vectorQ ]          := symmetric[ 0, v, b  ] ;
-DotProduct[ v_?vectorQ, b_?bivectorQ ]        := antisymmetric[ 0, v, b  ] ;
-DotProduct[ b_?bivectorQ, v_?vectorQ ]        := -DotProduct[ v, b ] ;
+grade /: (v1_?bladeQ ) . grade[k_, m_] := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[grade[k, m], #] & /@ (Range[4] - 1);
+  Total[{v1.g0, v1.g1, v1.g2, v1.g3}] ]
 
-DotProduct[ t_?trivectorQ, m_?vectorQ ]       := directProduct[ 2, t, m  ] ;
-DotProduct[ t_?trivectorQ, m_?bivectorQ ]     := directProduct[ 1, t, m  ] ;
-DotProduct[ t_?trivectorQ, m_?trivectorQ ]    := directProduct[ 0, t, m  ] ;
-DotProduct[ m_, t_?trivectorQ ]               := DotProduct[ t, m ] ;
+grade /: m1_ . grade[k_, m_]  := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[grade[k, m], #] & /@ (Range[4] - 1);
+  Total[{m1.g0, m1.g1, m1.g2, m1.g3}] ]
 
-DotProduct[ b1_?bivectorQ, b2_?bivectorQ ]    := symmetric[ 0, b1, b2  ] ;
+grade[_, {{0, 0}, {0, 0}}] := 0
 
-WedgeProduct[ s_?scalarQ, m_ ]                := directProduct[ m // First, s, m  ] ;
-WedgeProduct[ m_, s_?scalarQ ]                := WedgeProduct[ s, m ] ;
-WedgeProduct[ v_?vectorQ, b_?vectorQ ]        := antisymmetric[ 0, v, b  ] ;
-WedgeProduct[ v_?vectorQ, b_?bivectorQ ]      := symmetric[ 0, v, b  ] ;
-WedgeProduct[ b_?bivectorQ, v_?vectorQ ]      := WedgeProduct[ v, b ] ;
-WedgeProduct[ b1_?bivectorQ, b2_?bivectorQ ]  := 0 ;
-WedgeProduct[ t_?trivectorQ, m_ ] := 0 ;
-WedgeProduct[ m_, t_?trivectorQ ] := 0 ;
+(*Define a custom wedge operator*)
 
-ClearAll[ magnitude, ScalarProduct ]
+grade /: grade[0, s_]\[Wedge]grade[k_, v_] := grade[k, s.v];
+grade /: grade[1, v1_]\[Wedge](v2_?vectorQ) := 
+  antisymmetric[2, grade[1, v1], v2];
 
-(* private *)
-magnitude[ v_?scalarQ ] := (v // Last)[[1, 1]] ;
+grade /: grade[1, v1_]\[Wedge](v2_?bivectorQ) := 
+  symmetric[3, grade[1, v1], v2];
+grade /: grade[2, v1_]\[Wedge](v2_?vectorQ) := 
+  symmetric[3, grade[2, v1], v2];
+grade /: grade[2, _]\[Wedge](v2_?bivectorQ) := 0;
 
-ScalarProduct[ s1_?scalarQ, s2_?scalarQ ]       := ( magnitude[s1] magnitude[s2] ) ;
-ScalarProduct[ s_?scalarQ, v_?vectorQ ]         := 0
-ScalarProduct[ s_?scalarQ, b_?bivectorQ ]       := 0
-ScalarProduct[ s_?scalarQ, t_?trivectorQ ]      := 0
+grade /: grade[_, _]\[Wedge](v2_?trivectorQ) := 0;
+grade /: grade[3, _]\[Wedge]m_ := 0;
 
-ScalarProduct[ v_?vectorQ, s_?scalarQ ]         := 0
-ScalarProduct[ v1_?vectorQ, v2_?vectorQ ]       := ( GeometricProduct[ v1, v2 ] // magnitude ) ;
-ScalarProduct[ v_?vectorQ, b_?bivectorQ ]       := 0
-ScalarProduct[ v_?vectorQ, t_?trivectorQ ]      := 0
+ClearAll[pmagnitude]
 
-ScalarProduct[ b_?bivectorQ, s_?scalarQ ]       := 0
-ScalarProduct[ b_?bivectorQ, v_?vectorQ ]       := 0
-ScalarProduct[ b1_?bivectorQ, b2_?bivectorQ ]   := ( GeometricProduct[ b1, b2 ] // ScalarSelection // magnitude ) ;
-ScalarProduct[ b_?bivectorQ, t_?trivectorQ ]    := 0
-
-ScalarProduct[ t_?trivectorQ, s_?scalarQ ]      := 0
-ScalarProduct[ t_?trivectorQ, v_?vectorQ ]      := 0
-ScalarProduct[ t_?trivectorQ, b_?bivectorQ ]    := 0
-ScalarProduct[ t1_?trivectorQ, t2_?trivectorQ ] := ( GeometricProduct[ t1, t2 ] // magnitude ) ;
-
-ScalarProduct[ s_?scalarQ, m_grade]             := ( magnitude[s] (m // ScalarSelection // magnitude) ) ;
-ScalarProduct[ v_?vectorQ, m_grade]             := ( GeometricProduct[v, (m // VectorSelection)] // magnitude ) ;
-ScalarProduct[ b_?bivectorQ, m_grade]           := ( GeometricProduct[b, (m // BivectorSelection)] // magnitude ) ;
-ScalarProduct[ t_?trivectorQ, m_grade]          := ( GeometricProduct[t, (m // TrivectorSelection)] // magnitude ) ;
-
-ScalarProduct[ m_grade, s_?scalarQ ]             := ScalarProduct[ s, m ] ;
-ScalarProduct[ m_grade, v_?vectorQ ]             := ScalarProduct[ v, m ] ;
-ScalarProduct[ m_grade, b_?bivectorQ ]           := ScalarProduct[ b, m ] ;
-ScalarProduct[ m_grade, t_?trivectorQ ]          := ScalarProduct[ t, m ] ;
-
-DotProduct[ m_grade, v2_?bladeQ ] := Module[{g0, g1, g2, g3},
-   {g0, g1, g2, g3} = GradeSelection[m, #] &/@ (Range[4]-1);
-
-   Total[ DotProduct[ g0, v2 ],
-          DotProduct[ g1, v2 ],
-          DotProduct[ g2, v2 ],
-          DotProduct[ g3, v2 ] ]
-]
-DotProduct[ v1_?bladeQ, m_grade ] := Module[{g0, g1, g2, g3},
-   {g0, g1, g2, g3} = GradeSelection[m, #] &/@ (Range[4]-1);
-
-   Total[ DotProduct[ v1, g0 ],
-          DotProduct[ v1, g1 ],
-          DotProduct[ v1, g2 ],
-          DotProduct[ v1, g3 ] ]
-]
-DotProduct[ m1_grade, m2_grade ] := Module[{g0, g1, g2, g3},
-   {g0, g1, g2, g3} = GradeSelection[m2, #] &/@ (Range[4]-1);
-
-   Total[ DotProduct[ m1, g0 ],
-          DotProduct[ m1, g1 ],
-          DotProduct[ m1, g2 ],
-          DotProduct[ m1, g3 ] ]
-]
-
-(*
 (*Begin["`Private`"]*)
-ClearAll[ displayMapping, bold, esub ]
-bold = Style[ #, Bold] &;
-esub = Subscript[ bold["e"], # ] & ;
-displayMapping = {
-   {Scalar[ 1 ], 1},
-   {Vector[ 1, 1 ], esub[1] },
-   {Vector[ 1, 2 ], esub[2] },
-   {Vector[ 1, 3 ], esub[3] },
-(* -1 : reversal for dot product selection *)
-   {Bivector[ -1, 1, 2 ], esub["12"] },
-   {Bivector[ -1, 2, 3 ], esub["23"] },
-   {Bivector[ -1, 3, 1 ], esub["31"] },
-   {Trivector[ -1 ], esub["123"] }
-} ;
-(*End[]  private *)
+pmagnitude::usage = 
+  "select the 1,1 element from a pauli matrix assuming it represents \
+either a Scalar, or a Trivector (i.e. scaled diagonal matrix)." ;
+pmagnitude[m_] := m[[1, 1]];
+(*End["`Private`"]*)
 
-GAdisplay[v_] := Total[ (Times[ScalarProduct[# // First, v], # // Last]) & /@ displayMapping] ;
-*)
+(* AngleBracket,single operand forms, enter with[Esc]<[Esc] \
+v[Esc]>[Esc] *)
+grade /: AngleBracket[grade[0, s_]] := pmagnitude[s]
+grade /: AngleBracket[grade[1, _]] := 0
+grade /: AngleBracket[grade[2, _]] := 0
+grade /: AngleBracket[grade[3, _]] := 0
+grade /: AngleBracket[
+  grade[_, m_]] := ((pauliGradeSelect[m, 0]) // pmagnitude)
+
+(* AngleBracket,two operand forms. *)
+
+grade /: AngleBracket[grade[0, s1_], 
+   grade[0, s2_]] := (pmagnitude[s1] pmagnitude[s2]);
+grade /: AngleBracket[grade[0, s1_], 
+   grade[-1, 
+    m_]] := (pmagnitude[
+     s1] ((pauliGradeSelect[m, 0]) // pmagnitude));
+grade /: AngleBracket[grade[0, s1_], grade[_, _]] := 0;
+grade /: AngleBracket[grade[-1, m_], 
+   grade[0, 
+    s1_]] := (pmagnitude[s1] ((pauliGradeSelect[m, 0]) // pmagnitude));
+grade /: AngleBracket[grade[_, _], grade[0, s1_]] := 0;
+
+grade /: AngleBracket[grade[3, t1_], 
+  grade[3, t2_]] := (pmagnitude[t1] pmagnitude[t2])
+grade /: AngleBracket[grade[3, t1_], 
+   grade[-1, 
+    m_]] := (pmagnitude[
+     t1] ((pauliGradeSelect[m, 3]) // pmagnitude));
+grade /: AngleBracket[grade[3, t1_], grade[_, _]] := 0;
+grade /: AngleBracket[grade[-1, m_], 
+   grade[3, 
+    t1_]] := (pmagnitude[t1] ((pauliGradeSelect[m, 3]) // pmagnitude));
+grade /: AngleBracket[grade[_, _], grade[3, t1_]] := 0;
+
+grade /: AngleBracket[grade[k1_, m1_], 
+   grade[k2_, m2_]] := (pauliGradeSelect[m1.m2, 0] // pmagnitude);
+
+
+(*Begin["`Private`"]*)
+ClearAll[displayMapping, bold, esub, GAdisplay]
+bold = Style[#, Bold] &;
+esub = Subscript[bold["e"], #] &;
+displayMapping = {{Scalar[1], 1}, {Vector[1, 1], 
+    esub[1]}, {Vector[1, 2], esub[2]}, {Vector[1, 3], 
+    esub[3]}, {Bivector[1, 2, 1], esub["12"]}, {Bivector[1, 3, 2], 
+    esub["23"]}, {Bivector[1, 1, 3], esub["31"]}, {Trivector[-1], 
+    esub["123"]}};
+
+
+GAdisplay[v_grade] := 
+  Total[(Times[AngleBracket[# // First, v], # // Last]) & /@ 
+    displayMapping];
+(*End["`Private`"]*)
+
+Unprotect[TraditionalForm, DisplayForm];
+TraditionalForm[m_grade] := ( m // GAdisplay) ;
+DisplayForm[m_grade] := ( m // GAdisplay) ;
+Protect[TraditionalForm, DisplayForm];
+
 
 (*
 Protect[ Scalar, Vector, Bivector, Trivector,
-         GeometricProduct, DotProduct, WedgeProduct, GradeSelection, 
-         ScalarSelection, VectorSelection, BivectorSelection, PseudoScalarSelection ]
+GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection
+]
 *)
 
 EndPackage[]
