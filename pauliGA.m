@@ -97,21 +97,33 @@ Protect[TraditionalForm, DisplayForm, StandardForm];
 
 (* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
+grade::usage = "(internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 ClearAll[Vector, Scalar, Bivector, Trivector, grade]
+Scalar::usage = "Scalar[v] constructs a scalar grade quantity with value v." ;
 Scalar[v_] := grade[0, v IdentityMatrix[2]];
+Vector::usage = "Vector[v, n], where n = {1,2,3} constructs a vector grade quantity with value v in direction n." ;
 Vector[v_, k_Integer /; k >= 1 && k <= 3] := 
   grade[1, v pauliMatrix[k]];
+Bivector::usage = "Bivector[v, n1, n2], where n1,n2 = {1,2,3} constructs a bivector grade quantity with value v in the plane n1,n2." ;
 Bivector[v_, k_Integer /; k >= 1 && k <= 3, 
    j_Integer /; j >= 1 && j <= 3] := 
   grade[2, v pauliMatrix[k].pauliMatrix[j]];
+Bivector::usage = "Trivector[v] constructs a trivector (pseudoscalar) grade quantity scaled by v." ;
 Trivector[v_] := grade[3, complexI v IdentityMatrix[2]];
 
+(*Begin["`Private`"]*)
 ClearAll[scalarQ, vectorQ, bivectorQ, trivectorQ, bladeQ]
+gradeQ::usage = "gradeQ[m, n] tests if the multivector m is of grade n.  n = -1 is used internally to represent values of more than one grade.";
 gradeQ[m_grade, n_Integer] := ((m // First) == n)
+scalarQ::usage = "scalarQ[m] tests if the multivector m is of grade 0 (scalar)" ;
 scalarQ[m_grade] := gradeQ[m, 0]
+vectorQ::usage = "vectorQ[m] tests if the multivector m is of grade 1 (vector)" ;
 vectorQ[m_grade] := gradeQ[m, 1]
+bivectorQ::usage = "bivectorQ[m] tests if the multivector m is of grade 2 (bivector)" ;
 bivectorQ[m_grade] := gradeQ[m, 2]
+trivectorQ::usage = "trivectorQ[m] tests if the multivector m is of grade 3 (trivector)" ;
 trivectorQ[m_grade] := gradeQ[m, 3]
+bladeQ::usage = "bladeQ[m] tests if the multivector is of a single grade." ;
 bladeQ[m_grade] := ((m // First) >= 0)
 
 ClearAll[directProduct, signedSymmetric, symmetric, antisymmetric]
@@ -146,9 +158,7 @@ pauliGradeSelect0 := pauliGradeSelect[#, 0] &;
 pauliGradeSelect1 := pauliGradeSelect[#, 1] &;
 pauliGradeSelect2 := pauliGradeSelect[#, 2] &;
 pauliGradeSelect3 := pauliGradeSelect[#, 3] &;
-
-
-
+(*End["`Private`"]*)
 
 
 (* Plus *)
