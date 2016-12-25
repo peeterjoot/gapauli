@@ -101,7 +101,6 @@ pauliGradeSelect1 := pauliGradeSelect[#, 1] & ;
 pauliGradeSelect2 := pauliGradeSelect[#, 2] & ;
 pauliGradeSelect3 := pauliGradeSelect[#, 3] & ;
 
-
 (* Addition and Subtraction operations *)
 grade /: grade[0, v1_] + grade[0, v2_] := grade[0, v1 + v2] ;
 grade /: grade[1, v1_] + grade[1, v2_] := grade[1, v1 + v2] ;
@@ -122,7 +121,7 @@ BivectorSelection := GradeSelection[ #, 2 ] &;
 TrivectorSelection  := GradeSelection[ #, 3 ] &;
 
 (* Unprotect functions that are used to define our rules *)
-protected = Unprotect [Times] ;
+protected = Unprotect [Times, NonCommutativeMultiply] ;
 
 Times[ s_?scalarQ, m_grade ]         := directProduct[ m // First, s, m  ] ;
 Times[ t_?trivectorQ, m_?vectorQ]    := directProduct[ 2, t, m ] ;
@@ -134,61 +133,77 @@ Times[ t_?trivectorQ, m_]            := directProduct[ -1, t, m ] ;
    http://reference.wolfram.com/language/ref/NonCommutativeMultiply.html
  *)
 
+ClearAll[ GeometricProduct ]
+GeometricProduct[ m1_grade, m2_grade ]        := directProduct[ -1, m1, m2 ] ;
+
+NonCommutativeMultiply[ v1_?vectorQ, v2_?vectorQ ] := GeometricProduct[ v1, v2 ] ;
+NonCommutativeMultiply[ v1_?vectorQ, v2_?bivectorQ ] := GeometricProduct[ v1, v2 ] ;
+NonCommutativeMultiply[ v1_?bivectorQ, v2_?vectorQ ] := GeometricProduct[ v1, v2 ] ;
+
 Protect[Evaluate[protected]] ; (* Restore protection of the functions *)
 
-ClearAll[ DotProduct, WedgeProduct, GeometricProduct ]
+ClearAll[ DotProduct, WedgeProduct ]
 
-DotProduct[ s_?scalarQ, m_ ] := directProduct[ m // First, s, m  ] ;
-DotProduct[ m_, s_?scalarQ ] := DotProduct[ s, m ] ;
-DotProduct[ t_?trivectorQ, m_?vectorQ ]    := directProduct[ 2, t, m  ] ;
-DotProduct[ t_?trivectorQ, m_?bivectorQ ]  := directProduct[ 1, t, m  ] ;
-DotProduct[ t_?trivectorQ, m_?trivectorQ ] := directProduct[ 0, t, m  ] ;
+DotProduct[ s_?scalarQ, m_ ]                  := directProduct[ m // First, s, m  ] ;
+DotProduct[ m_, s_?scalarQ ]                  := DotProduct[ s, m ] ;
 
-DotProduct[ m_, t_?trivectorQ ] := DotProduct[ t, m ] ;
+DotProduct[ v_?vectorQ, b_?vectorQ ]          := symmetric[ 0, v, b  ] ;
+DotProduct[ v_?vectorQ, b_?bivectorQ ]        := antisymmetric[ 0, v, b  ] ;
+DotProduct[ b_?bivectorQ, v_?vectorQ ]        := -DotProduct[ v, b ] ;
 
-WedgeProduct[ s_?scalarQ, m_ ] := directProduct[ m // First, s, m  ] ;
-WedgeProduct[ m_, s_?scalarQ ] := WedgeProduct[ s, m ] ;
+DotProduct[ t_?trivectorQ, m_?vectorQ ]       := directProduct[ 2, t, m  ] ;
+DotProduct[ t_?trivectorQ, m_?bivectorQ ]     := directProduct[ 1, t, m  ] ;
+DotProduct[ t_?trivectorQ, m_?trivectorQ ]    := directProduct[ 0, t, m  ] ;
+DotProduct[ m_, t_?trivectorQ ]               := DotProduct[ t, m ] ;
+
+DotProduct[ b1_?bivectorQ, b2_?bivectorQ ]    := symmetric[ 0, b1, b2  ] ;
+
+WedgeProduct[ s_?scalarQ, m_ ]                := directProduct[ m // First, s, m  ] ;
+WedgeProduct[ m_, s_?scalarQ ]                := WedgeProduct[ s, m ] ;
+WedgeProduct[ v_?vectorQ, b_?vectorQ ]        := antisymmetric[ 0, v, b  ] ;
+WedgeProduct[ v_?vectorQ, b_?bivectorQ ]      := symmetric[ 0, v, b  ] ;
+WedgeProduct[ b_?bivectorQ, v_?vectorQ ]      := WedgeProduct[ v, b ] ;
+WedgeProduct[ b1_?bivectorQ, b2_?bivectorQ ]  := 0 ;
 WedgeProduct[ t_?trivectorQ, m_ ] := 0 ;
 WedgeProduct[ m_, t_?trivectorQ ] := 0 ;
 
-(*GeometricProduct[ m1_grade, m2_grade ] := directProduct[ -1, m1, m2 ] ;*)
-(*
-pBladeQ[m : {multivectorType, _}] := False ;
-pBladeQ[m : {_Integer, _}] := True ;
+ClearAll[ magnitude, scalarProduct ]
 
-ClearAll[ magnitude ]
-
+(* private *)
 magnitude[ v_?scalarQ ] := (v // Last)[[1, 1]] ;
-(*End[]*) (* private *)
 
-ClearAll[ ScalarProduct ]
+ScalarProduct[ s1_?scalarQ, s2_?scalarQ ]       := ( magnitude[s1] magnitude[s2] ) ;
+ScalarProduct[ s_?scalarQ, v_?vectorQ ]         := 0
+ScalarProduct[ s_?scalarQ, b_?bivectorQ ]       := 0
+ScalarProduct[ s_?scalarQ, t_?trivectorQ ]      := 0
 
-DotProduct[ v1_?scalarQ, v2_] := NonCommutativeMultiply[ v1, v2 ] ;
-DotProduct[ v1_, v2_?scalarQ] := NonCommutativeMultiply[ v1, v2 ] ;
-WedgeProduct[ v1_?scalarQ, v2_] := NonCommutativeMultiply[ v1, v2 ] ;
-WedgeProduct[ v1_, v2_?scalarQ] := NonCommutativeMultiply[ v1, v2 ] ;
+ScalarProduct[ v_?vectorQ, s_?scalarQ ]         := 0
+ScalarProduct[ v1_?vectorQ, v2_?vectorQ ]       := ( GeometricProduct[ v1, v2 ] // magnitude ) ;
+ScalarProduct[ v_?vectorQ, b_?bivectorQ ]       := 0
+ScalarProduct[ v_?vectorQ, t_?trivectorQ ]      := 0
 
+ScalarProduct[ b_?bivectorQ, s_?scalarQ ]       := 0
+ScalarProduct[ b_?bivectorQ, v_?vectorQ ]       := 0
+ScalarProduct[ b1_?bivectorQ, b2_?bivectorQ ]   := ( GeometricProduct[ b1, b2 ] // ScalarSelection // magnitude ) ;
+ScalarProduct[ b_?bivectorQ, t_?trivectorQ ]    := 0
 
-DotProduct[ v1_?vectorQ, v2_?vectorQ]    :=     symmetric[ scalarType,   v1, v2 ] ;
-DotProduct[ v1_?vectorQ, v2_?bivectorQ]  := antisymmetric[ vectorType,   v1, v2 ] ;
-DotProduct[ v1_?bivectorQ,  v2_?vectorQ] := -DotProduct[ v2, v1 ] ;
+ScalarProduct[ t_?trivectorQ, s_?scalarQ ]      := 0
+ScalarProduct[ t_?trivectorQ, v_?vectorQ ]      := 0
+ScalarProduct[ t_?trivectorQ, b_?bivectorQ ]    := 0
+ScalarProduct[ t1_?trivectorQ, t2_?trivectorQ ] := ( GeometricProduct[ t1, t2 ] // magnitude ) ;
 
-DotProduct[ v1_?bivectorQ, v2_?bivectorQ]  := symmetric[ scalarType,     v1, v2 ] ;
+ScalarProduct[ s_?scalarQ, m_grade]             := ( magnitude[s] (m // ScalarSelection // magnitude) ) ;
+ScalarProduct[ v_?vectorQ, m_grade]             := ( GeometricProduct[v, (m // VectorSelection)] // magnitude ) ;
+ScalarProduct[ b_?bivectorQ, m_grade]           := ( GeometricProduct[b, (m // BivectorSelection)] // magnitude ) ;
+ScalarProduct[ t_?trivectorQ, m_grade]          := ( GeometricProduct[t, (m // TrivectorSelection)] // magnitude ) ;
+
+ScalarProduct[ m_grade, s_?scalarQ ]             := ScalarProduct[ s, m ] ;
+ScalarProduct[ m_grade, v_?vectorQ ]             := ScalarProduct[ v, m ] ;
+ScalarProduct[ m_grade, b_?bivectorQ ]           := ScalarProduct[ b, m ] ;
+ScalarProduct[ m_grade, t_?trivectorQ ]          := ScalarProduct[ t, m ] ;
 
 (*
-WedgeProduct[ v1_?scalarQ, v2_?scalarQ ]    := DotProduct[ v1, v2 ] ;
-WedgeProduct[ v1_?scalarQ, v2_?vectorQ ]    := DotProduct[ v1, v2 ] ;
-WedgeProduct[ v1_?scalarQ, v2_?bivectorQ ]  := DotProduct[ v1, v2 ] ;
-WedgeProduct[ v1_?vectorQ,    v2_?scalarQ ] := DotProduct[ v2, v1 ] ;
-WedgeProduct[ v1_?bivectorQ,  v2_?scalarQ ] := DotProduct[ v2, v1 ] ;
-
-WedgeProduct[ v1_?vectorQ, v2_?vectorQ ]    := antisymmetric[ bivectorType,  v1, v2 ] ;
-WedgeProduct[ v1_?vectorQ, v2_?bivectorQ ]  :=     symmetric[ trivectorType, v1, v2 ] ;
-WedgeProduct[ v1_?bivectorQ,  v2_?vectorQ ] := WedgeProduct[ v2, v1 ] ;
-
-WedgeProduct[ v1_?bivectorQ, v2_?bivectorQ ]  := Scalar[0] ;
-
-*)
+(*End[]*) (* private *)
 
 ScalarMagnitude[ v_ ] := (GradeSelection[ v, 0 ] // magnitude) ;
 
