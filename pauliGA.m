@@ -2,7 +2,76 @@
 
 (* copy this module to a directory in $Path.  Then invoke with <<pauliGA` *)
 BeginPackage["pauliGA`"]
-pauliGA::usage = "An attempt to use the Pauli representation to compactly but efficiently implement 3D Euclidean Geometric Algebra operations.";
+pauliGA::usage = "An attempt to use the Pauli representation to compactly but efficiently implement 3D Euclidean (CL(3,0)) Geometric Algebra operations.
+
+Elements of the algebra can be constructed with one of
+
+   Scalar[v]
+   Vector[v, n]
+   Bivector[v, n, m]
+   Trivector[v]
+
+Example:
+
+   m = Scalar[ Sin[x] ] + Vector[ Log[z], 3 ] + Trivector[ 7 ] ;
+   m // StandardForm
+
+> 7 e[123] + e[3] Log[z] + Sin[x]
+
+A few operators are provided:
+   m1 + m2
+   m1 - m2
+   - m
+   st * vb    Scalars and trivectors can multiply vectors and bivectors in any order
+   vb1 ** vb1 Vectors and bivectors when multiplied have to use the NonCommutativeMultiply operator, but any grade object may also.
+   m1 . m2    Dot product.  The functional form Dot[m1, m2] may also be used.
+   m1 ^ m2    Wedge product.  Enter with m1 [Esc]^[Esc] m2.  The functional form Wedge[m1, m2]
+   <m>        Scalar selection.  Enter with [Esc]<[Esc] m [Esc]>[Esc].  The functional form AngleBracket[m] may also be used.
+   <m1,m2>    Scalar product.  Enter with [Esc]<[Esc] m1,m2 [Esc]>[Esc].  The functional form AngleBracket[m1, m2] may also be used.
+
+Functions provided:
+
+   - scalarQ
+   - vectorQ
+   - bivectorQ
+   - trivectorQ
+   - bladeQ
+   - GradeSelection
+   - ScalarSelection
+   - VectorSelection
+   - BivectorSelection
+   - TrivectorSelection
+
+The following built-in methods are overridden:
+
+   - TraditionalForm
+   - DisplayForm
+   - StandardForm
+
+TODO: 
+
+1) Can't multiply expressions directly like:
+
+   Sin[x] Vector[y]
+
+have to do:
+
+   Scalar[Sin[x]] Vector[y]
+
+2) Define a named scalar product operator, and scalar selection operator.
+
+3) Test!
+
+4) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?
+
+5) Cut and pasted StandardForm has strings in it:
+
+   7 "e[123]" + "e[3]" Log[z] + Sin[x]
+
+... probably should just be a bare: e[1]e[2]e[3] (how to avoid e[] from being used by other stuff and messing up display?)
+
+6) proper packaging stuff.  private for internals and protect externals.
+";
 
 (*Begin["`Private`"]*)
 complex::usage = 
@@ -198,15 +267,21 @@ grade /: (b1_?bivectorQ).grade[2, b2_] :=
 
 ClearAll[GradeSelection, ScalarSelection, VectorSelection, \
 BivectorSelection, TrivectorSelection]
+
+GradeSelection::usage = "GradeSelection[m, k] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[] type (so scalar selection is not just a number).";
 GradeSelection[m_?scalarQ, 0] := m;
 GradeSelection[m_?vectorQ, 1] := m;
 GradeSelection[m_?bivectorQ, 2] := m;
 GradeSelection[m_?trivectorQ, 3] := m;
 GradeSelection[m_, k_Integer /; k >= 0 && k <= 3] := 
   grade[k, pauliGradeSelect[m // Last, k]];
+ScalarSelection::usage = "ScalarSelection[m] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[] type (not just a number or an expression).";
 ScalarSelection := GradeSelection[#, 0] &;
+VectorSelection::usage = "VectorSelection[m] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
 VectorSelection := GradeSelection[#, 1] &;
+BivectorSelection::usage = "BivectorSelection[m] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
 BivectorSelection := GradeSelection[#, 2] &;
+TrivectorSelection::usage = "TrivectorSelection[m] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[] type (not just an number or expression).";
 TrivectorSelection := GradeSelection[#, 3] &;
 
 (* Dot ; handle dot products where one or more factors is a \
@@ -295,25 +370,31 @@ grade /: AngleBracket[grade[k1_, m1_],
 
 
 (*Begin["`Private`"]*)
-ClearAll[displayMapping, bold, esub, GAdisplay]
+ClearAll[displayMapping, bold, esub, gaDisplay]
 bold = Style[#, Bold] &;
 esub = Subscript[bold["e"], #] &;
-displayMapping = {{Scalar[1], 1}, {Vector[1, 1], 
-    esub[1]}, {Vector[1, 2], esub[2]}, {Vector[1, 3], 
-    esub[3]}, {Bivector[1, 2, 1], esub["12"]}, {Bivector[1, 3, 2], 
-    esub["23"]}, {Bivector[1, 1, 3], esub["31"]}, {Trivector[-1], 
-    esub["123"]}};
+displayMapping = {
+   {Scalar[1], 1, 1},
+   {Vector[1, 1], esub[1], "e[1]"},
+   {Vector[1, 2], esub[2], "e[2]"},
+   {Vector[1, 3], esub[3], "e[3]"},
+   {Bivector[1, 2, 1], esub["12"], "e[12]"},
+   {Bivector[1, 3, 2], esub["23"], "e[23]"},
+   {Bivector[1, 1, 3], esub["31"], "e[31]"},
+   {Trivector[-1], esub["123"], "e[123]"}
+};
 
 
-GAdisplay[v_grade] := 
-  Total[(Times[AngleBracket[# // First, v], # // Last]) & /@ 
+GAdisplay[v_grade, how_] := 
+  Total[(Times[AngleBracket[# // First, v], #[[how]]]) & /@ 
     displayMapping];
 (*End["`Private`"]*)
 
-Unprotect[TraditionalForm, DisplayForm];
-TraditionalForm[m_grade] := ( m // GAdisplay) ;
-DisplayForm[m_grade] := ( m // GAdisplay) ;
-Protect[TraditionalForm, DisplayForm];
+Unprotect[TraditionalForm, DisplayForm, StandardForm] ;
+TraditionalForm[m_grade] := ((GAdisplay[m, 2]) // TraditionalForm) ;
+DisplayForm[m_grade] := GAdisplay[m, 2] ;
+StandardForm[m_grade] := GAdisplay[m, 3] ;
+Protect[TraditionalForm, DisplayForm, StandardForm] ;
 
 
 (*
