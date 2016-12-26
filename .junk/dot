@@ -1,0 +1,32 @@
+grade /: grade[0, s_] . grade[k_, m_] := grade[k, s*m] ;
+grade /: grade[k_, m_] . grade[0, s_] := grade[k, s*m] ;
+
+grade /: (t_?trivectorQ) . m_grade := t m ;
+grade /: m_grade . (t_?trivectorQ) := t m ;
+
+grade /: (v1_?vectorQ) . grade[1, v2_] := symmetric[0, v1, grade[1, v2]] ;
+grade /: (v_?vectorQ) . grade[2, b_] := antisymmetric[0, v, grade[2, b]] ;
+grade /: (b_?bivectorQ) . grade[1, v_] := antisymmetric[0, b, grade[1, v]] ;
+grade /: (b1_?bivectorQ) . grade[2, b2_] := symmetric[0, b1, grade[2, b2]] ;
+
+
+Total[ g0 . v2, g1 . v2, g2 . v2, g3 . v2 ]
+Total[ v1 . g0, v1 . g1, v1 . g2, v1 . g3 ]
+Total[ m1 . g0, m1 . g1, m1 . g2, m1 . g3 ]
+{{s . s, s . v, s . b, s . t, s . m}, {v . s, v . v, v . b, v . t, v . m}, {b . s, b . v, b . b, b . t, b . m}, {t . s, t . v, t . b, t . t, t . m}, {m . s, m . v, m . b, m . t, m . m}} // Grid
+
+DotProduct[m_grade, v2_?bladeQ] := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[m, #] & /@ (Range[4] - 1);
+  Total[DotProduct[g0, v2], DotProduct[g1, v2], DotProduct[g2, v2], 
+   DotProduct[g3, v2]]]
+DotProduct[v1_?bladeQ, m_grade] := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[m, #] & /@ (Range[4] - 1);
+  Total[DotProduct[v1, g0], DotProduct[v1, g1], DotProduct[v1, g2], 
+   DotProduct[v1, g3]]]
+DotProduct[m1_grade, m2_grade] := 
+ Module[{g0, g1, g2, g3}, {g0, g1, g2, g3} = 
+   GradeSelection[m2, #] & /@ (Range[4] - 1);
+  Total[DotProduct[m1, g0], DotProduct[m1, g1], DotProduct[m1, g2], 
+   DotProduct[m1, g3]]]

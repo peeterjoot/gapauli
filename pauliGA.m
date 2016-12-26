@@ -54,7 +54,14 @@ The following built-in methods are overridden:
 
 TODO: 
 
-3) Test!
+3) Tests:
+
+   st * vb    Scalars and trivectors can multiply vectors and bivectors in any order
+   vb1 ** vb1 Vectors and bivectors when multiplied have to use the NonCommutativeMultiply operator, but any grade object may also.
+   m1 . m2    Dot product.  The functional form Dot[m1, m2] may also be used.
+   m1 ^ m2    Wedge product.  Enter with m1 [Esc]^[Esc] m2.  The functional form Wedge[m1, m2]
+   <m>        Scalar selection.  Enter with [Esc]<[Esc] m [Esc]>[Esc].  The functional form ScalarValue[m] may also be used.  This returns the numeric (or expression) value of the scalar grade of the multivector, and not a grade[] object.
+   <m1,m2>    Scalar product.  Enter with [Esc]<[Esc] m1,m2 [Esc]>[Esc].  The functional form ScalarProduct[m1, m2] may also be used.  This returns the numeric (or expression) value of the scalar product of the multivectors, and not a grade[] object.
 
 4) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?
 
@@ -224,6 +231,24 @@ pauliGradeSelect2 := pauliGradeSelect[#, 2] &;
 pauliGradeSelect3 := pauliGradeSelect[#, 3] &;
 (*End["`Private`"]*)
 
+ClearAll[GradeSelection, ScalarSelection, VectorSelection, \
+BivectorSelection, TrivectorSelection]
+
+GradeSelection::usage = "GradeSelection[m, k] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[] type (so scalar selection is not just a number).";
+GradeSelection[m_?scalarQ, 0] := m;
+GradeSelection[m_?vectorQ, 1] := m;
+GradeSelection[m_?bivectorQ, 2] := m;
+GradeSelection[m_?trivectorQ, 3] := m;
+GradeSelection[m_, k_Integer /; k >= 0 && k <= 3] := 
+  grade[k, pauliGradeSelect[m // Last, k]];
+ScalarSelection::usage = "ScalarSelection[m] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[] type (not just a number or an expression).";
+ScalarSelection := GradeSelection[#, 0] &;
+VectorSelection::usage = "VectorSelection[m] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
+VectorSelection := GradeSelection[#, 1] &;
+BivectorSelection::usage = "BivectorSelection[m] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
+BivectorSelection := GradeSelection[#, 2] &;
+TrivectorSelection::usage = "TrivectorSelection[m] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[] type (not just an number or expression).";
+TrivectorSelection := GradeSelection[#, 3] &;
 
 (* Plus *)
 grade /: (v1_?notGradeQ) + grade[k_, v2_] := Scalar[v1] + grade[k, v2] ;
@@ -260,25 +285,6 @@ grade /: (b_?bivectorQ).grade[1, v_] :=
   antisymmetric[0, b, grade[1, v]];
 grade /: (b1_?bivectorQ).grade[2, b2_] := 
   symmetric[0, b1, grade[2, b2]];
-
-ClearAll[GradeSelection, ScalarSelection, VectorSelection, \
-BivectorSelection, TrivectorSelection]
-
-GradeSelection::usage = "GradeSelection[m, k] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[] type (so scalar selection is not just a number).";
-GradeSelection[m_?scalarQ, 0] := m;
-GradeSelection[m_?vectorQ, 1] := m;
-GradeSelection[m_?bivectorQ, 2] := m;
-GradeSelection[m_?trivectorQ, 3] := m;
-GradeSelection[m_, k_Integer /; k >= 0 && k <= 3] := 
-  grade[k, pauliGradeSelect[m // Last, k]];
-ScalarSelection::usage = "ScalarSelection[m] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[] type (not just a number or an expression).";
-ScalarSelection := GradeSelection[#, 0] &;
-VectorSelection::usage = "VectorSelection[m] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
-VectorSelection := GradeSelection[#, 1] &;
-BivectorSelection::usage = "BivectorSelection[m] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[] type.";
-BivectorSelection := GradeSelection[#, 2] &;
-TrivectorSelection::usage = "TrivectorSelection[m] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[] type (not just an number or expression).";
-TrivectorSelection := GradeSelection[#, 3] &;
 
 (* Dot ; handle dot products where one or more factors is a \
 multivector.

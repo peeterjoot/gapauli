@@ -10,17 +10,19 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3783,        117]
-NotebookOptionsPosition[      3493,        102]
-NotebookOutlinePosition[      3850,        118]
-CellTagsIndexPosition[      3807,        115]
+NotebookDataLength[     31057,       1018]
+NotebookOptionsPosition[     30438,        994]
+NotebookOutlinePosition[     30832,       1011]
+CellTagsIndexPosition[     30789,       1008]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
-  RowBox[{"<<", " ", "pauliGA`"}], ";"}]], "Input"],
+  RowBox[{"<<", " ", "pauliGA`"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"On", "[", "Assert", "]"}]}], "Input",
+ CellChangeTimes->{{3.691718294880554*^9, 3.691718295281008*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -98,10 +100,901 @@ Cell[BoxData[{
   RowBox[{"m123", " ", "=", " ", 
    RowBox[{"e1", " ", "+", " ", "b23", " ", "+", " ", "t123"}]}], 
   ";"}]}], "Input",
- CellChangeTimes->{{3.691717208742756*^9, 3.691717535638682*^9}}]
+ CellChangeTimes->{{3.691717208742756*^9, 3.691717535638682*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Predicate", " ", "tests"}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"bladeQ", "[", "#", "]"}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"!", 
+         RowBox[{"bladeQ", "[", "#", "]"}]}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "m01", ",", "m02", ",", "m03", ",", "m12", ",", "m13", ",", "m23", ",", 
+       "m012", ",", "m013", ",", "m023", ",", "m123"}], "}"}]}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"gradeAnyQ", "[", "#", "]"}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", "b12", ",", 
+       "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", ",", "m13", 
+       ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", "m123"}], 
+      "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"!", 
+         RowBox[{"gradeAnyQ", "[", "#", "]"}]}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"Sin", "[", "x", "]"}], ",", 
+       RowBox[{"Exp", "[", 
+        RowBox[{"I", " ", "theta"}], "]"}]}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"!", 
+         RowBox[{"notGradeQ", "[", "#", "]"}]}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", 
+       ",", "m13", ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", 
+       "m123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"notGradeQ", "[", "#", "]"}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"Sin", "[", "x", "]"}], ",", 
+       RowBox[{"Exp", "[", 
+        RowBox[{"I", " ", "theta"}], "]"}]}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"gradeQ", "[", 
+          RowBox[{"#", ",", "0"}], "]"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"scalarQ", "[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", "s0", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"gradeQ", "[", 
+           RowBox[{"#", ",", "0"}], "]"}]}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"scalarQ", "[", "#", "]"}]}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", "b12", ",", 
+       "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", ",", "m13", 
+       ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", "m123"}], 
+      "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"gradeQ", "[", 
+          RowBox[{"#", ",", "1"}], "]"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"vectorQ", "[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{"e1", ",", "e2", ",", "e3"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"gradeQ", "[", 
+           RowBox[{"#", ",", "1"}], "]"}]}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"vectorQ", "[", "#", "]"}]}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "b23", ",", "b31", ",", "b12", ",", "t123", ",", "m01", ",", 
+       "m02", ",", "m03", ",", "m12", ",", "m13", ",", "m23", ",", "m012", 
+       ",", "m013", ",", "m023", ",", "m123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"gradeQ", "[", 
+          RowBox[{"#", ",", "2"}], "]"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"bivectorQ", "[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{"b23", ",", "b31", ",", "b12"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"gradeQ", "[", 
+           RowBox[{"#", ",", "2"}], "]"}]}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"bivectorQ", "[", "#", "]"}]}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "t123", ",", "m01", ",", 
+       "m02", ",", "m03", ",", "m12", ",", "m13", ",", "m23", ",", "m012", 
+       ",", "m013", ",", "m023", ",", "m123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"gradeQ", "[", 
+          RowBox[{"#", ",", "3"}], "]"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"trivectorQ", "[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", "t123", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"gradeQ", "[", 
+           RowBox[{"#", ",", "3"}], "]"}]}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{"!", 
+          RowBox[{"trivectorQ", "[", "#", "]"}]}], "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "m01", ",", "m02", ",", "m03", ",", "m12", ",", "m13", ",",
+        "m23", ",", "m012", ",", "m013", ",", "m023", ",", "m123"}], "}"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"gradeQ", "[", 
+         RowBox[{"#", ",", 
+          RowBox[{"-", "1"}]}], "]"}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "m01", ",", "m02", ",", "m03", ",", "m12", ",", "m13", ",", "m23", ",", 
+       "m012", ",", "m013", ",", "m023", ",", "m123"}], "}"}]}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Assert", "[", 
+        RowBox[{"!", 
+         RowBox[{"gradeQ", "[", 
+          RowBox[{"#", ",", 
+           RowBox[{"-", "1"}]}], "]"}]}], "]"}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123"}], "}"}]}], ";"}], "\n"}]}]], "Input",
+ CellChangeTimes->{{3.691718210439073*^9, 3.6917182571309843`*^9}, {
+   3.6917182929298563`*^9, 3.6917183025319567`*^9}, {3.691750173495006*^9, 
+   3.691750175245139*^9}, 3.691751017579562*^9, 3.691751071857938*^9, {
+   3.6917511135036993`*^9, 3.691751191437381*^9}, {3.691751563802803*^9, 
+   3.6917516355396347`*^9}, {3.691752853444841*^9, 3.691752867621365*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Grade", " ", "selection", " ", 
+    RowBox[{"tests", "."}]}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "0"}], "]"}], "\[Equal]", "s0"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"ScalarSelection", "[", "#", "]"}], "\[Equal]", "s0"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "m01", ",", "m02", ",", "m03", ",", "m013", ",", "m012", ",",
+        "m023"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "0"}], "]"}], "\[Equal]", "0"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"ScalarSelection", "[", "#", "]"}], "\[Equal]", "0"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", "b12", ",", 
+       "t123", ",", "m12", ",", "m13", ",", "m23", ",", "m123"}], "}"}]}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "1"}], "]"}], "\[Equal]", "e1"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"VectorSelection", "[", "#", "]"}], "\[Equal]", "e1"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "e1", ",", "m01", ",", "m12", ",", "m13", ",", "m012", ",", "m013", ",",
+        "m123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "1"}], "]"}], "\[Equal]", "0"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"VectorSelection", "[", "#", "]"}], "\[Equal]", "0"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "b23", ",", "b31", ",", "b12", ",", "t123", ",", "m02", ",", 
+       "m03", ",", "m23", ",", "m023"}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "2"}], "]"}], "\[Equal]", "b23"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"BivectorSelection", "[", "#", "]"}], "\[Equal]", "b23"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "b23", ",", "m02", ",", "m12", ",", "m23", ",", "m023", ",", "m123", 
+       ",", "m012"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "2"}], "]"}], "\[Equal]", "0"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"BivectorSelection", "[", "#", "]"}], "\[Equal]", "0"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "t123", ",", "m01", ",", 
+       "m03", ",", "m13", ",", "m013"}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "3"}], "]"}], "\[Equal]", "t123"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"TrivectorSelection", "[", "#", "]"}], "\[Equal]", "t123"}],
+          "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "t123", ",", "m03", ",", "m13", ",", "m23", ",", "m013", ",", "m023", 
+       ",", "m123"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"GradeSelection", "[", 
+           RowBox[{"#", ",", "3"}], "]"}], "\[Equal]", "0"}], "]"}], ",", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"TrivectorSelection", "[", "#", "]"}], "\[Equal]", "0"}], 
+         "]"}]}], "}"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "m01", ",", "m02", ",", "m12", ",", "m012"}], "}"}]}], 
+    ";"}], "\n"}]}]], "Input",
+ CellChangeTimes->{{3.691751653826517*^9, 3.6917517625192757`*^9}, {
+   3.6917517941706133`*^9, 3.69175185909622*^9}, {3.6917519517960453`*^9, 
+   3.691751964642564*^9}, {3.691752110768613*^9, 3.6917521110667133`*^9}, 
+   3.691752184252092*^9, {3.691752325399881*^9, 3.691752456207947*^9}, {
+   3.69175251281031*^9, 3.691752596540791*^9}, {3.691752781227096*^9, 
+   3.691752803814671*^9}, {3.691752837928651*^9, 3.6917528472512703`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"XXForm", " ", "tests", " ", 
+    RowBox[{"(", 
+     RowBox[{"manual", " ", "verification"}], ")"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Column", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"#", "//", "TraditionalForm"}], ")"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", 
+       ",", "m13", ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", 
+       "m123"}], "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"Column", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"#", "//", "StandardForm"}], ")"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", 
+       ",", "m13", ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", 
+       "m123"}], "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"Column", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"#", "//", "DisplayForm"}], ")"}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "s0", ",", "e1", ",", "e2", ",", "e3", ",", "b23", ",", "b31", ",", 
+       "b12", ",", "t123", ",", "m01", ",", "m02", ",", "m03", ",", "m12", 
+       ",", "m13", ",", "m23", ",", "m012", ",", "m013", ",", "m023", ",", 
+       "m123"}], "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.691752965483047*^9, 3.691752992679398*^9}, {
+  3.691753102406242*^9, 3.691753150539043*^9}}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TagBox[
+      FormBox["1",
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "1"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "2"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "3"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "\<\"23\"\>"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "\<\"31\"\>"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "\<\"12\"\>"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       SubscriptBox[
+        StyleBox["\<\"e\"\>",
+         StripOnInput->False,
+         FontWeight->Bold], "\<\"123\"\>"],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"]}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"]}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"]}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"], "+", "1"}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]},
+    {
+     TagBox[
+      FormBox[
+       RowBox[{
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"123\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "\<\"23\"\>"], "+", 
+        SubscriptBox[
+         StyleBox["\<\"e\"\>",
+          StripOnInput->False,
+          FontWeight->Bold], "1"]}],
+       TraditionalForm],
+      TraditionalForm,
+      Editable->True]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.691753103183937*^9, 3.69175315246878*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     RowBox[{"e", "[", "1", "]"}]},
+    {
+     RowBox[{"e", "[", "2", "]"}]},
+    {
+     RowBox[{"e", "[", "3", "]"}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "2", "]"}], " ", 
+      RowBox[{"e", "[", "3", "]"}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], " ", 
+      RowBox[{"e", "[", "3", "]"}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], " ", 
+      RowBox[{"e", "[", "2", "]"}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], " ", 
+      RowBox[{"e", "[", "2", "]"}], " ", 
+      RowBox[{"e", "[", "3", "]"}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{"e", "[", "1", "]"}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{"e", "[", "1", "]"}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{"e", "[", "1", "]"}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}], " ", 
+       RowBox[{"e", "[", "3", "]"}]}]}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.691753103183937*^9, 3.691753152477297*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "1"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "2"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "3"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"23\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"31\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"12\"\>"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"123\"\>"]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"123\"\>"], "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"23\"\>"]}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.691753103183937*^9, 3.691753152480225*^9}]
+}, Open  ]]
 },
-WindowSize->{808, 713},
-WindowMargins->{{4, Automatic}, {Automatic, 4}},
+WindowSize->{1502, 1072},
+WindowMargins->{{-2501, Automatic}, {Automatic, 26}},
+Magnification:>1.5 Inherited,
 FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
 21, 2016)",
 StyleDefinitions->"Default.nb"
@@ -117,11 +1010,17 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 75, 2, 32, "Input"],
-Cell[636, 24, 2853, 76, 466, "Input"]
+Cell[558, 20, 204, 4, 80, "Input"],
+Cell[765, 26, 2853, 76, 607, "Input"],
+Cell[3621, 104, 7735, 222, 762, "Input"],
+Cell[11359, 328, 5351, 152, 545, "Input"],
+Cell[CellGroupData[{
+Cell[16735, 484, 1695, 42, 266, "Input"],
+Cell[18433, 528, 5574, 225, 497, "Output"],
+Cell[24010, 755, 2836, 99, 485, "Output"],
+Cell[26849, 856, 3573, 135, 531, "Output"]
+}, Open  ]]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
