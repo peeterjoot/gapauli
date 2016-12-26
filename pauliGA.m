@@ -64,13 +64,9 @@ have to do:
 
 4) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?
 
-5) Cut and pasted StandardForm has strings in it:
+5) Can a package have options (i.e. to define the name of the e[] operator used in StandardForm that represents a basis vector).
 
-   7 "e[123]" + "e[3]" Log[z] + Sin[x]
-
-... probably should just be a bare: e[1]e[2]e[3] (how to avoid e[] from being used by other stuff and messing up display?)
-
-6) proper packaging stuff.  private for internals and protect externals.
+6) proper packaging stuff:  private for internals and protect externals.
 ";
 
 (*Begin["`Private`"]*)
@@ -370,20 +366,19 @@ grade /: AngleBracket[grade[k1_, m1_],
 
 
 (*Begin["`Private`"]*)
-ClearAll[displayMapping, bold, esub, gaDisplay]
+ClearAll[displayMapping, bold, esub, GAdisplay]
 bold = Style[#, Bold] &;
 esub = Subscript[bold["e"], #] &;
 displayMapping = {
    {Scalar[1], 1, 1},
-   {Vector[1, 1], esub[1], "e[1]"},
-   {Vector[1, 2], esub[2], "e[2]"},
-   {Vector[1, 3], esub[3], "e[3]"},
-   {Bivector[1, 2, 1], esub["12"], "e[12]"},
-   {Bivector[1, 3, 2], esub["23"], "e[23]"},
-   {Bivector[1, 1, 3], esub["31"], "e[31]"},
-   {Trivector[-1], esub["123"], "e[123]"}
+   {Vector[1, 1], esub[1], e[1]},
+   {Vector[1, 2], esub[2], e[2]},
+   {Vector[1, 3], esub[3], e[3]},
+   {Bivector[1, 2, 1], esub["12"], e[1]e[2]},
+   {Bivector[1, 3, 2], esub["23"], e[2]e[3]},
+   {Bivector[1, 1, 3], esub["31"], e[3]e[1]},
+   {Trivector[-1], esub["123"], e[1]e[2]e[3]}
 };
-
 
 GAdisplay[v_grade, how_] := 
   Total[(Times[AngleBracket[# // First, v], #[[how]]]) & /@ 
