@@ -54,8 +54,6 @@ The following built-in methods are overridden:
 
 TODO: 
 
-2) Define a named scalar product operator, and scalar selection operator.
-
 3) Test!
 
 4) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?

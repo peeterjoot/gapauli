@@ -1,0 +1,127 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3783,        117]
+NotebookOptionsPosition[      3493,        102]
+NotebookOutlinePosition[      3850,        118]
+CellTagsIndexPosition[      3807,        115]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"<<", " ", "pauliGA`"}], ";"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "s0", ",", " ", "e1", ",", " ", "e2", ",", " ", "e3", ",", " ", "b23", ",",
+     " ", "b31", ",", " ", "b12", ",", " ", "t123", ",", " ", "m01", ",", " ",
+     "m02", ",", " ", "m03", ",", " ", "m12", ",", " ", "m23", ",", " ", 
+    "m012", ",", " ", "m013", ",", " ", "m023", ",", " ", "m123"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"s0", " ", "=", " ", 
+   RowBox[{"Scalar", "[", "1", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"e1", " ", "=", " ", 
+   RowBox[{"Vector", "[", 
+    RowBox[{"1", ",", "1"}], "]"}]}], " ", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"e2", " ", "=", " ", 
+   RowBox[{"Vector", "[", 
+    RowBox[{"1", ",", "2"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"e3", " ", "=", " ", 
+   RowBox[{"Vector", "[", 
+    RowBox[{"1", ",", "3"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"b23", " ", "=", " ", 
+   RowBox[{"Bivector", "[", 
+    RowBox[{"1", ",", "2", ",", "3"}], "]"}]}], " ", 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"b31", " ", "=", " ", 
+   RowBox[{"Bivector", "[", 
+    RowBox[{"1", ",", "3", ",", "1"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"b12", " ", "=", " ", 
+   RowBox[{"Bivector", "[", 
+    RowBox[{"1", ",", "1", ",", "2"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"t123", " ", "=", " ", 
+   RowBox[{"Trivector", "[", "1", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m01", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "e1"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m02", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "b23"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m03", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "t123"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m12", " ", "=", " ", 
+   RowBox[{"e1", " ", "+", " ", "b23"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m13", " ", "=", " ", 
+   RowBox[{"e1", " ", "+", " ", "t123"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m23", " ", "=", " ", 
+   RowBox[{"b23", " ", "+", " ", "t123"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m012", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "e1", " ", "+", " ", "b23"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m013", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "e1", " ", "+", " ", "t123"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m023", " ", "=", " ", 
+   RowBox[{"s0", " ", "+", " ", "b23", " ", "+", " ", "t123"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m123", " ", "=", " ", 
+   RowBox[{"e1", " ", "+", " ", "b23", " ", "+", " ", "t123"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.691717208742756*^9, 3.691717535638682*^9}}]
+},
+WindowSize->{808, 713},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 75, 2, 32, "Input"],
+Cell[636, 24, 2853, 76, 466, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
