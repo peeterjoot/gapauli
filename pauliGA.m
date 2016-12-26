@@ -26,21 +26,25 @@ A few operators are provided:
    vb1 ** vb1 Vectors and bivectors when multiplied have to use the NonCommutativeMultiply operator, but any grade object may also.
    m1 . m2    Dot product.  The functional form Dot[m1, m2] may also be used.
    m1 ^ m2    Wedge product.  Enter with m1 [Esc]^[Esc] m2.  The functional form Wedge[m1, m2]
-   <m>        Scalar selection.  Enter with [Esc]<[Esc] m [Esc]>[Esc].  The functional form AngleBracket[m] may also be used.
-   <m1,m2>    Scalar product.  Enter with [Esc]<[Esc] m1,m2 [Esc]>[Esc].  The functional form AngleBracket[m1, m2] may also be used.
+   <m>        Scalar selection.  Enter with [Esc]<[Esc] m [Esc]>[Esc].  The functional form ScalarValue[m] may also be used.  This returns the numeric (or expression) value of the scalar grade of the multivector, and not a grade[] object.
+   <m1,m2>    Scalar product.  Enter with [Esc]<[Esc] m1,m2 [Esc]>[Esc].  The functional form ScalarProduct[m1, m2] may also be used.  This returns the numeric (or expression) value of the scalar product of the multivectors, and not a grade[] object.
 
-Functions provided:
+   Functions provided:
 
    - scalarQ
    - vectorQ
    - bivectorQ
    - trivectorQ
    - bladeQ
+   - gradeAnyQ
+   - notGradeQ
    - GradeSelection
    - ScalarSelection
    - VectorSelection
    - BivectorSelection
    - TrivectorSelection
+   - ScalarValue
+   - ScalarProduct
 
 The following built-in methods are overridden:
 
@@ -49,14 +53,6 @@ The following built-in methods are overridden:
    - StandardForm
 
 TODO: 
-
-1) Can't multiply expressions directly like:
-
-   Sin[x] Vector[y]
-
-have to do:
-
-   Scalar[Sin[x]] Vector[y]
 
 2) Define a named scalar product operator, and scalar selection operator.
 
@@ -190,6 +186,11 @@ trivectorQ::usage = "trivectorQ[m] tests if the multivector m is of grade 3 (tri
 trivectorQ[m_grade] := gradeQ[m, 3]
 bladeQ::usage = "bladeQ[m] tests if the multivector is of a single grade." ;
 bladeQ[m_grade] := ((m // First) >= 0)
+gradeAnyQ::usage = "predicate pattern match for grade[_]";
+gradeAnyQ[m_grade] := True
+gradeAnyQ[_] := False
+notGradeQ::usage = "predicate pattern match for !grade[]";
+notGradeQ[v_] := Not[gradeAnyQ[v]]
 
 ClearAll[directProduct, signedSymmetric, symmetric, antisymmetric]
 
@@ -227,6 +228,7 @@ pauliGradeSelect3 := pauliGradeSelect[#, 3] &;
 
 
 (* Plus *)
+grade /: (v1_?notGradeQ) + grade[k_, v2_] := Scalar[v1] + grade[k, v2] ;
 grade /: grade[0, v1_] + grade[0, v2_] := grade[0, v1 + v2];
 grade /: grade[1, v1_] + grade[1, v2_] := grade[1, v1 + v2];
 grade /: grade[2, v1_] + grade[2, v2_] := grade[2, v1 + v2];
@@ -237,14 +239,14 @@ grade /: grade[_, v1_] + grade[_, v2_] := grade[-1, v1 + v2];
 grade /: -grade[k_, v_] := grade[k, -v];
 
 (* Times *)
-grade /: grade[0, s_] grade[k_, m_] := grade[k, s*m];
-grade /: grade[3, p_] grade[1, m_] := grade[2, p*m];
-grade /: grade[3, p_] grade[2, m_] := grade[1, p*m];
-grade /: grade[3, p_] grade[3, m_] := grade[0, p*m];
-grade /: grade[3, p_] grade[_, m_] := grade[-1, p*m];
+grade /: (v_?notGradeQ) grade[k_, m_] := grade[k, v m];
+grade /: grade[0, s_] grade[k_, m_] := grade[k, s.m];
+grade /: grade[3, p_] grade[1, m_] := grade[2, p.m];
+grade /: grade[3, p_] grade[2, m_] := grade[1, p.m];
+grade /: grade[3, p_] grade[3, m_] := grade[0, p.m];
+grade /: grade[3, p_] grade[_, m_] := grade[-1, p.m];
 
 (* NonCommutativeMultiply *)
-
 grade /: grade[_, m1_] ** grade[_, m2_] := grade[-1, m1.m2];
 
 (* Dot *)
@@ -335,6 +337,10 @@ grade /: AngleBracket[grade[3, _]] := 0
 grade /: AngleBracket[
   grade[_, m_]] := ((pauliGradeSelect[m, 0]) // pmagnitude)
 
+ClearAll[ScalarValue] ;
+ScalarValue::usage = "Same as AngleBracket[ m ], aka [Esc]<[Esc] m1 [Esc]>[Esc]." ;
+ScalarValue[m_grade] := AngleBracket[ m1 ] ;
+
 (* AngleBracket,two operand forms. *)
 
 grade /: AngleBracket[grade[0, s1_], 
@@ -364,6 +370,9 @@ grade /: AngleBracket[grade[_, _], grade[3, t1_]] := 0;
 grade /: AngleBracket[grade[k1_, m1_], 
    grade[k2_, m2_]] := (pauliGradeSelect[m1.m2, 0] // pmagnitude);
 
+ClearAll[ScalarProduct] ;
+ScalarProduct::usage = "Same as AngleBracket[ m1, m2 ], aka [Esc]<[Esc] m1, m2 [Esc]>[Esc]." ;
+ScalarProduct[m1_grade, m2_grade] := AngleBracket[ m1, m2 ] ;
 
 (*Begin["`Private`"]*)
 ClearAll[displayMapping, bold, esub, GAdisplay]
