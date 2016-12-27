@@ -69,7 +69,7 @@ TODO:
 
 2) Can a package have options (i.e. to define the name of the e[] operator used in StandardForm that represents a basis vector).
 
-3) proper packaging stuff:  private for internals and protect externals.
+3) proper packaging stuff:  private for internals.
 ";
 
 (*Begin["`Private`"]*)
