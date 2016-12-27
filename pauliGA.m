@@ -2,7 +2,14 @@
 
 (* copy this module to a directory in $Path.  Then invoke with <<pauliGA` *)
 BeginPackage["pauliGA`"]
-pauliGA::usage = "An attempt to use the Pauli representation to compactly but efficiently implement 3D Euclidean (CL(3,0)) Geometric Algebra operations.
+pauliGA::usage = "pauliGA: An implementation of Euclidean (CL(3,0)) Geometric Algebra.
+
+Pauli matrices are used to represent the algebraic elements.  This provides an efficient and compact representation
+of the entire algebraic space.
+
+Internally, a multivector is represented by a pair (grade, pauli-representation).  The grade portion will be 
+obliterated when adding objects that have different grade, or multiplying vectors or bivectors.  When
+it is available, certain operations can be optimized.  Comparison ignores the cached grade if it exists.
 
 Elements of the algebra can be constructed with one of
 
@@ -37,8 +44,8 @@ A few operators are provided:
    - VectorSelection
    - BivectorSelection
    - TrivectorSelection
-   - ScalarValue
-   - ScalarProduct
+   - ScalarValue, < m >
+   - ScalarProduct, < m1, m2 >
 
 The following built-in methods are overridden:
 
@@ -56,31 +63,18 @@ Internal functions:
    - gradeAnyQ
    - notGradeQ
 
-   Internally, a multivector is represented by a pair (grade, representation).  The grade portion will be 
-   obliterated when adding objects that have different grade, or multiplying vectors or bivectors.  When
-   it is available, certain operations can be optimized.  Comparison ignores the cached grade if it exists.
-
 TODO: 
 
-3) Tests:
+1) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?
 
-   st * vb    Scalars and trivectors can multiply vectors and bivectors in any order
-   vb1 ** vb1 Vectors and bivectors when multiplied have to use the NonCommutativeMultiply operator, but any grade object may also.
-   m1 . m2    Dot product.  The functional form Dot[m1, m2] may also be used.
-   m1 ^ m2    Wedge product.  Enter with m1 [Esc]^[Esc] m2.  The functional form Wedge[m1, m2]
-   <m>        Scalar selection.  Enter with [Esc]<[Esc] m [Esc]>[Esc].  The functional form ScalarValue[m] may also be used.  This returns the numeric (or expression) value of the scalar grade of the multivector, and not a grade[] object.
-   <m1,m2>    Scalar product.  Enter with [Esc]<[Esc] m1,m2 [Esc]>[Esc].  The functional form ScalarProduct[m1, m2] may also be used.  This returns the numeric (or expression) value of the scalar product of the multivectors, and not a grade[] object.
+2) Can a package have options (i.e. to define the name of the e[] operator used in StandardForm that represents a basis vector).
 
-4) How to get better formatted output by default without using one of TraditionalForm, DisplayForm, StandardForm ?
-
-5) Can a package have options (i.e. to define the name of the e[] operator used in StandardForm that represents a basis vector).
-
-6) proper packaging stuff:  private for internals and protect externals.
+3) proper packaging stuff:  private for internals and protect externals.
 ";
 
 (*Begin["`Private`"]*)
 complex::usage = 
-  "A limited use complex number implementation to use internally in \
+  "complex.  A limited use complex number implementation to use internally in \
 Pauli basis representation, independent of any Complex";
 ClearAll[complex, complexQ, notComplexQ, real, imag, conjugate];
 
@@ -100,7 +94,7 @@ complex /: complex[re_, 0] := re;
 complex /: complex[r1_, i1_] complex[r2_, i2_] := 
   complex[r1 r2 - i1 i2, r1 i2 + r2 i1];
 
-norm::usage = "Norm like function for complex[]";
+norm::usage = "norm[z].  A Norm like function for complex[]";
 norm[z_complex] := ((z // First)^2 + (z // Last)^2);
 
 (*special case this one to deal with the sort of products that are \
@@ -111,52 +105,52 @@ complex /: Power[z_complex, n_] :=
   Module[{r = norm[z]^(n/2), theta = n ArcTan[z // First, z // Last]},
     r complex[Cos[theta], Sin[theta]]];
 
-complexQ::usage = "predicate pattern match for complex[]";
+complexQ::usage = "complexQ[z].  predicate pattern match for complex[]";
 complexQ[z_complex] := True;
 complexQ[_] := False;
-notComplexQ::usage = "predicate pattern match for !complex[]";
+notComplexQ::usage = "notComplexQ[z].  predicate pattern match for !complex[]";
 notComplexQ[v_] := Not[complexQ[v]];
 
 complex /: (v_?notComplexQ) complex[re_, im_] := complex[v re, v im];
 
-real::usage = "Re like function for complex[]";
+real::usage = "real[z].  Re[z] like function for complex[]";
 real[z_complex] := (z // First);
-imag::usage = "Im like function for complex[]";
+imag::usage = "imag[z].  Im[z] like function for complex[]";
 imag[z_complex] := (z // Last);
 real[ex_] := ex;
 imag[ex_] := 0;
-conjugate::usage = "Conjugate like function for complex[]";
+conjugate::usage = "conjugate[z].  Conjugate[z] like function for complex[]";
 conjugate[z_complex] := complex[z // First, -z // Last];
 conjugate[ex_] := ex;
 
 ClearAll[complexI, fMatrix, matrixreal, matriximag, matrixconj]
-complexI::usage = "I like unit imaginary for complex[]";
+complexI::usage = "complexI.  I like unit imaginary for complex[]";
 complexI := complex[0, 1];
 
 fMatrix[p_, f_] := (Function[a, f@a, Listable]@p)
 matrixreal::usage = 
-  "method to apply real to all elements in matrix.  This is a hack.  \
+  "matrixreal.  method to apply real to all elements in matrix.  This is a hack.  \
 Can probably set an attribute on the real function to do this.";
 matrixreal[m_] := fMatrix[m, real];
 matriximag::usage = 
-  "method to apply imag to all elements in matrix.  This is a hack.  \
+  "matriximag.  method to apply imag to all elements in matrix.  This is a hack.  \
 Can probably set an attribute on the imag function to do this.";
 matriximag[m_] := fMatrix[m, imag];
 matrixconj::usage = 
-  "method to apply conjugate to all elements in matrix.  This is a \
+  "matrixconj.  method to apply conjugate to all elements in matrix.  This is a \
 hack.  Can probably set an attribute on the conj function to do this.";
 matrixconj[m_] := fMatrix[m, conjugate];
 
 ClearAll[pauliMatrix, conjugateTranspose]
 pauliMatrix::usage = 
-  "PauliMatrix implemented with complex[], instead of Complex[].";
+  "pauliMatrix[n], n = 1,2,3.  PauliMatrix[] implemented with complex[], instead of Complex[].";
 pauliMatrix[1] := PauliMatrix[1];
 pauliMatrix[
    2] := (PauliMatrix[2] /. {Complex[0, 1] -> complexI, 
      Complex[0, -1] -> -complexI});
 pauliMatrix[3] := PauliMatrix[3];
 conjugateTranspose::usage = 
-  "ConjugateTranspose like operation for pauliMatrix.";
+  "conjugateTranspose[].  ConjugateTranspose[] like operation for pauliMatrix.";
 conjugateTranspose[m_List] := Transpose[matrixconj[m]];
 (*End["`Private`"]*)
 
@@ -171,7 +165,12 @@ Protect[TraditionalForm, DisplayForm, StandardForm];
 
 (* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
-grade::usage = "(internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
+Unprotect[ Scalar, Vector, Bivector, Trivector,
+GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
+ScalarValue, ScalarProduct
+] ;
+
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 ClearAll[Vector, Scalar, Bivector, Trivector, grade]
 Scalar::usage = "Scalar[v] constructs a scalar grade quantity with value v." ;
 Scalar[v_] := grade[0, v IdentityMatrix[2]];
@@ -182,7 +181,7 @@ Bivector::usage = "Bivector[v, n1, n2], where n1,n2 = {1,2,3} constructs a bivec
 Bivector[v_, k_Integer /; k >= 1 && k <= 3, 
    j_Integer /; j >= 1 && j <= 3] := 
   grade[2, v pauliMatrix[k].pauliMatrix[j]];
-Bivector::usage = "Trivector[v] constructs a trivector (pseudoscalar) grade quantity scaled by v." ;
+Trivector::usage = "Trivector[v] constructs a trivector (pseudoscalar) grade quantity scaled by v." ;
 Trivector[v_] := grade[3, complexI v IdentityMatrix[2]];
 
 (*Begin["`Private`"]*)
@@ -199,10 +198,10 @@ trivectorQ::usage = "trivectorQ[m] tests if the multivector m is of grade 3 (tri
 trivectorQ[m_grade] := gradeQ[m, 3]
 bladeQ::usage = "bladeQ[m] tests if the multivector is of a single grade." ;
 bladeQ[m_grade] := ((m // First) >= 0)
-gradeAnyQ::usage = "predicate pattern match for grade[_]";
+gradeAnyQ::usage = "gradeAnyQ[].  predicate pattern match for grade[_]";
 gradeAnyQ[m_grade] := True
 gradeAnyQ[_] := False
-notGradeQ::usage = "predicate pattern match for !grade[]";
+notGradeQ::usage = "notGradeQ[].  predicate pattern match for !grade[]";
 notGradeQ[v_] := Not[gradeAnyQ[v]]
 
 ClearAll[directProduct, signedSymmetric, symmetric, antisymmetric]
@@ -284,9 +283,17 @@ grade /: grade[3, s_] ** grade[k_, m_] := grade[3, s] grade[k, m] ;
 grade /: grade[k_, m_] ** grade[3, s_] := grade[3, s] grade[k, m] ;
 grade /: grade[_, m1_] ** grade[_, m2_] := grade[-1, m1.m2];
 
+(*
+Unprotect[NonCommutativeMultiply] ;
+NonCommutativeMultiply[ m1_grade, m2_grade ] := (m1 ** m2) ;
+Protect[NonCommutativeMultiply] ;
+*)
+
 (* Dot *)
-grade /: grade[0, s_].grade[k_, m_] := grade[k, s*m];
-grade /: grade[k_, m_].grade[0, s_] := grade[k, s*m];
+grade /: (s_?notGradeQ).grade[k_, m_] := grade[k, s m];
+grade /: grade[k_, m_].(s_?notGradeQ) := grade[k, s m];
+grade /: grade[0, s_].grade[k_, m_] := grade[k, s m];
+grade /: grade[k_, m_].grade[0, s_] := grade[k, s m];
 
 grade /: (t_?trivectorQ).m_grade := t m;
 grade /: m_grade.(t_?trivectorQ) := t m;
@@ -342,7 +349,7 @@ ClearAll[pmagnitude]
 
 (*Begin["`Private`"]*)
 pmagnitude::usage = 
-  "select the 1,1 element from a pauli matrix assuming it represents \
+  "pmagnitude[].  select the 1,1 element from a pauli matrix assuming it represents \
 either a Scalar, or a Trivector (i.e. scaled diagonal matrix)." ;
 pmagnitude[m_] := m[[1, 1]];
 (*End["`Private`"]*)
@@ -357,8 +364,8 @@ grade /: AngleBracket[
   grade[_, m_]] := ((pauliGradeSelect[m, 0]) // pmagnitude)
 
 ClearAll[ScalarValue] ;
-ScalarValue::usage = "Same as AngleBracket[ m ], aka [Esc]<[Esc] m1 [Esc]>[Esc]." ;
-ScalarValue[m_grade] := AngleBracket[ m1 ] ;
+ScalarValue::usage = "ScalarValue[m].  Same as AngleBracket[ m ], aka [Esc]<[Esc] m1 [Esc]>[Esc]." ;
+ScalarValue[m_grade] := AngleBracket[ m ] ;
 
 (* AngleBracket,two operand forms. *)
 
@@ -390,7 +397,7 @@ grade /: AngleBracket[grade[k1_, m1_],
    grade[k2_, m2_]] := (pauliGradeSelect[m1.m2, 0] // pmagnitude);
 
 ClearAll[ScalarProduct] ;
-ScalarProduct::usage = "Same as AngleBracket[ m1, m2 ], aka [Esc]<[Esc] m1, m2 [Esc]>[Esc]." ;
+ScalarProduct::usage = "ScalarProduct[].  Same as AngleBracket[ m1, m2 ], aka [Esc]<[Esc] m1, m2 [Esc]>[Esc]." ;
 ScalarProduct[m1_grade, m2_grade] := AngleBracket[ m1, m2 ] ;
 
 (*Begin["`Private`"]*)
@@ -419,11 +426,9 @@ DisplayForm[m_grade] := GAdisplay[m, 2] ;
 StandardForm[m_grade] := GAdisplay[m, 3] ;
 Protect[TraditionalForm, DisplayForm, StandardForm] ;
 
-
-(*
 Protect[ Scalar, Vector, Bivector, Trivector,
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection
-]
-*)
+GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
+ScalarValue, ScalarProduct
+] ;
 
 EndPackage[]
