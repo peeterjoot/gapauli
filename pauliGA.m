@@ -299,9 +299,9 @@ grade /: (t_?trivectorQ).m_grade := t m;
 grade /: m_grade.(t_?trivectorQ) := t m;
 
 grade /: (v1_?vectorQ).grade[1, v2_] := symmetric[0, v1, grade[1, v2]];
-grade /: (v_?vectorQ).grade[2, b_] := antisymmetric[0, v, grade[2, b]];
+grade /: (v_?vectorQ).grade[2, b_] := antisymmetric[1, v, grade[2, b]];
 grade /: (b_?bivectorQ).grade[1, v_] := 
-  antisymmetric[0, b, grade[1, v]];
+  antisymmetric[1, b, grade[1, v]];
 grade /: (b1_?bivectorQ).grade[2, b2_] := 
   symmetric[0, b1, grade[2, b2]];
 
