@@ -19,6 +19,7 @@ Example:
 > 7 e[123] + e[3] Log[z] + Sin[x]
 
 A few operators are provided:
+   ==         Compare two multivectors, ignoring the cached grade if any.
    m1 + m2
    m1 - m2
    - m
@@ -31,13 +32,6 @@ A few operators are provided:
 
    Functions provided:
 
-   - scalarQ
-   - vectorQ
-   - bivectorQ
-   - trivectorQ
-   - bladeQ
-   - gradeAnyQ
-   - notGradeQ
    - GradeSelection
    - ScalarSelection
    - VectorSelection
@@ -51,6 +45,20 @@ The following built-in methods are overridden:
    - TraditionalForm
    - DisplayForm
    - StandardForm
+
+Internal functions:
+
+   - scalarQ
+   - vectorQ
+   - bivectorQ
+   - trivectorQ
+   - bladeQ
+   - gradeAnyQ
+   - notGradeQ
+
+   Internally, a multivector is represented by a pair (grade, representation).  The grade portion will be 
+   obliterated when adding objects that have different grade, or multiplying vectors or bivectors.  When
+   it is available, certain operations can be optimized.  Comparison ignores the cached grade if it exists.
 
 TODO: 
 
@@ -270,6 +278,10 @@ grade /: grade[3, p_] grade[3, m_] := grade[0, p.m];
 grade /: grade[3, p_] grade[_, m_] := grade[-1, p.m];
 
 (* NonCommutativeMultiply *)
+grade /: grade[0, s_] ** grade[k_, m_] := grade[k, s.m];
+grade /: grade[k_, m_] ** grade[0, s_] := grade[k, s.m];
+grade /: grade[3, s_] ** grade[k_, m_] := grade[3, s] grade[k, m] ;
+grade /: grade[k_, m_] ** grade[3, s_] := grade[3, s] grade[k, m] ;
 grade /: grade[_, m1_] ** grade[_, m2_] := grade[-1, m1.m2];
 
 (* Dot *)
@@ -285,6 +297,9 @@ grade /: (b_?bivectorQ).grade[1, v_] :=
   antisymmetric[0, b, grade[1, v]];
 grade /: (b1_?bivectorQ).grade[2, b2_] := 
   symmetric[0, b1, grade[2, b2]];
+
+(* == comparison operator *)
+grade /: grade[_, m1_] == grade[_, m2_] := (m1 == m2) ;
 
 (* Dot ; handle dot products where one or more factors is a \
 multivector.
