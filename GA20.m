@@ -79,9 +79,10 @@ ClearAll[ Vector, Scalar, Bivector, grade ]
 Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quantity with value v in direction n." ;
-Vector[ v_, k_Integer /; k >= 1 && k <= 2 ] := grade[ 1, v pauliMatrix[ k ] ] ;
+Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, v PauliMatrix[ 1 ] ] ;
+Vector[ v_, k_Integer /; k == 2 ] := grade[ 1, v PauliMatrix[ 3 ] ] ;
 Bivector::usage = "Bivector[ v ], constructs a bivector grade quantity with value v in the plane e1,e2." ;
-Bivector[ v_, k_Integer /; k >= 1 && k <= 2, j_Integer /; j >= 1 && j <= 2 ] := grade[ 2, v pauliMatrix[ k ].pauliMatrix[ j ] ] ;
+Bivector[ v_ ] := grade[ 2, v PauliMatrix[ 1 ].PauliMatrix[ 3 ] ] ;
 
 (*Begin[ "`Private`" ]*)
 ClearAll[ scalarQ, vectorQ, bivectorQ, bladeQ ]
@@ -115,7 +116,7 @@ pauliGradeSelect[ ,x ]*)
 ClearAll[ pauliGradeSelect ]
 pauliGradeSelect[ m_, 0 ] := (((m[ [2,2 ] ] + m[ [1,1 ] ])/2) IdentityMatrix[ 2 ])
 pauliGradeSelect[ {{_,d1_},{d2_,_}}, 1 ] := {{0,d1},{d2,0}}
-pauliGradeSelect[ m_, 2 ] := (((m[ [2,2 ] ] - m[ [1,1 ] ])/2) IdentityMatrix[ 2 ])
+pauliGradeSelect[ m_, 2 ] := (((m[ [2,2 ] ] - m[ [1,1 ] ])/2) DiagonalMatrix[ {1,-1} ])
 
 ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2 ]
 pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
@@ -236,7 +237,7 @@ displayMapping = {
    {Scalar[ 1 ], 1, 1},
    {Vector[ 1, 1 ], esub[ 1 ], e[ 1 ]},
    {Vector[ 1, 2 ], esub[ 2 ], e[ 2 ]},
-   {Bivector[ 1 ], esub[ "12" ], e[ 1 ]e[ 2 ]},
+   {Bivector[ -1 ], esub[ "12" ], e[ 1 ]e[ 2 ]}
 } ;
 
 GAdisplay[ v_grade, how_ ] :=
