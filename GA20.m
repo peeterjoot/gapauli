@@ -82,7 +82,7 @@ Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quant
 Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, v PauliMatrix[ 1 ] ] ;
 Vector[ v_, k_Integer /; k == 2 ] := grade[ 1, v PauliMatrix[ 3 ] ] ;
 Bivector::usage = "Bivector[ v ], constructs a bivector grade quantity with value v in the plane e1,e2." ;
-Bivector[ v_ ] := grade[ 2, v PauliMatrix[ 1 ].PauliMatrix[ 3 ] ] ;
+Bivector[ v_ ] := grade[ 2, v PauliMatrix[ 1 ] . PauliMatrix[ 3 ] ] ;
 
 (*Begin[ "`Private`" ]*)
 ClearAll[ scalarQ, vectorQ, bivectorQ, bladeQ ]
@@ -114,9 +114,10 @@ antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 (*These operator on just the Pauli matrix portions x of \
 pauliGradeSelect[ ,x ]*)
 ClearAll[ pauliGradeSelect ]
-pauliGradeSelect[ m_, 0 ] := (((m[ [2,2 ] ] + m[ [1,1 ] ])/2) IdentityMatrix[ 2 ])
-pauliGradeSelect[ {{_,d1_},{d2_,_}}, 1 ] := {{0,d1},{d2,0}}
-pauliGradeSelect[ m_, 2 ] := (((m[ [2,2 ] ] - m[ [1,1 ] ])/2) DiagonalMatrix[ {1,-1} ])
+pauliGradeSelect[ {{a_,  _}, { _, d_}}, 0 ] := ( (1/2) (a + d) IdentityMatrix[ 2 ] )
+pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 1 ] := ( (1/2) (b + c) PauliMatrix[ 1 ] + (1/2)(a - d) PauliMatrix[ 3 ] )
+pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 2 ] := ( (1/2) (c - b) PauliMatrix[ 1 ].PauliMatrix[ 3 ] )
+
 
 ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2 ]
 pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
