@@ -50,15 +50,19 @@ ClearAll[ complexI, fMatrix, matrixreal, matriximag, matrixconj ]
 complexI::usage = "complexI.  I like unit imaginary for complex[ ]" ;
 complexI := complex[ 0, 1 ] ;
 
+fMatrix::usage = "thread a function f over all the elements p in a list." ;
 fMatrix[ p_, f_ ] := (Function[ a, f@a, Listable ]@p)
+
 matrixreal::usage =
   "matrixreal.  method to apply real to all elements in matrix.  This is a hack.  \
 Can probably set an attribute on the real function to do this." ;
 matrixreal[ m_ ] := fMatrix[ m, real ] ;
+
 matriximag::usage =
   "matriximag.  method to apply imag to all elements in matrix.  This is a hack.  \
 Can probably set an attribute on the imag function to do this." ;
 matriximag[ m_ ] := fMatrix[ m, imag ] ;
+
 matrixconj::usage =
   "matrixconj.  method to apply conjugate to all elements in matrix.  This is a \
 hack.  Can probably set an attribute on the conj function to do this." ;
