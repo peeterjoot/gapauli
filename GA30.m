@@ -72,8 +72,7 @@ TODO:
 3) proper packaging stuff:  private for internals.
 " ;
 
-<< altcomplex`;
-(*BEGIN: << altcomplex`;
+(*BEGIN: << altcomplex`;*)
 
 (* copy this module to a directory in $Path.  Then invoke with <<GA30` *)
 (*BeginPackage[ "complex`" ]*)
@@ -146,7 +145,7 @@ matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 Protect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
 
 (*EndPackage[ ]*)
-END: << altcomplex`;*)
+(*END: << altcomplex`;*)
 
 ClearAll[ pauliMatrix, conjugateTranspose ]
 pauliMatrix::usage =
@@ -401,29 +400,32 @@ D[ m_grade, u_ ] := grade[ m // First,
 ] ;
 Protect[ D ] ;
 
-Unprotect[ Grad ] ;
+(*grade /: \[Del] grade[ g_, m_ ] List[u_] := ( ( Vector[1, #] ** D[ grade[g,m], u[[#]] ] ) & /@ Range[3] ) // Total ; *)
+(*grade /: \[Del] grade[ g_, m_ ] u_List := ( ( Vector[1, #] ** D[ grade[g,m], u[[#]] ] ) & /@ Range[3] ) // Total ;*)
 
-Grad[ m_grade, u_List ] := ( ( Vector[1, #] ** D[ m, u[[#]] ] ) & /@ Range[3] ) // Total ;
+(*
+Unprotect[ Grad, Div, Curl ] ;
+Protect[ Grad, Div, Curl ] ;
+*)
 
-Protect[ Grad ] ;
+Unprotect[ grad, div, curl, vcurl ];
+ClearAll[ grad, div, curl, vcurl ];
+grad::usage = "grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to cartesian coordinates x,y,z..";
+grad[ m_grade, u_List ] := ( ( Vector[1, #] ** D[ m, u[[#]] ] ) & /@ Range[3] ) // Total ;
 
-Unprotect[ Div ] ;
+div::usage = "div[m,{x,y,z}] of a grade k+1 blade m, computes < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;
+div[ m_?vectorQ, u_List ] := grad[ m, u ] // ScalarSelection ;
+div[ m_?bivectorQ, u_List ] := grad[ m, u ] // VectorSelection ;
+div[ m_?trivectorQ, u_List ] := grad[ m, u ] // BivectorSelection ;
 
-Div[ m_vectorQ, u_List ] := Grad[ m, u ] // ScalarSelection ;
-Div[ m_bivectorQ, u_List ] := Grad[ m, u ] // VectorSelection ;
-Div[ m_trivectorQ, u_List ] := Grad[ m, u ] // BivectorSelection ;
+curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;
+curl[ m_?vectorQ, u_List ] := (grad[ m, u ] // BivectorSelection) ;
+curl[ m_?bivectorQ, u_List ] := (grad[ m, u ] // TrivectorSelection) ;
+curl[ m_?trivectorQ, u_List ] := 0 ;
 
-Protect[ Div ] ;
-
-Unprotect[ Curl ] ;
-
-curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k" ;
-curl[ m_vectorQ, u_List ] := (Grad[ m, u ] // BivectorSelection) ;
-curl[ m_bivectorQ, u_List ] := (Grad[ m, u ] // TrivectorSelection) ;
-curl[ m_trivectorQ, u_List ] := 0 ;
-Curl[ m_vectorQ, u_List ] := -Trivector[1] curl[ m, u ] ;
-
-Protect[ Curl ] ;
+vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
+vcurl[ m_?vectorQ, u_List ] := -Trivector[1] curl[ m, u ] ;
+Protect[ grad, div, curl, vcurl ];
 
 Protect[ Scalar, Vector, Bivector, Trivector,
 GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
