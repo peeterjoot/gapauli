@@ -76,6 +76,9 @@ TODO:
 
 (* copy this module to a directory in $Path.  Then invoke with <<GA30` *)
 (*BeginPackage[ "complex`" ]*)
+
+Unprotect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
+
 complex::usage =
   "complex.  A limited use complex number implementation to use internally in \
 a Pauli or Dirac matrix basis representation, independent of any Complex" ;
@@ -146,6 +149,11 @@ Protect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatri
 
 (*EndPackage[ ]*)
 (*END: << altcomplex`;*)
+
+Unprotect[ Scalar, Vector, Bivector, Trivector,
+GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
+ScalarValue, ScalarProduct
+] ;
 
 ClearAll[ pauliMatrix, conjugateTranspose ]
 pauliMatrix::usage =
