@@ -385,7 +385,7 @@ displayMapping = {
 } ;
 
 GAdisplay[ v_grade, how_ ] :=
-  Total[ (Times[ AngleBracket[ # // First, v ], #[ [how ] ] ]) & /@
+  Total[ (Times[ (AngleBracket[ # // First, v ] (*// Simplify*)), #[ [how ] ] ]) & /@
     displayMapping ] ;
 (*End[ "`Private`" ]*)
 
