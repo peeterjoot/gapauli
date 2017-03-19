@@ -74,8 +74,8 @@ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, e,
 ScalarValue, ScalarProduct
 ] ;
 
-grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 ClearAll[ Vector, Scalar, Bivector, grade ]
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quantity with value v in direction n." ;
@@ -190,7 +190,7 @@ grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
 grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s.v ] ;
 grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
 
-(* Only e12 ^ scalar is none zero, and that is handled above *)
+(* Only e12 ^ scalar is non zero, and that is handled above *)
 grade /: grade[ 2, _ ] \[Wedge] b_?bladeQ := 0 ;
 grade /: b_?bladeQ \[Wedge] grade[ 2, _ ] := 0 ;
 
@@ -220,8 +220,9 @@ ScalarValue[ m_grade ] := AngleBracket[ m ] ;
 
 grade /: AngleBracket[ grade[ 0, s1_ ], grade[ 0, s2_ ] ] := (pmagnitude[ s1 ] pmagnitude[ s2 ]) ;
 grade /: AngleBracket[ grade[ 0, s1_ ], grade[ -1, m_ ] ] := (pmagnitude[ s1 ] ((pauliGradeSelect[ m, 0 ]) // pmagnitude)) ;
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ _, _ ] ] := 0 ;
 grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (pmagnitude[ s1 ] ((pauliGradeSelect[ m, 0 ]) // pmagnitude)) ;
+
+grade /: AngleBracket[ grade[ 0, s1_ ], grade[ _, _ ] ] := 0 ;
 grade /: AngleBracket[ grade[ _, _ ], grade[ 0, s1_ ] ] := 0 ;
 
 grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1.m2, 0 ] // pmagnitude) ;

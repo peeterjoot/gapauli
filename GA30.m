@@ -181,8 +181,8 @@ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSe
 ScalarValue, ScalarProduct
 ] ;
 
-grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 ClearAll[ Vector, Scalar, Bivector, Trivector, grade ]
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector::usage = "Vector[ v, n ], where n = {1,2,3} constructs a vector grade quantity with value v in direction n." ;
@@ -322,7 +322,7 @@ grade /: grade[ 1, v1_ ] \[Wedge] (v2_?bivectorQ) := symmetric[ 3, grade[ 1, v1 
 grade /: grade[ 2, v1_ ] \[Wedge] (v2_?vectorQ) := symmetric[ 3, grade[ 2, v1 ], v2 ] ;
 grade /: grade[ 2, _ ] \[Wedge] (v2_?bivectorQ) := 0 ;
 
-(* Only e123 ^ scalar is none zero, and that is handled above *)
+(* Only e123 ^ scalar is non zero, and that is handled above *)
 grade /: grade[ 3, _ ] \[Wedge] b_?bladeQ := 0 ;
 grade /: b_?bladeQ \[Wedge] grade[ 3, _ ] := 0 ;
 

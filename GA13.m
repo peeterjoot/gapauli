@@ -186,8 +186,8 @@ ScalarValue, ScalarProduct, Pseudoscalar
 
 Pseudoscalar = diracGammaMatrix[0].diracGammaMatrix[1].diracGammaMatrix[2].diracGammaMatrix[3];
 
-grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Dirac matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 ClearAll[ Vector, Scalar, Bivector, Trivector, grade ]
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Dirac matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector::usage = "Vector[ v, n ], where n = {1,2,3} constructs a vector grade quantity with value v in direction n." ;
@@ -281,6 +281,7 @@ grade /: grade[ 0, v1_ ] + grade[ 0, v2_ ] := grade[ 0, v1 + v2 ] ;
 grade /: grade[ 1, v1_ ] + grade[ 1, v2_ ] := grade[ 1, v1 + v2 ] ;
 grade /: grade[ 2, v1_ ] + grade[ 2, v2_ ] := grade[ 2, v1 + v2 ] ;
 grade /: grade[ 3, v1_ ] + grade[ 3, v2_ ] := grade[ 3, v1 + v2 ] ;
+grade /: grade[ 4, v1_ ] + grade[ 4, v2_ ] := grade[ 4, v1 + v2 ] ;
 grade /: grade[ _, v1_ ] + grade[ _, v2_ ] := grade[ -1, v1 + v2 ] ;
 
 (* Times[ -1, _ ] *)
@@ -289,31 +290,57 @@ grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 (* Times *)
 grade /: (v_?notGradeQ) grade[ k_, m_ ] := grade[ k, v m ] ;
 grade /: grade[ 0, s_ ] grade[ k_, m_ ] := grade[ k, s.m ] ;
-grade /: grade[ 3, p_ ] grade[ 1, m_ ] := grade[ 2, p.m ] ;
-grade /: grade[ 3, p_ ] grade[ 2, m_ ] := grade[ 1, p.m ] ;
-grade /: grade[ 3, p_ ] grade[ 3, m_ ] := grade[ 0, p.m ] ;
-grade /: grade[ 3, p_ ] grade[ _, m_ ] := grade[ -1, p.m ] ;
+grade /: grade[ _, m_ ] := grade[ -1, p.m ] ;
 
 (* NonCommutativeMultiply *)
-grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
-grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, s.m ] ;
-grade /: grade[ 3, s_ ] ** grade[ k_, m_ ] := grade[ 3, s ] grade[ k, m ] ;
-grade /: grade[ k_, m_ ] ** grade[ 3, s_ ] := grade[ 3, s ] grade[ k, m ] ;
+grade /: grade[ 0, s_ ]  ** grade[ k_, m_ ] := grade[ k, s.m ] ;
+grade /: grade[ k_, m_ ] ** grade[ 0, s_ ]  := grade[ k, s.m ] ;
+
+grade /: grade[ 4, p_ ] ** grade[ 1, m_ ] := grade[ 3, p.m ] ;
+grade /: grade[ 1, m_ ] ** grade[ 4, p_ ] := grade[ 3, m.p ] ;
+
+grade /: grade[ 4, p_ ] ** grade[ 2, m_ ] := grade[ 2, p.m ] ;
+grade /: grade[ 2, m_ ] ** grade[ 4, p_ ] := grade[ 2, m.p ] ;
+
+grade /: grade[ 4, p_ ] ** grade[ 3, m_ ] := grade[ 1, p.m ] ;
+grade /: grade[ 3, m_ ] ** grade[ 4, p_ ] := grade[ 1, m.p ] ;
+
+grade /: grade[ 4, p_ ] ** grade[ 4, m_ ] := grade[ 0, p.m ] ;
+grade /: grade[ 4, p_ ] ** grade[ _, m_ ] := grade[ -1, p.m ] ;
+
 grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
 
-(* Dot *)
+(* Dot 
+ 
+ v1 . v2 = (1/2)( v1 v2 + v2 v1 ) ; v1 . v2 =   v2 . v1
+
+ v . b = (1/2)( v b - b v )       ; v . b = - b . v
+
+ v . t = (1/2)( v t + t v )       ; v . t =   t . v
+
+ v . q = (1/2)( v q - q v )       ; v . q = - q . v
+
+ *)
 grade /: (s_?notGradeQ).grade[ k_, m_ ] := grade[ k, s m ] ;
 grade /: grade[ k_, m_ ].(s_?notGradeQ) := grade[ k, s m ] ;
 grade /: grade[ 0, s_ ].grade[ k_, m_ ] := grade[ k, s m ] ;
 grade /: grade[ k_, m_ ].grade[ 0, s_ ] := grade[ k, s m ] ;
 
-grade /: (t_?trivectorQ).m_grade := t m ;
-grade /: m_grade.(t_?trivectorQ) := t m ;
+grade /: (q_?quadvectorQ).m_grade := q ** m ;
+grade /: m_grade.(q_?quadvectorQ) := m ** q ;
 
 grade /: (v1_?vectorQ).grade[ 1, v2_ ] := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
+
 grade /: (v_?vectorQ).grade[ 2, b_ ] := antisymmetric[ 1, v, grade[ 2, b ] ] ;
 grade /: (b_?bivectorQ).grade[ 1, v_ ] := antisymmetric[ 1, b, grade[ 1, v ] ] ;
-grade /: (b1_?bivectorQ).grade[ 2, b2_ ] := symmetric[ 0, b1, grade[ 2, b2 ] ] ;
+
+grade /: (v_?vectorQ).grade[ 3, t_ ] := symmetric[ 2, v, grade[ 3, t ] ] ;
+grade /: (t_?trivectorQ).grade[ 1, v_ ] := symmetric[ 2, t, grade[ 1, v ] ] ;
+
+grade /: (v_?vectorQ).grade[ 4, q_ ] := antisymmetric[ 3, v, grade[ 3, q ] ] ;
+grade /: (q_?quadvectorQ).grade[ 1, v_ ] := antisymmetric[ 3, q, grade[ 1, v ] ] ;
+
+
 
 (* == comparison operator *)
 grade /: grade[ _, m1_ ] == grade[ _, m2_ ] := (m1 == m2) ;
@@ -323,38 +350,46 @@ grade /: grade[ g1_, m1_ ] . grade[ g2_, m2_ ]:= binaryOperator[ Dot, grade[ g1,
 
 grade[ _, {{0, 0}, {0, 0}} ] := 0
 
-(*Define a custom wedge operator*)
+(* Define a custom wedge operator
 
-grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
+ v1 ^ v2 = (1/2)( v1 v2 - v2 v1 )   ; v1 ^ v2 = - v1 . v2
+ v ^ b   = (1/2)( v b + b v )       ; v ^ b   =   v . b
+ v ^ t   = (1/2)( v t - t v )       ; v ^ t   = - v . t
+ v ^ q   = (1/2)( v q + q v ) = 0   ; v ^ q   =   v . q
+*)
+grade /: grade[ 0, s_ ]  \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
 grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s.v ] ;
-grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
 
-grade /: grade[ 1, v1_ ] \[Wedge] (v2_?bivectorQ) := symmetric[ 3, grade[ 1, v1 ], v2 ] ;
-grade /: grade[ 2, v1_ ] \[Wedge] (v2_?vectorQ) := symmetric[ 3, grade[ 2, v1 ], v2 ] ;
-grade /: grade[ 2, _ ] \[Wedge] (v2_?bivectorQ) := 0 ;
+grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ)   := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
+grade /: grade[ 1, v_ ]  \[Wedge] (b_?bivectorQ)  := symmetric[ 3, grade[ 1, v ], b ] ;
+grade /: grade[ 1, v_ ]  \[Wedge] (t_?trivectorQ) := antisymmetric[ 4, grade[ 1, v ], t ] ;
 
-(* Only e123 ^ scalar is none zero, and that is handled above *)
-grade /: grade[ 3, _ ] \[Wedge] b_?bladeQ := 0 ;
-grade /: b_?bladeQ \[Wedge] grade[ 3, _ ] := 0 ;
+grade /: grade[ 2, v1_ ] \[Wedge] (v2_?vectorQ)   := symmetric[ 3, grade[ 2, v1 ], v2 ] ;
+grade /: grade[ 2, _ ]   \[Wedge] (v2_?bivectorQ) := 0 ;
+
+(* Only e0123 ^ scalar is non zero, and that is handled above *)
+grade /: grade[ 4, _ ] \[Wedge] b_?bladeQ := 0 ;
+grade /: b_?bladeQ \[Wedge] grade[ 4, _ ] := 0 ;
 
 grade /: grade[ g1_, m1_ ] \[Wedge] grade[ g2_, m2_ ]:= binaryOperator[ Wedge, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
 
-ClearAll[ pmagnitude ]
+ClearAll[ smagnitude, pmagnitude ]
 
 (*Begin[ "`Private`" ]*)
-pmagnitude::usage =
-  "pmagnitude[ ].  select the 1,1 element from a dirac matrix assuming it represents \
-either a Scalar, or a Trivector (i.e. scaled diagonal matrix)." ;
-pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
+smagnitude::usage = "smagnitude[ ].  select the 1,1 element from a dirac matrix assuming it represents a Scalar" ;
+smagnitude[ m_ ] := m[ [1, 1 ] ] ;
+pmagnitude::usage = "pmagnitude[ ].  select the 1,3 element from a dirac matrix assuming it represents a scaled version of g_0123" ;
+pmagnitude[ m_ ] := m[ [1, 3 ] ] complexI ;
 (*End[ "`Private`" ]*)
 
 (* AngleBracket,single operand forms, enter with[ Esc ]<[ Esc ] \
 v[ Esc ]>[ Esc ] *)
-grade /: AngleBracket[ grade[ 0, s_ ] ] := pmagnitude[ s ]
+grade /: AngleBracket[ grade[ 0, s_ ] ] := smagnitude[ s ]
 grade /: AngleBracket[ grade[ 1, _ ] ] := 0
 grade /: AngleBracket[ grade[ 2, _ ] ] := 0
 grade /: AngleBracket[ grade[ 3, _ ] ] := 0
-grade /: AngleBracket[ grade[ _, m_ ] ] := ((diracGradeSelect[ m, 0 ]) // pmagnitude)
+grade /: AngleBracket[ grade[ 4, _ ] ] := 0
+grade /: AngleBracket[ grade[ _, m_ ] ] := ((diracGradeSelect[ m, 0 ]) // smagnitude)
 
 ClearAll[ ScalarValue ] ;
 ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
@@ -362,19 +397,22 @@ ScalarValue[ m_grade ] := AngleBracket[ m ] ;
 
 (* AngleBracket,two operand forms. *)
 
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ 0, s2_ ] ] := (pmagnitude[ s1 ] pmagnitude[ s2 ]) ;
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ -1, m_ ] ] := (pmagnitude[ s1 ] ((diracGradeSelect[ m, 0 ]) // pmagnitude)) ;
+grade /: AngleBracket[ grade[ 0, s1_ ], grade[ 0, s2_ ] ] := (smagnitude[ s1 ] smagnitude[ s2 ]) ;
+grade /: AngleBracket[ grade[ 0, s1_ ], grade[ -1, m_ ] ] := (smagnitude[ s1 ] ((diracGradeSelect[ m, 0 ]) // smagnitude)) ;
+grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (smagnitude[ s1 ] ((diracGradeSelect[ m, 0 ]) // smagnitude)) ;
+
 grade /: AngleBracket[ grade[ 0, s1_ ], grade[ _, _ ] ] := 0 ;
-grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (pmagnitude[ s1 ] ((diracGradeSelect[ m, 0 ]) // pmagnitude)) ;
+grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (smagnitude[ s1 ] ((diracGradeSelect[ m, 0 ]) // smagnitude)) ;
 grade /: AngleBracket[ grade[ _, _ ], grade[ 0, s1_ ] ] := 0 ;
 
-grade /: AngleBracket[ grade[ 3, t1_ ], grade[ 3, t2_ ] ] := (pmagnitude[ t1 ] pmagnitude[ t2 ])
-grade /: AngleBracket[ grade[ 3, t1_ ], grade[ -1, m_ ] ] := (pmagnitude[ t1 ] ((diracGradeSelect[ m, 3 ]) // pmagnitude)) ;
-grade /: AngleBracket[ grade[ 3, t1_ ], grade[ _, _ ] ] := 0 ;
-grade /: AngleBracket[ grade[ -1, m_ ], grade[ 3, t1_ ] ] := (pmagnitude[ t1 ] ((diracGradeSelect[ m, 3 ]) // pmagnitude)) ;
-grade /: AngleBracket[ grade[ _, _ ], grade[ 3, t1_ ] ] := 0 ;
+grade /: AngleBracket[ grade[ 4, q1_ ], grade[ 4, q2_ ] ] := (pmagnitude[ q1 ] pmagnitude[ q2 ])
+grade /: AngleBracket[ grade[ 4, q1_ ], grade[ -1, m_ ] ] := (pmagnitude[ q1 ] ((diracGradeSelect[ m, 4 ]) // pmagnitude)) ;
+grade /: AngleBracket[ grade[ 4, q1_ ], grade[ _, _ ] ] := 0 ;
 
-grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (diracGradeSelect[ m1.m2, 0 ] // pmagnitude) ;
+grade /: AngleBracket[ grade[ -1, m_ ], grade[ 4, q1_ ] ] := (smagnitude[ q1 ] ((diracGradeSelect[ m, 4 ]) // pmagnitude)) ;
+grade /: AngleBracket[ grade[ _, _ ], grade[ 4, t1_ ] ] := 0 ;
+
+grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (diracGradeSelect[ m1.m2, 0 ] // smagnitude) ;
 
 ClearAll[ ScalarProduct ] ;
 ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
@@ -434,18 +472,20 @@ D[ m_grade, u_ ] := grade[ m // First,
    ]
 ] ;
 
-(*Grad::usage = "grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to cartesian coordinates x,y,z..";*)
-grade /: Grad[ grade[ k_, m_ ], u_List ] := ( ( Vector[1, #] ** D[ grade[k, m], u[[#]] ] ) & /@ Range[3] ) // Total ;
+(*Grad::usage = "grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to cartesian coordinates ct,x,y,z..";*)
+grade /: Grad[ grade[ k_, m_ ], u_List ] := ( ( Vector[1, #] ** D[ grade[k, m], u[[#]] ] ) & /@ Range[4] ) // Total ;
 
-(*Div::usage = "div[m,{x,y,z}] of a grade k+1 blade m, computes < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
+(*Div::usage = "div[m,{x,y,z}] of a grade k+1 blade m, computes < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates ct,x,y,z." ;*)
 grade /: Div[ grade[ 1, m_], u_List ] := Grad[ grade[1, m], u ] // ScalarSelection ;
 grade /: Div[ grade[ 2, m_], u_List ] := Grad[ grade[2, m], u ] // VectorSelection ;
 grade /: Div[ grade[ 3, m_], u_List ] := Grad[ grade[3, m], u ] // BivectorSelection ;
+grade /: Div[ grade[ 4, m_], u_List ] := Grad[ grade[4, m], u ] // TrivectorSelection ;
 
-(*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
+(*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates ct,x,y,z." ;*)
 grade /: Curl[ grade[ 1, m_], u_List ] := Grad[ grade[1, m], u ] // BivectorSelection ;
 grade /: Curl[ grade[ 2, m_], u_List ] := Grad[ grade[2, m], u ] // TrivectorSelection ;
-grade /: Curl[ grade[ 3, m_], u_List ] := 0
+grade /: Curl[ grade[ 3, m_], u_List ] := Grad[ grade[3, m], u ] // QuadvectorSelection ;
+grade /: Curl[ grade[ 4, m_], u_List ] := 0
 
 Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
 Vcurl[ m_?vectorQ, u_List ] := -Trivector[1] Curl[ m, u ] ;
