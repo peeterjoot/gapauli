@@ -253,32 +253,38 @@ antisymmetric[t_, v1_, v2_] := signedSymmetric[t, v1, v2, -1];
 
 (* These operator on just the Dirac matrix portions x of diracGradeSelect[ ,x] *)
 ClearAll[diracGradeSelect, diracPseudoscalar, vs]
+diracGradeSelect::usage = "diracGradeSelect[m, g] selects the grade g components of the multivector m, as represented by a Dirac matrix (internal).";
 diracGradeSelect[m_, 0] := IdentityMatrix[4] (((m // Tr)/4) // Simplify);
 
-vs[m_, 0] := (m[[1, 1]] + m[[2, 2]] - m[[3, 3]] - m[[4, 4]])/4;
-vs[m_, 1] := (m[[1, 4]] + m[[2, 3]] - m[[3, 2]] - m[[4, 1]])/4;
+vs::usage = "vs[m, n], n in [0,3].  (internal) Select the n'th component of the vector as part of grade 1 selection.";
+vs[m_, 0] :=           ( m[[1, 1]] + m[[2, 2]] - m[[3, 3]] - m[[4, 4]])/4;
+vs[m_, 1] :=           ( m[[1, 4]] + m[[2, 3]] - m[[3, 2]] - m[[4, 1]])/4;
 vs[m_, 2] := -complexI (-m[[1, 4]] + m[[2, 3]] + m[[3, 2]] - m[[4, 1]])/4;
-vs[m_, 3] := (m[[1, 3]] - m[[2, 4]] - m[[3, 1]] + m[[4, 2]])/4;
+vs[m_, 3] :=           ( m[[1, 3]] - m[[2, 4]] - m[[3, 1]] + m[[4, 2]])/4;
 diracGradeSelect[m_, 1] := (((vs[m, #] diracGammaMatrix[#]) & /@ (Range[4] - 1) ) // Total) ;
 
 ClearAll[bs, pairs]
-bs[m_, {1, 2}] := -complexI (m[[4, 4]] - m[[3, 3]] + m[[2, 2]] - m[[1, 1]]) /4
-bs[m_, {0, 3}] :=           (m[[1, 3]] - m[[2, 4]] + m[[3, 1]] - m[[4, 2]])/4
-bs[m_, {0, 2}] := -complexI (-m[[1, 4]] + m[[2, 3]] - m[[3, 2]] + m[[4, 1]]) / 4
-bs[m_, {0, 1}] :=           (m[[1, 4]] + m[[2, 3]] + m[[3, 2]] + m[[4, 1]])/4
-bs[m_, {1, 3}] :=           (m[[1, 2]] - m[[2, 1]] + m[[3, 4]] - m[[4, 3]])/4
-bs[m_, {2, 3}] :=  complexI (m[[1, 2]] + m[[2, 1]] +  m[[3, 4]] + m[[4, 3]])/4
+vs::usage = "bs[m, n, o], n,o in [0,3].  (internal) Select bivector components as part of grade 2 selection.";
+bs[m_, {1, 2}] := -complexI ( m[[4, 4]] - m[[3, 3]] + m[[2, 2]] - m[[1, 1]])/4;
+bs[m_, {0, 3}] :=           ( m[[1, 3]] - m[[2, 4]] + m[[3, 1]] - m[[4, 2]])/4;
+bs[m_, {0, 2}] := -complexI (-m[[1, 4]] + m[[2, 3]] - m[[3, 2]] + m[[4, 1]])/4;
+bs[m_, {0, 1}] :=           ( m[[1, 4]] + m[[2, 3]] + m[[3, 2]] + m[[4, 1]])/4;
+bs[m_, {1, 3}] :=           ( m[[1, 2]] - m[[2, 1]] + m[[3, 4]] - m[[4, 3]])/4;
+bs[m_, {2, 3}] :=  complexI ( m[[1, 2]] + m[[2, 1]] + m[[3, 4]] + m[[4, 3]])/4;
 
 pairs := {{1, 2}, {0, 3}, {0, 2}, {0, 1}, {1, 3}, {2, 3}};
 diracGradeSelect[m_, 2] := (((bs[m, #] diracGammaMatrix[# // First] . diracGammaMatrix[# // Last]) & /@ pairs) // Total) // Simplify ;
 
 ClearAll[ts, triplets, trivectors]
-ts[m_, {0, 1, 2}] := -complexI (-m[[1, 1]] + m[[2, 2]] + m[[3, 3]] - m[[4, 4]])/ 4
-ts[m_, {0, 1, 3}] := (m[[1, 2]] - m[[2, 1]] - m[[3, 4]] + m[[4, 3]])/ 4
-ts[m_, {0, 2, 3}] := -complexI (-m[[1, 2]] - m[[2, 1]] + m[[3, 4]] + m[[4, 3]])/ 4
-ts[m_, {1, 2, 3}] := -complexI (-m[[1, 3]] - m[[2, 4]] + m[[3, 1]] + m[[4, 2]])/ 4
+vs::usage = "ts[m, n, o, p], n,o,p in [0,3].  (internal) Select trivector components as part of grade 3 selection.";
+ts[m_, {0, 1, 2}] := -complexI (-m[[1, 1]] + m[[2, 2]] + m[[3, 3]] - m[[4, 4]])/4;
+ts[m_, {0, 1, 3}] :=           ( m[[1, 2]] - m[[2, 1]] - m[[3, 4]] + m[[4, 3]])/4;
+ts[m_, {0, 2, 3}] := -complexI (-m[[1, 2]] - m[[2, 1]] + m[[3, 4]] + m[[4, 3]])/4;
+ts[m_, {1, 2, 3}] := -complexI (-m[[1, 3]] - m[[2, 4]] + m[[3, 1]] + m[[4, 2]])/4;
 
+triplets::usage = "Unique indexes for trivector components (internal)";
 triplets := {{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, {1, 2, 3}}
+trivectors::usage = "Set of all the trivector basis elements for a grade 3 blade, corresponding to indexes of the triplets variable. (internal)";
 trivectors := diracGammaMatrix[# // First].diracGammaMatrix[#[[2]]].diracGammaMatrix[# // Last] & /@ triplets;
 diracGradeSelect[m_, 3] := ((ts[m, triplets[[#]]] trivectors[[#]] & /@ Range[4]) // Total) // Simplify;
 
