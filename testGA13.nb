@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    147142,       3935]
-NotebookOptionsPosition[    139826,       3735]
-NotebookOutlinePosition[    144052,       3848]
-CellTagsIndexPosition[    142927,       3821]
+NotebookDataLength[    144279,       3867]
+NotebookOptionsPosition[    137181,       3667]
+NotebookOutlinePosition[    141245,       3780]
+CellTagsIndexPosition[    140174,       3753]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -43,9 +43,9 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"<<", " ", "GA13`"}], ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
-   RowBox[{"?", "GA13"}], "\n", 
+   RowBox[{"?", "GA13"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
-    RowBox[{"?", "grade"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"?", "grade"}], "*)"}], "\n", 
    RowBox[{"?", "Scalar"}], "\n", 
    RowBox[{"?", "Vector"}], "\n", 
    RowBox[{"?", "Bivector"}], "\n", 
@@ -128,152 +128,152 @@ default without using one of TraditionalForm, DisplayForm, StandardForm \
 operator used in StandardForm that represents a basis vector).\\n\\n3) proper \
 packaging stuff:  private for internals.\\n\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.698974751673459*^9},
- CellTags->"Info26503698960351-5087410"],
+ CellChangeTimes->{3.6990024059186296`*^9},
+ CellTags->"Info23698988005-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"Scalar[ v ] constructs a scalar grade quantity with value v.\"\
 \>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69897475177065*^9},
- CellTags->"Info26513698960351-5087410"],
+ CellChangeTimes->{3.699002406002993*^9},
+ CellTags->"Info33698988005-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"Vector[ v, n ], where n = {0,1,2,3} constructs a vector grade \
 quantity with value v in direction n.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974751871984*^9},
- CellTags->"Info26523698960351-5087410"],
+ CellChangeTimes->{3.6990024060785837`*^9},
+ CellTags->"Info43698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"Bivector[ v, n1, n2 ], where n1,n2 = {1,2,3} constructs a \
 bivector grade quantity with value v in the plane n1,n2.\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974751967819*^9},
- CellTags->"Info26533698960351-5087410"],
+ CellChangeTimes->{3.6990024061561413`*^9},
+ CellTags->"Info53698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"Trivector[ v, k, l, m ] constructs a trivector (pseudoscalar) \
 grade quantity scaled by v.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752062421*^9},
- CellTags->"Info26543698960352-5087410"],
+ CellChangeTimes->{3.6990024062311296`*^9},
+ CellTags->"Info63698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"Quadvector[ v ] constructs a quadvector (pseudoscalar) grade \
 quantity scaled by v.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752161034*^9},
- CellTags->"Info26553698960352-5087410"],
+ CellChangeTimes->{3.699002406307013*^9},
+ CellTags->"Info73698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeQ[ m, n ] tests if the multivector m is of grade n.  n = \
 -1 is used internally to represent values of more than one grade.\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752257702*^9},
- CellTags->"Info26563698960352-5087410"],
+ CellChangeTimes->{3.699002406382289*^9},
+ CellTags->"Info83698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752354389*^9},
- CellTags->"Info26573698960352-5087410"],
+ CellChangeTimes->{3.69900240645859*^9},
+ CellTags->"Info93698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"vectorQ[ m ] tests if the multivector m is of grade 1 (vector)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752453516*^9},
- CellTags->"Info26583698960352-5087410"],
+ CellChangeTimes->{3.699002406537916*^9},
+ CellTags->"Info103698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"bivectorQ[ m ] tests if the multivector m is of grade 2 \
 (bivector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752556532*^9},
- CellTags->"Info26593698960352-5087410"],
+ CellChangeTimes->{3.6990024066156282`*^9},
+ CellTags->"Info113698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"trivectorQ[ m ] tests if the multivector m is of grade 3 \
 (trivector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752658687*^9},
- CellTags->"Info26603698960352-5087410"],
+ CellChangeTimes->{3.699002406697605*^9},
+ CellTags->"Info123698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"quadvectorQ[ m ] tests if the multivector m is of grade 4 \
 (quadvector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752752049*^9},
- CellTags->"Info26613698960352-5087410"],
+ CellChangeTimes->{3.699002406775128*^9},
+ CellTags->"Info133698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"bladeQ[ m ] tests if the multivector is of a single \
 grade.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974752850514*^9},
- CellTags->"Info26623698960352-5087410"],
+ CellChangeTimes->{3.69900240684895*^9},
+ CellTags->"Info143698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeAnyQ[ ].  predicate pattern match for grade[ _ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974753199472*^9},
- CellTags->"Info26633698960352-5087410"],
+ CellChangeTimes->{3.6990024069242697`*^9},
+ CellTags->"Info153698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"notGradeQ[ ].  predicate pattern match for !grade[ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6989747536296053`*^9},
- CellTags->"Info26643698960353-5087410"],
+ CellChangeTimes->{3.699002407000393*^9},
+ CellTags->"Info163698988006-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"GradeSelection[ m, k ] selects the grade k elements from the \
 multivector m.  The selected result is represented internally as a grade[ ] \
 type (so scalar selection is not just a number).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.698974754146978*^9},
- CellTags->"Info26653698960353-5087410"],
+ CellChangeTimes->{3.699002407074327*^9},
+ CellTags->"Info173698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarSelection[ m ] selects the grade 0 (scalar) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type (not just a number or an expression).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.698974754496806*^9},
- CellTags->"Info26663698960354-5087410"],
+ CellChangeTimes->{3.6990024071515408`*^9},
+ CellTags->"Info183698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"VectorSelection[ m ] selects the grade 1 (vector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974754659165*^9},
- CellTags->"Info26673698960354-5087410"],
+ CellChangeTimes->{3.6990024072254744`*^9},
+ CellTags->"Info193698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"BivectorSelection[ m ] selects the grade 2 (bivector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974754763237*^9},
- CellTags->"Info26683698960354-5087410"],
+ CellChangeTimes->{3.699002407301076*^9},
+ CellTags->"Info203698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"TrivectorSelection[ m ] selects the grade 3 (trivector) \
 element from the multivector m if it exists.  The selected result is \
 represented internally as a grade[ ] type (not just an number or expression).\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69897475486827*^9},
- CellTags->"Info26693698960354-5087410"],
+ CellChangeTimes->{3.6990024075400543`*^9},
+ CellTags->"Info213698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"QuadvectorSelection[ m ] selects the grade 4 (trivector) \
 element from the multivector m if it exists.  The selected result is \
 represented internally as a grade[ ] type (not just an number or expression).\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974754972608*^9},
- CellTags->"Info26703698960354-5087410"],
+ CellChangeTimes->{3.69900240770977*^9},
+ CellTags->"Info223698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ \
 Esc ] m1 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.698974755169756*^9},
- CellTags->"Info26713698960355-5087410"],
+ CellChangeTimes->{3.699002407821656*^9},
+ CellTags->"Info233698988007-4614289"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc \
 ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6989747555302553`*^9},
- CellTags->"Info26723698960355-5087410"]
+ CellChangeTimes->{3.6990024079004927`*^9},
+ CellTags->"Info243698988007-4614289"]
 }, Open  ]]
 }, Open  ]],
 
@@ -3648,76 +3648,7 @@ Cell[BoxData[
    3.698971250687028*^9, 3.698971289539538*^9}}]
 }, Open  ]],
 
-Cell[BoxData[
- RowBox[{
-  RowBox[{"(*", 
-   RowBox[{
-    RowBox[{
-     RowBox[{
-      RowBox[{
-       RowBox[{
-        RowBox[{
-         RowBox[{
-          RowBox[{
-           RowBox[{"(", 
-            RowBox[{
-             RowBox[{"Bivector", "[", 
-              RowBox[{"1", ",", "1", ",", "2"}], "]"}], " ", "**", " ", 
-             RowBox[{"Bivector", "[", 
-              RowBox[{"1", ",", "2", ",", "3"}], "]"}]}], ")"}], " ", "//", 
-           " ", 
-           RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{"Bivector", "[", 
-               RowBox[{"1", ",", "2", ",", "3"}], "]"}], " ", "**", 
-              RowBox[{"Bivector", "[", 
-               RowBox[{"1", ",", "1", ",", "2"}], "]"}]}], " ", ")"}]}]}], "//",
-           " ", 
-          RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-           RowBox[{"Bivector", "[", 
-            RowBox[{"1", ",", "3", ",", "1"}], "]"}]}]}], " ", "//", " ", 
-         RowBox[{
-         "TraditionalForm", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-          RowBox[{"(", 
-           RowBox[{
-            RowBox[{"Bivector", "[", 
-             RowBox[{
-              RowBox[{"-", "1"}], ",", "1", ",", "2"}], "]"}], " ", "**", " ", 
-            RowBox[{"Bivector", "[", 
-             RowBox[{"1", ",", "3", ",", "0"}], "]"}]}], ")"}]}]}], " ", "//",
-         " ", 
-        RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"Bivector", "[", 
-            RowBox[{
-             RowBox[{"-", "1"}], ",", "3", ",", "0"}], "]"}], " ", "**", 
-           RowBox[{"Bivector", "[", 
-            RowBox[{"1", ",", "1", ",", "2"}], "]"}]}], " ", ")"}]}]}], "//", 
-       " ", 
-       RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"Bivector", "[", 
-           RowBox[{
-            RowBox[{"-", "1"}], ",", "1", ",", "2"}], "]"}], "  ", 
-          RowBox[{"Bivector", "[", 
-           RowBox[{"1", ",", "3", ",", "0"}], "]"}]}], ")"}]}]}], " ", "//", 
-      " ", 
-      RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"Bivector", "[", 
-          RowBox[{
-           RowBox[{"-", "1"}], ",", "3", ",", "0"}], "]"}], " ", 
-         RowBox[{"Bivector", "[", 
-          RowBox[{"1", ",", "1", ",", "2"}], "]"}]}], " ", ")"}]}]}], "//", 
-     " ", 
-     RowBox[{"TraditionalForm", "\[IndentingNewLine]", 
-      RowBox[{"Quadvector", "[", "1", "]"}]}]}], " ", "//", " ", 
-    "TraditionalForm"}], "*)"}], "\[IndentingNewLine]", 
-  "\[IndentingNewLine]"}]], "Input",
+Cell[BoxData[""], "Input",
  CellChangeTimes->{
   3.698960979945443*^9, {3.698961026378001*^9, 3.698961121392948*^9}, {
    3.6989611649576273`*^9, 3.698961228207506*^9}, 3.6989681667842903`*^9, {
@@ -3727,7 +3658,8 @@ Cell[BoxData[
    3.6989686977929583`*^9}, {3.698969746023321*^9, 3.69896978069298*^9}, {
    3.698969813563531*^9, 3.698969834379525*^9}, {3.698969920026309*^9, 
    3.69896994217665*^9}, {3.698970106230008*^9, 3.6989701078922853`*^9}, {
-   3.698970233626149*^9, 3.698970255997336*^9}, 3.6989724331413937`*^9}],
+   3.698970233626149*^9, 3.698970255997336*^9}, 3.6989724331413937`*^9, 
+   3.699002422133106*^9}],
 
 Cell[BoxData[" "], "Input",
  CellChangeTimes->{3.698969684436802*^9}]
@@ -3747,102 +3679,102 @@ StyleDefinitions->"Default.nb"
 (* Internal cache information *)
 (*CellTagsOutline
 CellTagsIndex->{
- "Info26503698960351-5087410"->{
-  Cell[3416, 87, 3208, 44, 1911, "Print",
-   CellTags->"Info26503698960351-5087410"]},
- "Info26513698960351-5087410"->{
-  Cell[6627, 133, 211, 4, 62, "Print",
-   CellTags->"Info26513698960351-5087410"]},
- "Info26523698960351-5087410"->{
-  Cell[6841, 139, 251, 4, 62, "Print",
-   CellTags->"Info26523698960351-5087410"]},
- "Info26533698960351-5087410"->{
-  Cell[7095, 145, 269, 5, 62, "Print",
-   CellTags->"Info26533698960351-5087410"]},
- "Info26543698960352-5087410"->{
-  Cell[7367, 152, 241, 4, 62, "Print",
-   CellTags->"Info26543698960352-5087410"]},
- "Info26553698960352-5087410"->{
-  Cell[7611, 158, 234, 4, 62, "Print",
-   CellTags->"Info26553698960352-5087410"]},
- "Info26563698960352-5087410"->{
-  Cell[7848, 164, 282, 5, 62, "Print",
-   CellTags->"Info26563698960352-5087410"]},
- "Info26573698960352-5087410"->{
-  Cell[8133, 171, 214, 4, 62, "Print",
-   CellTags->"Info26573698960352-5087410"]},
- "Info26583698960352-5087410"->{
-  Cell[8350, 177, 214, 4, 62, "Print",
-   CellTags->"Info26583698960352-5087410"]},
- "Info26593698960352-5087410"->{
-  Cell[8567, 183, 218, 4, 62, "Print",
-   CellTags->"Info26593698960352-5087410"]},
- "Info26603698960352-5087410"->{
-  Cell[8788, 189, 220, 4, 62, "Print",
-   CellTags->"Info26603698960352-5087410"]},
- "Info26613698960352-5087410"->{
-  Cell[9011, 195, 222, 4, 62, "Print",
-   CellTags->"Info26613698960352-5087410"]},
- "Info26623698960352-5087410"->{
-  Cell[9236, 201, 210, 4, 62, "Print",
-   CellTags->"Info26623698960352-5087410"]},
- "Info26633698960352-5087410"->{
-  Cell[9449, 207, 206, 4, 62, "Print",
-   CellTags->"Info26633698960352-5087410"]},
- "Info26643698960353-5087410"->{
-  Cell[9658, 213, 207, 4, 62, "Print",
-   CellTags->"Info26643698960353-5087410"]},
- "Info26653698960353-5087410"->{
-  Cell[9868, 219, 341, 6, 87, "Print",
-   CellTags->"Info26653698960353-5087410"]},
- "Info26663698960354-5087410"->{
-  Cell[10212, 227, 342, 6, 87, "Print",
-   CellTags->"Info26663698960354-5087410"]},
- "Info26673698960354-5087410"->{
-  Cell[10557, 235, 303, 5, 62, "Print",
-   CellTags->"Info26673698960354-5087410"]},
- "Info26683698960354-5087410"->{
-  Cell[10863, 242, 307, 5, 62, "Print",
-   CellTags->"Info26683698960354-5087410"]},
- "Info26693698960354-5087410"->{
-  Cell[11173, 249, 357, 6, 87, "Print",
-   CellTags->"Info26693698960354-5087410"]},
- "Info26703698960354-5087410"->{
-  Cell[11533, 257, 359, 6, 87, "Print",
-   CellTags->"Info26703698960354-5087410"]},
- "Info26713698960355-5087410"->{
-  Cell[11895, 265, 237, 4, 62, "Print",
-   CellTags->"Info26713698960355-5087410"]},
- "Info26723698960355-5087410"->{
-  Cell[12135, 271, 248, 4, 62, "Print",
-   CellTags->"Info26723698960355-5087410"]}
+ "Info23698988005-4614289"->{
+  Cell[3416, 87, 3207, 44, 1911, "Print",
+   CellTags->"Info23698988005-4614289"]},
+ "Info33698988005-4614289"->{
+  Cell[6626, 133, 209, 4, 62, "Print",
+   CellTags->"Info33698988005-4614289"]},
+ "Info43698988006-4614289"->{
+  Cell[6838, 139, 250, 4, 62, "Print",
+   CellTags->"Info43698988006-4614289"]},
+ "Info53698988006-4614289"->{
+  Cell[7091, 145, 268, 5, 62, "Print",
+   CellTags->"Info53698988006-4614289"]},
+ "Info63698988006-4614289"->{
+  Cell[7362, 152, 240, 4, 62, "Print",
+   CellTags->"Info63698988006-4614289"]},
+ "Info73698988006-4614289"->{
+  Cell[7605, 158, 231, 4, 62, "Print",
+   CellTags->"Info73698988006-4614289"]},
+ "Info83698988006-4614289"->{
+  Cell[7839, 164, 279, 5, 62, "Print",
+   CellTags->"Info83698988006-4614289"]},
+ "Info93698988006-4614289"->{
+  Cell[8121, 171, 210, 4, 62, "Print",
+   CellTags->"Info93698988006-4614289"]},
+ "Info103698988006-4614289"->{
+  Cell[8334, 177, 212, 4, 62, "Print",
+   CellTags->"Info103698988006-4614289"]},
+ "Info113698988006-4614289"->{
+  Cell[8549, 183, 218, 4, 62, "Print",
+   CellTags->"Info113698988006-4614289"]},
+ "Info123698988006-4614289"->{
+  Cell[8770, 189, 218, 4, 62, "Print",
+   CellTags->"Info123698988006-4614289"]},
+ "Info133698988006-4614289"->{
+  Cell[8991, 195, 220, 4, 62, "Print",
+   CellTags->"Info133698988006-4614289"]},
+ "Info143698988006-4614289"->{
+  Cell[9214, 201, 207, 4, 62, "Print",
+   CellTags->"Info143698988006-4614289"]},
+ "Info153698988006-4614289"->{
+  Cell[9424, 207, 206, 4, 62, "Print",
+   CellTags->"Info153698988006-4614289"]},
+ "Info163698988006-4614289"->{
+  Cell[9633, 213, 203, 4, 62, "Print",
+   CellTags->"Info163698988006-4614289"]},
+ "Info173698988007-4614289"->{
+  Cell[9839, 219, 339, 6, 87, "Print",
+   CellTags->"Info173698988007-4614289"]},
+ "Info183698988007-4614289"->{
+  Cell[10181, 227, 342, 6, 87, "Print",
+   CellTags->"Info183698988007-4614289"]},
+ "Info193698988007-4614289"->{
+  Cell[10526, 235, 303, 5, 62, "Print",
+   CellTags->"Info193698988007-4614289"]},
+ "Info203698988007-4614289"->{
+  Cell[10832, 242, 305, 5, 62, "Print",
+   CellTags->"Info203698988007-4614289"]},
+ "Info213698988007-4614289"->{
+  Cell[11140, 249, 358, 6, 87, "Print",
+   CellTags->"Info213698988007-4614289"]},
+ "Info223698988007-4614289"->{
+  Cell[11501, 257, 356, 6, 87, "Print",
+   CellTags->"Info223698988007-4614289"]},
+ "Info233698988007-4614289"->{
+  Cell[11860, 265, 235, 4, 62, "Print",
+   CellTags->"Info233698988007-4614289"]},
+ "Info243698988007-4614289"->{
+  Cell[12098, 271, 246, 4, 62, "Print",
+   CellTags->"Info243698988007-4614289"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info26503698960351-5087410", 140236, 3749},
- {"Info26513698960351-5087410", 140356, 3752},
- {"Info26523698960351-5087410", 140473, 3755},
- {"Info26533698960351-5087410", 140590, 3758},
- {"Info26543698960352-5087410", 140707, 3761},
- {"Info26553698960352-5087410", 140824, 3764},
- {"Info26563698960352-5087410", 140941, 3767},
- {"Info26573698960352-5087410", 141058, 3770},
- {"Info26583698960352-5087410", 141175, 3773},
- {"Info26593698960352-5087410", 141292, 3776},
- {"Info26603698960352-5087410", 141409, 3779},
- {"Info26613698960352-5087410", 141526, 3782},
- {"Info26623698960352-5087410", 141643, 3785},
- {"Info26633698960352-5087410", 141760, 3788},
- {"Info26643698960353-5087410", 141877, 3791},
- {"Info26653698960353-5087410", 141994, 3794},
- {"Info26663698960354-5087410", 142111, 3797},
- {"Info26673698960354-5087410", 142229, 3800},
- {"Info26683698960354-5087410", 142347, 3803},
- {"Info26693698960354-5087410", 142465, 3806},
- {"Info26703698960354-5087410", 142583, 3809},
- {"Info26713698960355-5087410", 142701, 3812},
- {"Info26723698960355-5087410", 142819, 3815}
+ {"Info23698988005-4614289", 137588, 3681},
+ {"Info33698988005-4614289", 137702, 3684},
+ {"Info43698988006-4614289", 137813, 3687},
+ {"Info53698988006-4614289", 137924, 3690},
+ {"Info63698988006-4614289", 138035, 3693},
+ {"Info73698988006-4614289", 138146, 3696},
+ {"Info83698988006-4614289", 138257, 3699},
+ {"Info93698988006-4614289", 138368, 3702},
+ {"Info103698988006-4614289", 138480, 3705},
+ {"Info113698988006-4614289", 138593, 3708},
+ {"Info123698988006-4614289", 138706, 3711},
+ {"Info133698988006-4614289", 138819, 3714},
+ {"Info143698988006-4614289", 138932, 3717},
+ {"Info153698988006-4614289", 139045, 3720},
+ {"Info163698988006-4614289", 139158, 3723},
+ {"Info173698988007-4614289", 139271, 3726},
+ {"Info183698988007-4614289", 139384, 3729},
+ {"Info193698988007-4614289", 139498, 3732},
+ {"Info203698988007-4614289", 139612, 3735},
+ {"Info213698988007-4614289", 139726, 3738},
+ {"Info223698988007-4614289", 139840, 3741},
+ {"Info233698988007-4614289", 139954, 3744},
+ {"Info243698988007-4614289", 140068, 3747}
  }
 *)
 (*NotebookFileOutline
@@ -3851,91 +3783,91 @@ Cell[558, 20, 645, 15, 253, "Text"],
 Cell[CellGroupData[{
 Cell[1228, 39, 2163, 44, 1010, "Input"],
 Cell[CellGroupData[{
-Cell[3416, 87, 3208, 44, 1911, "Print",
- CellTags->"Info26503698960351-5087410"],
-Cell[6627, 133, 211, 4, 62, "Print",
- CellTags->"Info26513698960351-5087410"],
-Cell[6841, 139, 251, 4, 62, "Print",
- CellTags->"Info26523698960351-5087410"],
-Cell[7095, 145, 269, 5, 62, "Print",
- CellTags->"Info26533698960351-5087410"],
-Cell[7367, 152, 241, 4, 62, "Print",
- CellTags->"Info26543698960352-5087410"],
-Cell[7611, 158, 234, 4, 62, "Print",
- CellTags->"Info26553698960352-5087410"],
-Cell[7848, 164, 282, 5, 62, "Print",
- CellTags->"Info26563698960352-5087410"],
-Cell[8133, 171, 214, 4, 62, "Print",
- CellTags->"Info26573698960352-5087410"],
-Cell[8350, 177, 214, 4, 62, "Print",
- CellTags->"Info26583698960352-5087410"],
-Cell[8567, 183, 218, 4, 62, "Print",
- CellTags->"Info26593698960352-5087410"],
-Cell[8788, 189, 220, 4, 62, "Print",
- CellTags->"Info26603698960352-5087410"],
-Cell[9011, 195, 222, 4, 62, "Print",
- CellTags->"Info26613698960352-5087410"],
-Cell[9236, 201, 210, 4, 62, "Print",
- CellTags->"Info26623698960352-5087410"],
-Cell[9449, 207, 206, 4, 62, "Print",
- CellTags->"Info26633698960352-5087410"],
-Cell[9658, 213, 207, 4, 62, "Print",
- CellTags->"Info26643698960353-5087410"],
-Cell[9868, 219, 341, 6, 87, "Print",
- CellTags->"Info26653698960353-5087410"],
-Cell[10212, 227, 342, 6, 87, "Print",
- CellTags->"Info26663698960354-5087410"],
-Cell[10557, 235, 303, 5, 62, "Print",
- CellTags->"Info26673698960354-5087410"],
-Cell[10863, 242, 307, 5, 62, "Print",
- CellTags->"Info26683698960354-5087410"],
-Cell[11173, 249, 357, 6, 87, "Print",
- CellTags->"Info26693698960354-5087410"],
-Cell[11533, 257, 359, 6, 87, "Print",
- CellTags->"Info26703698960354-5087410"],
-Cell[11895, 265, 237, 4, 62, "Print",
- CellTags->"Info26713698960355-5087410"],
-Cell[12135, 271, 248, 4, 62, "Print",
- CellTags->"Info26723698960355-5087410"]
+Cell[3416, 87, 3207, 44, 1911, "Print",
+ CellTags->"Info23698988005-4614289"],
+Cell[6626, 133, 209, 4, 62, "Print",
+ CellTags->"Info33698988005-4614289"],
+Cell[6838, 139, 250, 4, 62, "Print",
+ CellTags->"Info43698988006-4614289"],
+Cell[7091, 145, 268, 5, 62, "Print",
+ CellTags->"Info53698988006-4614289"],
+Cell[7362, 152, 240, 4, 62, "Print",
+ CellTags->"Info63698988006-4614289"],
+Cell[7605, 158, 231, 4, 62, "Print",
+ CellTags->"Info73698988006-4614289"],
+Cell[7839, 164, 279, 5, 62, "Print",
+ CellTags->"Info83698988006-4614289"],
+Cell[8121, 171, 210, 4, 62, "Print",
+ CellTags->"Info93698988006-4614289"],
+Cell[8334, 177, 212, 4, 62, "Print",
+ CellTags->"Info103698988006-4614289"],
+Cell[8549, 183, 218, 4, 62, "Print",
+ CellTags->"Info113698988006-4614289"],
+Cell[8770, 189, 218, 4, 62, "Print",
+ CellTags->"Info123698988006-4614289"],
+Cell[8991, 195, 220, 4, 62, "Print",
+ CellTags->"Info133698988006-4614289"],
+Cell[9214, 201, 207, 4, 62, "Print",
+ CellTags->"Info143698988006-4614289"],
+Cell[9424, 207, 206, 4, 62, "Print",
+ CellTags->"Info153698988006-4614289"],
+Cell[9633, 213, 203, 4, 62, "Print",
+ CellTags->"Info163698988006-4614289"],
+Cell[9839, 219, 339, 6, 87, "Print",
+ CellTags->"Info173698988007-4614289"],
+Cell[10181, 227, 342, 6, 87, "Print",
+ CellTags->"Info183698988007-4614289"],
+Cell[10526, 235, 303, 5, 62, "Print",
+ CellTags->"Info193698988007-4614289"],
+Cell[10832, 242, 305, 5, 62, "Print",
+ CellTags->"Info203698988007-4614289"],
+Cell[11140, 249, 358, 6, 87, "Print",
+ CellTags->"Info213698988007-4614289"],
+Cell[11501, 257, 356, 6, 87, "Print",
+ CellTags->"Info223698988007-4614289"],
+Cell[11860, 265, 235, 4, 62, "Print",
+ CellTags->"Info233698988007-4614289"],
+Cell[12098, 271, 246, 4, 62, "Print",
+ CellTags->"Info243698988007-4614289"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12432, 281, 117, 1, 65, "Subsection"],
-Cell[12552, 284, 34039, 998, 5350, "Input"],
-Cell[46594, 1284, 46, 0, 31, "Need to generalize this to Cl(1,3)"]
+Cell[12393, 281, 117, 1, 65, "Subsection"],
+Cell[12513, 284, 34039, 998, 5350, "Input"],
+Cell[46555, 1284, 46, 0, 31, "Need to generalize this to Cl(1,3)"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[46677, 1289, 123, 1, 65, "Subsection"],
-Cell[46803, 1292, 21360, 510, 3676, "Input"]
+Cell[46638, 1289, 123, 1, 65, "Subsection"],
+Cell[46764, 1292, 21360, 510, 3676, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[68200, 1807, 172, 3, 65, "Subsection"],
+Cell[68161, 1807, 172, 3, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[68397, 1814, 5393, 126, 917, "Input"],
-Cell[73793, 1942, 5619, 133, 190, "Output"],
-Cell[79415, 2077, 5078, 169, 514, "Output"],
-Cell[84496, 2248, 4455, 118, 502, "Output"],
-Cell[88954, 2368, 3223, 79, 514, "Output"]
+Cell[68358, 1814, 5393, 126, 917, "Input"],
+Cell[73754, 1942, 5619, 133, 173, "Output"],
+Cell[79376, 2077, 5078, 169, 497, "Output"],
+Cell[84457, 2248, 4455, 118, 485, "Output"],
+Cell[88915, 2368, 3223, 79, 497, "Output"]
 }, Open  ]],
-Cell[92192, 2450, 245, 5, 48, "Input"]
+Cell[92153, 2450, 245, 5, 48, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[92474, 2460, 121, 1, 65, "Subsection"],
+Cell[92435, 2460, 121, 1, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[92620, 2465, 7027, 180, 917, "Input"],
-Cell[99650, 2647, 1303, 34, 97, "Output"],
-Cell[100956, 2683, 971, 23, 65, "Output"],
-Cell[101930, 2708, 505, 8, 99, "Output"]
+Cell[92581, 2465, 7027, 180, 917, "Input"],
+Cell[99611, 2647, 1303, 34, 80, "Output"],
+Cell[100917, 2683, 971, 23, 48, "Output"],
+Cell[101891, 2708, 505, 8, 48, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[102484, 2722, 186, 2, 65, "Subsection"],
+Cell[102445, 2722, 186, 2, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[102695, 2728, 8028, 225, 1692, "Input"],
-Cell[110726, 2955, 25657, 692, 974, "Output"]
+Cell[102656, 2728, 8028, 225, 1692, "Input"],
+Cell[110687, 2955, 25657, 692, 957, "Output"]
 }, Open  ]],
-Cell[136398, 3650, 3340, 79, 393, "Input"],
-Cell[139741, 3731, 69, 1, 48, "Input"]
+Cell[136359, 3650, 734, 11, 82, "Input"],
+Cell[137096, 3663, 69, 1, 48, "Input"]
 }, Open  ]]
 }
 ]
