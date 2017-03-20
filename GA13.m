@@ -365,6 +365,10 @@ grade /: grade[4, p_] ** grade[_, m_] := grade[-1, p.m];
 
 grade /: grade[_, m1_] ** grade[_, m2_] := grade[-1, m1.m2];
 
+(* \[Equal]comparison operator *)
+
+grade /: grade[_, m1_] == grade[_, m2_] := (m1 == m2);
+
 
 (*Dot
 
@@ -378,26 +382,26 @@ grade /: grade[k_, m_].(s_?notGradeQ) := grade[k, s m];
 grade /: grade[0, s_].grade[k_, m_] := grade[k, s m];
 grade /: grade[k_, m_].grade[0, s_] := grade[k, s m];
 
+grade /: (v1_?vectorQ).grade[1, v2_] := symmetric[0, v1, grade[1, v2]];
+grade /: (v_?vectorQ).grade[2, b_] := antisymmetric[1, v, grade[2, b]];
+grade /: (v_?vectorQ).grade[3, t_] := symmetric[2, v, grade[3, t]];
+grade /: (v_?vectorQ).grade[4, q_] := antisymmetric[3, v, grade[3, q]];
+
+grade /: (b_?bivectorQ).grade[1, v_] := antisymmetric[1, b, grade[1, v]];
+grade /: (b_?bivectorQ).grade[2, b2_] := grade[0, (b // Last).b2 // diracGradeSelect0];
+grade /: (b_?bivectorQ).grade[3, t_] := grade[1, (b // Last).t // diracGradeSelect1];
+grade /: (b_?bivectorQ).grade[4, q_] := grade[1, (b // Last).q // diracGradeSelect2];
+grade /: grade[3, t_] . (b_?bivectorQ) := grade[1, t. (b // Last) // diracGradeSelect1];
+grade /: grade[4, q_] . (b_?bivectorQ) := grade[1, q. (b // Last) // diracGradeSelect2];
+
+grade /: (t_?trivectorQ).grade[1, v_] := symmetric[2, t, grade[1, v]];
+grade /: (t_?trivectorQ).grade[3, t2_] := grade[0, (t // Last).t2 // diracGradeSelect0];
+grade /: (t_?trivectorQ).grade[4, q_] := grade[1, (t // Last).q // diracGradeSelect1];
+grade /: grade[4, q_].(t_?trivectorQ) := grade[1, q. (t // Last) // diracGradeSelect1];
+
+grade /: (q_?quadvectorQ).grade[1, v_] := antisymmetric[3, q, grade[1, v]];
 grade /: (q_?quadvectorQ).m_grade := q ** m;
 grade /: m_grade.(q_?quadvectorQ) := m ** q;
-
-grade /: (v1_?vectorQ).grade[1, v2_] := symmetric[0, v1, grade[1, v2]];
-
-grade /: (v_?vectorQ).grade[2, b_] := antisymmetric[1, v, grade[2, b]];
-grade /: (b_?bivectorQ).grade[1, v_] := antisymmetric[1, b, grade[1, v]];
-
-grade /: (v_?vectorQ).grade[3, t_] := symmetric[2, v, grade[3, t]];
-grade /: (t_?trivectorQ).grade[1, v_] := symmetric[2, t, grade[1, v]];
-
-grade /: (v_?vectorQ).grade[4, q_] := antisymmetric[3, v, grade[3, q]];
-grade /: (q_?quadvectorQ).grade[1, v_] := antisymmetric[3, q, grade[1, v]];
-
-
-
-
-(* \[Equal]comparison operator *)
-
-grade /: grade[_, m1_] == grade[_, m2_] := (m1 == m2);
 
 (*Dot;handle dot products where one or more factors is a multivector.*)
 
