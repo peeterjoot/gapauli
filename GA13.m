@@ -305,28 +305,20 @@ diracGradeSelect[m_, 0] :=
 
 vs[m_, 0] := (m[[1, 1]] + m[[2, 2]] - m[[3, 3]] - m[[4, 4]])/4;
 vs[m_, 1] := (m[[1, 4]] + m[[2, 3]] - m[[3, 2]] - m[[4, 1]])/4;
-vs[m_, 2] := -complexI (-m[[1, 4]] + m[[2, 3]] + m[[3, 2]] - 
-      m[[4, 1]])/4;
+vs[m_, 2] := -complexI (-m[[1, 4]] + m[[2, 3]] + m[[3, 2]] - m[[4, 1]])/4;
 vs[m_, 3] := (m[[1, 3]] - m[[2, 4]] - m[[3, 1]] + m[[4, 2]])/4;
-diracGradeSelect[m_, 
-   1] := (((vs[m, #] diracGammaMatrix[#]) & /@ (Range[4] - 1) ) // 
-    Total) ;
+diracGradeSelect[m_, 1] := (((vs[m, #] diracGammaMatrix[#]) & /@ (Range[4] - 1) ) // Total) ;
 
 ClearAll[bs, pairs]
-bs[m_, {1, 
-   2}] := -(m[[4, 4]] - m[[3, 3]] + m[[2, 2]] - m[[1, 1]]) complexI/4
-bs[m_, {0, 3}] := (m[[1, 3]] - m[[2, 4]] + m[[3, 1]] - m[[4, 2]])/4
-bs[m_, {0, 
-   2}] := -(-m[[1, 4]] + m[[2, 3]] - m[[3, 2]] + m[[4, 1]]) complexI/
-   4
-bs[m_, {0, 1}] := (m[[1, 4]] + m[[2, 3]] + m[[3, 2]] + m[[4, 1]])/4 
-bs[m_, {1, 3}] := (m[[1, 2]] - m[[2, 1]] + m[[3, 4]] - m[[4, 3]])/4
-bs[m_, {2, 3}] := 
- complexI (m[[1, 2]] + m[[2, 1]] +  m[[3, 4]] + m[[4, 3]])/4
+bs[m_, {1, 2}] := -complexI (m[[4, 4]] - m[[3, 3]] + m[[2, 2]] - m[[1, 1]]) /4
+bs[m_, {0, 3}] :=           (m[[1, 3]] - m[[2, 4]] + m[[3, 1]] - m[[4, 2]])/4
+bs[m_, {0, 2}] := -complexI (-m[[1, 4]] + m[[2, 3]] - m[[3, 2]] + m[[4, 1]]) / 4
+bs[m_, {0, 1}] :=           (m[[1, 4]] + m[[2, 3]] + m[[3, 2]] + m[[4, 1]])/4 
+bs[m_, {1, 3}] :=           (m[[1, 2]] - m[[2, 1]] + m[[3, 4]] - m[[4, 3]])/4
+bs[m_, {2, 3}] :=  complexI (m[[1, 2]] + m[[2, 1]] +  m[[3, 4]] + m[[4, 3]])/4
 
 pairs := {{1, 2}, {0, 3}, {0, 2}, {0, 1}, {1, 3}, {2, 3}};
-diracGradeSelect[m_, 2] := (((bs[m, #] diracGammaMatrix[# // First] . 
-          diracGammaMatrix[# // Last]) & /@ pairs) // Total) // Simplify ;
+diracGradeSelect[m_, 2] := (((bs[m, #] diracGammaMatrix[# // First] . diracGammaMatrix[# // Last]) & /@ pairs) // Total) // Simplify ;
 
 ClearAll[ts, triplets, trivectors]
 ts[m_, {0, 1, 2}] := -complexI (-m[[1, 1]] + m[[2, 2]] + m[[3, 3]] - m[[4, 4]])/ 4
@@ -335,11 +327,8 @@ ts[m_, {0, 2, 3}] := -complexI (-m[[1, 2]] - m[[2, 1]] + m[[3, 4]] + m[[4, 3]])/
 ts[m_, {1, 2, 3}] := -complexI (-m[[1, 3]] - m[[2, 4]] + m[[3, 1]] + m[[4, 2]])/ 4
 
 triplets := {{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, {1, 2, 3}}
-trivectors := 
-  diracGammaMatrix[# // First]. diracGammaMatrix[#[[2]]]. 
-     diracGammaMatrix[# // Last] & /@ triplets;
-diracGradeSelect[m_, 2] := ((bs[m, triplets[[#]]] trivectors[#] & /@ Range[4]) // Total) // Simplify ;
-
+trivectors := diracGammaMatrix[# // First].diracGammaMatrix[#[[2]]].diracGammaMatrix[# // Last] & /@ triplets;
+diracGradeSelect[m_, 3] := ((ts[m, triplets[[#]]] trivectors[[#]] & /@ Range[4]) // Total) // Simplify;
 
 diracPseudoscalar = 
   diracGammaMatrix[0].diracGammaMatrix[1].diracGammaMatrix[2].diracGammaMatrix[3];
