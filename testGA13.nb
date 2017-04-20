@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    144279,       3867]
-NotebookOptionsPosition[    137181,       3667]
-NotebookOutlinePosition[    141245,       3780]
-CellTagsIndexPosition[    140174,       3753]
+NotebookDataLength[    136890,       3682]
+NotebookOptionsPosition[    129747,       3481]
+NotebookOutlinePosition[    133811,       3594]
+CellTagsIndexPosition[    132740,       3567]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -43,9 +43,9 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"<<", " ", "GA13`"}], ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
-   RowBox[{"?", "GA13"}], "\[IndentingNewLine]", 
+   RowBox[{"?", "GA13"}], "\n", 
    RowBox[{"(*", 
-    RowBox[{"?", "grade"}], "*)"}], "\n", 
+    RowBox[{"?", "grade"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"?", "Scalar"}], "\n", 
    RowBox[{"?", "Vector"}], "\n", 
    RowBox[{"?", "Bivector"}], "\n", 
@@ -128,152 +128,152 @@ default without using one of TraditionalForm, DisplayForm, StandardForm \
 operator used in StandardForm that represents a basis vector).\\n\\n3) proper \
 packaging stuff:  private for internals.\\n\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.6990024059186296`*^9},
- CellTags->"Info23698988005-4614289"],
+ CellChangeTimes->{3.7017154360444307`*^9},
+ CellTags->"Info23701701035-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"Scalar[ v ] constructs a scalar grade quantity with value v.\"\
 \>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406002993*^9},
- CellTags->"Info33698988005-4614289"],
+ CellChangeTimes->{3.7017154362108727`*^9},
+ CellTags->"Info33701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"Vector[ v, n ], where n = {0,1,2,3} constructs a vector grade \
 quantity with value v in direction n.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024060785837`*^9},
- CellTags->"Info43698988006-4614289"],
+ CellChangeTimes->{3.701715436293936*^9},
+ CellTags->"Info43701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"Bivector[ v, n1, n2 ], where n1,n2 = {1,2,3} constructs a \
 bivector grade quantity with value v in the plane n1,n2.\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024061561413`*^9},
- CellTags->"Info53698988006-4614289"],
+ CellChangeTimes->{3.701715436381206*^9},
+ CellTags->"Info53701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"Trivector[ v, k, l, m ] constructs a trivector (pseudoscalar) \
 grade quantity scaled by v.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024062311296`*^9},
- CellTags->"Info63698988006-4614289"],
+ CellChangeTimes->{3.701715436465672*^9},
+ CellTags->"Info63701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"Quadvector[ v ] constructs a quadvector (pseudoscalar) grade \
 quantity scaled by v.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406307013*^9},
- CellTags->"Info73698988006-4614289"],
+ CellChangeTimes->{3.7017154365544*^9},
+ CellTags->"Info73701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeQ[ m, n ] tests if the multivector m is of grade n.  n = \
 -1 is used internally to represent values of more than one grade.\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406382289*^9},
- CellTags->"Info83698988006-4614289"],
+ CellChangeTimes->{3.7017154366377583`*^9},
+ CellTags->"Info83701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69900240645859*^9},
- CellTags->"Info93698988006-4614289"],
+ CellChangeTimes->{3.7017154367186813`*^9},
+ CellTags->"Info93701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"vectorQ[ m ] tests if the multivector m is of grade 1 (vector)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406537916*^9},
- CellTags->"Info103698988006-4614289"],
+ CellChangeTimes->{3.701715436804618*^9},
+ CellTags->"Info103701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"bivectorQ[ m ] tests if the multivector m is of grade 2 \
 (bivector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024066156282`*^9},
- CellTags->"Info113698988006-4614289"],
+ CellChangeTimes->{3.701715436895976*^9},
+ CellTags->"Info113701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"trivectorQ[ m ] tests if the multivector m is of grade 3 \
 (trivector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406697605*^9},
- CellTags->"Info123698988006-4614289"],
+ CellChangeTimes->{3.701715436986185*^9},
+ CellTags->"Info123701701036-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"quadvectorQ[ m ] tests if the multivector m is of grade 4 \
 (quadvector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002406775128*^9},
- CellTags->"Info133698988006-4614289"],
+ CellChangeTimes->{3.701715437073996*^9},
+ CellTags->"Info133701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"bladeQ[ m ] tests if the multivector is of a single \
 grade.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69900240684895*^9},
- CellTags->"Info143698988006-4614289"],
+ CellChangeTimes->{3.701715437161933*^9},
+ CellTags->"Info143701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeAnyQ[ ].  predicate pattern match for grade[ _ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024069242697`*^9},
- CellTags->"Info153698988006-4614289"],
+ CellChangeTimes->{3.701715437244961*^9},
+ CellTags->"Info153701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"notGradeQ[ ].  predicate pattern match for !grade[ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002407000393*^9},
- CellTags->"Info163698988006-4614289"],
+ CellChangeTimes->{3.701715437331849*^9},
+ CellTags->"Info163701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"GradeSelection[ m, k ] selects the grade k elements from the \
 multivector m.  The selected result is represented internally as a grade[ ] \
 type (so scalar selection is not just a number).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.699002407074327*^9},
- CellTags->"Info173698988007-4614289"],
+ CellChangeTimes->{3.701715437552649*^9},
+ CellTags->"Info173701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarSelection[ m ] selects the grade 0 (scalar) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type (not just a number or an expression).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.6990024071515408`*^9},
- CellTags->"Info183698988007-4614289"],
+ CellChangeTimes->{3.70171543793789*^9},
+ CellTags->"Info183701701037-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"VectorSelection[ m ] selects the grade 1 (vector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024072254744`*^9},
- CellTags->"Info193698988007-4614289"],
+ CellChangeTimes->{3.701715438150763*^9},
+ CellTags->"Info193701701038-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"BivectorSelection[ m ] selects the grade 2 (bivector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002407301076*^9},
- CellTags->"Info203698988007-4614289"],
+ CellChangeTimes->{3.70171543853601*^9},
+ CellTags->"Info203701701038-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"TrivectorSelection[ m ] selects the grade 3 (trivector) \
 element from the multivector m if it exists.  The selected result is \
 represented internally as a grade[ ] type (not just an number or expression).\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024075400543`*^9},
- CellTags->"Info213698988007-4614289"],
+ CellChangeTimes->{3.701715438803545*^9},
+ CellTags->"Info213701701038-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"QuadvectorSelection[ m ] selects the grade 4 (trivector) \
 element from the multivector m if it exists.  The selected result is \
 represented internally as a grade[ ] type (not just an number or expression).\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69900240770977*^9},
- CellTags->"Info223698988007-4614289"],
+ CellChangeTimes->{3.70171543908893*^9},
+ CellTags->"Info223701701038-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ \
 Esc ] m1 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.699002407821656*^9},
- CellTags->"Info233698988007-4614289"],
+ CellChangeTimes->{3.701715439186009*^9},
+ CellTags->"Info233701701039-6642900"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc \
 ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6990024079004927`*^9},
- CellTags->"Info243698988007-4614289"]
+ CellChangeTimes->{3.701715439537774*^9},
+ CellTags->"Info243701701039-6642900"]
 }, Open  ]]
 }, Open  ]],
 
@@ -486,7 +486,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"mq", "=", "e0123"}], ";"}], "\[IndentingNewLine]", 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\n", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -702,7 +702,7 @@ Cell[BoxData[{
   "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{"Grade", " ", "selection", " ", 
-    RowBox[{"tests", "."}]}], "*)"}], "\[IndentingNewLine]"}], "\n", 
+    RowBox[{"tests", "."}]}], "*)"}], "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -738,7 +738,7 @@ Cell[BoxData[{
      RowBox[{
      "e1", ",", "e2", ",", "e3", ",", "e23", ",", "e31", ",", "e12", ",", 
       "e123", ",", "mvb", ",", "mvt", ",", "mbt", ",", "mvbt"}], "}"}]}], 
-   ";"}], "\[IndentingNewLine]"}], "\n", 
+   ";"}], "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -774,7 +774,7 @@ Cell[BoxData[{
      RowBox[{
      "es", ",", "e23", ",", "e31", ",", "e12", ",", "e123", ",", "msb", ",", 
       "mst", ",", "mbt", ",", "msbt"}], "}"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -810,7 +810,7 @@ Cell[BoxData[{
      RowBox[{
      "es", ",", "e1", ",", "e2", ",", "e3", ",", "e123", ",", "msv", ",", 
       "mst", ",", "mvt", ",", "msvt"}], "}"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1216,7 +1216,7 @@ Cell[BoxData[{
       RowBox[{"{", 
        RowBox[{"es", ",", "mvbt", ",", 
         RowBox[{"e1", "+", "e23", "+", "e123"}]}], "}"}]}], 
-     "\[IndentingNewLine]", "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1894,7 +1894,7 @@ Cell[BoxData[{
      "es", ",", "e1", ",", "e2", ",", "e3", ",", "e23", ",", "e31", ",", 
       "e12", ",", "e123", ",", "msv", ",", "msb", ",", "mst", ",", "mvb", ",",
        "mvt", ",", "mbt", ",", "msvb", ",", "msvt", ",", "msbt", ",", 
-      "mvbt"}], "}"}]}], "]"}], "\n"}], "\[IndentingNewLine]", 
+      "mvbt"}], "}"}]}], "]"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{"Column", "[", 
    RowBox[{
@@ -1906,12 +1906,24 @@ Cell[BoxData[{
      "es", ",", "e1", ",", "e2", ",", "e3", ",", "e23", ",", "e31", ",", 
       "e12", ",", "e123", ",", "msv", ",", "msb", ",", "mst", ",", "mvb", ",",
        "mvt", ",", "mbt", ",", "msvb", ",", "msvt", ",", "msbt", ",", 
-      "mvbt"}], "}"}]}], "]"}], "\n"}], "\[IndentingNewLine]", 
+      "mvbt"}], "}"}]}], "]"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"Column", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"#", "//", "DisplayForm"}], ")"}], "&"}], "/@", 
+    RowBox[{"{", 
+     RowBox[{
+     "es", ",", "e1", ",", "e2", ",", "e3", ",", "e23", ",", "e31", ",", 
+      "e12", ",", "e123", ",", "msv", ",", "msb", ",", "mst", ",", "mvb", ",",
+       "mvt", ",", "mbt", ",", "msvb", ",", "msvt", ",", "msbt", ",", 
+      "mvbt"}], "}"}]}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"Column", "[", 
   RowBox[{
    RowBox[{
-    RowBox[{"(", 
-     RowBox[{"#", "//", "DisplayForm"}], ")"}], "&"}], "/@", 
+    RowBox[{"(", "#", ")"}], "&"}], "/@", 
    RowBox[{"{", 
     RowBox[{
     "es", ",", "e1", ",", "e2", ",", "e3", ",", "e23", ",", "e31", ",", "e12",
@@ -1938,7 +1950,7 @@ Cell[BoxData[{
    3.691795841721541*^9, 3.691795844686182*^9}, {3.698953545090942*^9, 
    3.698953545096994*^9}, {3.6989555835019712`*^9, 3.698955644832675*^9}, {
    3.6989558602864237`*^9, 3.698955980094895*^9}, 3.6989703824377327`*^9, 
-   3.698972405315529*^9}],
+   3.698972405315529*^9, {3.701715466038419*^9, 3.701715470477029*^9}}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2073,7 +2085,8 @@ Cell[BoxData[
    3.691794978608439*^9, 3.691795009809869*^9, {3.691795199059567*^9, 
    3.691795223228322*^9}, 3.6917954895859947`*^9, 3.6917955468865633`*^9, 
    3.691795602693726*^9, {3.691795829638823*^9, 3.691795848393449*^9}, 
-   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9}],
+   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9, 
+   3.7017154744686127`*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2244,7 +2257,8 @@ Cell[BoxData[
    3.691794978608439*^9, 3.691795009809869*^9, {3.691795199059567*^9, 
    3.691795223228322*^9}, 3.6917954895859947`*^9, 3.6917955468865633`*^9, 
    3.691795602693726*^9, {3.691795829638823*^9, 3.691795848393449*^9}, 
-   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952842205*^9}],
+   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9, 
+   3.7017154745376377`*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2364,7 +2378,8 @@ Cell[BoxData[
    3.691794978608439*^9, 3.691795009809869*^9, {3.691795199059567*^9, 
    3.691795223228322*^9}, 3.6917954895859947`*^9, 3.6917955468865633`*^9, 
    3.691795602693726*^9, {3.691795829638823*^9, 3.691795848393449*^9}, 
-   3.69218483024903*^9, 3.698970392852908*^9, 3.6989719528570957`*^9}],
+   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9, 
+   3.701715474547435*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2445,7 +2460,90 @@ Cell[BoxData[
    3.691794978608439*^9, 3.691795009809869*^9, {3.691795199059567*^9, 
    3.691795223228322*^9}, 3.6917954895859947`*^9, 3.6917955468865633`*^9, 
    3.691795602693726*^9, {3.691795829638823*^9, 3.691795848393449*^9}, 
-   3.69218483024903*^9, 3.698970392852908*^9, 3.69897195286602*^9}]
+   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9, 
+   3.7017154745869207`*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "1"]},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "2"]},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "3"]},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]},
+    {
+     RowBox[{"-", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"13\"\>"]}]},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "\<\"12\"\>"]},
+    {
+     SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox["\<\"\[Gamma]\"\>", "1"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"123\"\>"], "+", 
+      SubscriptBox["\<\"\[Gamma]\"\>", "\<\"23\"\>"]}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{
+  3.691791551402295*^9, {3.691791594869808*^9, 3.6917916458927193`*^9}, {
+   3.691791709440235*^9, 3.691791720571684*^9}, {3.691791768503936*^9, 
+   3.69179179516475*^9}, 3.6917920865475893`*^9, {3.69179258229484*^9, 
+   3.6917925900896387`*^9}, {3.691792687344152*^9, 3.691792708165069*^9}, {
+   3.691792841796733*^9, 3.691792949602928*^9}, {3.691792982818384*^9, 
+   3.691793028460248*^9}, 3.691793150190076*^9, {3.691793193380019*^9, 
+   3.691793222383069*^9}, {3.6917932775491123`*^9, 3.691793316206334*^9}, 
+   3.69179336027372*^9, {3.6917934288920307`*^9, 3.691793456198935*^9}, {
+   3.6917934965731*^9, 3.691793543089006*^9}, 3.69179357632473*^9, {
+   3.691793611881084*^9, 3.691793659967074*^9}, 3.691794147805304*^9, {
+   3.691794194160804*^9, 3.691794230413221*^9}, 3.691794309990511*^9, 
+   3.691794347202363*^9, {3.6917944697362633`*^9, 3.69179448721546*^9}, {
+   3.6917945202197237`*^9, 3.691794552050255*^9}, 3.691794642658412*^9, 
+   3.691794680130802*^9, 3.69179475428813*^9, 3.691794831212236*^9, 
+   3.691794978608439*^9, 3.691795009809869*^9, {3.691795199059567*^9, 
+   3.691795223228322*^9}, 3.6917954895859947`*^9, 3.6917955468865633`*^9, 
+   3.691795602693726*^9, {3.691795829638823*^9, 3.691795848393449*^9}, 
+   3.69218483024903*^9, 3.698970392852908*^9, 3.698971952774619*^9, 
+   3.7017154745933943`*^9}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -2963,54 +3061,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"Vector", "[", 
         RowBox[{"1", ",", "4"}], "]"}], "**", 
-       RowBox[{"grade", "[", 
-        RowBox[{"0", ",", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{
-              SuperscriptBox["g", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", "0", ",", "0"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", 
-             RowBox[{
-              SuperscriptBox["g", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", "0"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", "0", ",", 
-             RowBox[{
-              SuperscriptBox["g", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0"}], 
-            "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", "0", ",", "0", ",", 
-             RowBox[{
-              SuperscriptBox["g", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "}"}]}], 
-          "}"}]}], "]"}]}], "+", 
+       RowBox[{
+        SuperscriptBox["g", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
       RowBox[{
        SubscriptBox["\<\"\[Gamma]\"\>", "3"], " ", 
        RowBox[{
@@ -3064,171 +3122,49 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"Vector", "[", 
         RowBox[{"1", ",", "4"}], "]"}], "**", 
-       RowBox[{"grade", "[", 
-        RowBox[{"1", ",", 
-         RowBox[{"{", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "3"], " ", 
           RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{
-              SuperscriptBox["e", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", 
-             RowBox[{
-              SuperscriptBox["h", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{
-                SuperscriptBox["f", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["g", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-              "]"}]}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", 
-             RowBox[{
-              SuperscriptBox["e", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{
-                SuperscriptBox["f", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-               RowBox[{
-                SuperscriptBox["g", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "]"}], 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["h", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], "}"}], 
-           ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["h", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["f", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-               RowBox[{
-                SuperscriptBox["g", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "]"}], 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["e", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-             "0"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["f", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["g", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-              "]"}], ",", 
-             RowBox[{
-              SuperscriptBox["h", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["e", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-            "}"}]}], "}"}]}], "]"}]}], "+", 
+           SuperscriptBox["e", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "1"], " ", 
+          RowBox[{
+           SuperscriptBox["f", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "2"], " ", 
+          RowBox[{
+           SuperscriptBox["g", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "3"], " ", 
+          RowBox[{
+           SuperscriptBox["h", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], ")"}]}], 
+      "+", 
       RowBox[{
        SubscriptBox["\<\"\[Gamma]\"\>", "\<\"30\"\>"], " ", 
        RowBox[{
@@ -3353,171 +3289,49 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"Vector", "[", 
         RowBox[{"1", ",", "4"}], "]"}], "**", 
-       RowBox[{"grade", "[", 
-        RowBox[{"1", ",", 
-         RowBox[{"{", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "3"], " ", 
           RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{
-              SuperscriptBox["e", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", 
-             RowBox[{
-              SuperscriptBox["h", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{
-                SuperscriptBox["f", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["g", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-              "]"}]}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", 
-             RowBox[{
-              SuperscriptBox["e", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{
-                SuperscriptBox["f", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
-               RowBox[{
-                SuperscriptBox["g", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "]"}], 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["h", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], "}"}], 
-           ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["h", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["f", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-               RowBox[{
-                SuperscriptBox["g", 
-                 TagBox[
-                  RowBox[{"(", 
-                   RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                  Derivative],
-                 MultilineFunction->None], "[", 
-                RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "]"}], 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["e", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-             "0"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"complex", "[", 
-              RowBox[{
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["f", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ",", 
-               RowBox[{"-", 
-                RowBox[{
-                 SuperscriptBox["g", 
-                  TagBox[
-                   RowBox[{"(", 
-                    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                   Derivative],
-                  MultilineFunction->None], "[", 
-                 RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-              "]"}], ",", 
-             RowBox[{
-              SuperscriptBox["h", 
-               TagBox[
-                RowBox[{"(", 
-                 RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                Derivative],
-               MultilineFunction->None], "[", 
-              RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "0", 
-             ",", 
-             RowBox[{"-", 
-              RowBox[{
-               SuperscriptBox["e", 
-                TagBox[
-                 RowBox[{"(", 
-                  RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
-                 Derivative],
-                MultilineFunction->None], "[", 
-               RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
-            "}"}]}], "}"}]}], "]"}]}], "-", 
+           SuperscriptBox["e", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "1"], " ", 
+          RowBox[{
+           SuperscriptBox["f", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "2"], " ", 
+          RowBox[{
+           SuperscriptBox["g", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "+", 
+         RowBox[{
+          SubscriptBox["\<\"\[Gamma]\"\>", "3"], " ", 
+          RowBox[{
+           SuperscriptBox["h", 
+            TagBox[
+             RowBox[{"(", 
+              RowBox[{"0", ",", "0", ",", "0", ",", "1"}], ")"}],
+             Derivative],
+            MultilineFunction->None], "[", 
+           RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], ")"}]}], 
+      "-", 
       RowBox[{
        SuperscriptBox["h", 
         TagBox[
@@ -3645,7 +3459,7 @@ Cell[BoxData[
   "Grid"]], "Output",
  CellChangeTimes->{
   3.6952978536169853`*^9, 3.6953092274356537`*^9, 3.698971197802969*^9, {
-   3.698971250687028*^9, 3.698971289539538*^9}}]
+   3.698971250687028*^9, 3.698971289539538*^9}, 3.701715774105824*^9}]
 }, Open  ]],
 
 Cell[BoxData[""], "Input",
@@ -3679,102 +3493,102 @@ StyleDefinitions->"Default.nb"
 (* Internal cache information *)
 (*CellTagsOutline
 CellTagsIndex->{
- "Info23698988005-4614289"->{
+ "Info23701701035-6642900"->{
   Cell[3416, 87, 3207, 44, 1911, "Print",
-   CellTags->"Info23698988005-4614289"]},
- "Info33698988005-4614289"->{
-  Cell[6626, 133, 209, 4, 62, "Print",
-   CellTags->"Info33698988005-4614289"]},
- "Info43698988006-4614289"->{
-  Cell[6838, 139, 250, 4, 62, "Print",
-   CellTags->"Info43698988006-4614289"]},
- "Info53698988006-4614289"->{
-  Cell[7091, 145, 268, 5, 62, "Print",
-   CellTags->"Info53698988006-4614289"]},
- "Info63698988006-4614289"->{
-  Cell[7362, 152, 240, 4, 62, "Print",
-   CellTags->"Info63698988006-4614289"]},
- "Info73698988006-4614289"->{
-  Cell[7605, 158, 231, 4, 62, "Print",
-   CellTags->"Info73698988006-4614289"]},
- "Info83698988006-4614289"->{
-  Cell[7839, 164, 279, 5, 62, "Print",
-   CellTags->"Info83698988006-4614289"]},
- "Info93698988006-4614289"->{
-  Cell[8121, 171, 210, 4, 62, "Print",
-   CellTags->"Info93698988006-4614289"]},
- "Info103698988006-4614289"->{
-  Cell[8334, 177, 212, 4, 62, "Print",
-   CellTags->"Info103698988006-4614289"]},
- "Info113698988006-4614289"->{
-  Cell[8549, 183, 218, 4, 62, "Print",
-   CellTags->"Info113698988006-4614289"]},
- "Info123698988006-4614289"->{
-  Cell[8770, 189, 218, 4, 62, "Print",
-   CellTags->"Info123698988006-4614289"]},
- "Info133698988006-4614289"->{
-  Cell[8991, 195, 220, 4, 62, "Print",
-   CellTags->"Info133698988006-4614289"]},
- "Info143698988006-4614289"->{
-  Cell[9214, 201, 207, 4, 62, "Print",
-   CellTags->"Info143698988006-4614289"]},
- "Info153698988006-4614289"->{
-  Cell[9424, 207, 206, 4, 62, "Print",
-   CellTags->"Info153698988006-4614289"]},
- "Info163698988006-4614289"->{
-  Cell[9633, 213, 203, 4, 62, "Print",
-   CellTags->"Info163698988006-4614289"]},
- "Info173698988007-4614289"->{
-  Cell[9839, 219, 339, 6, 87, "Print",
-   CellTags->"Info173698988007-4614289"]},
- "Info183698988007-4614289"->{
-  Cell[10181, 227, 342, 6, 87, "Print",
-   CellTags->"Info183698988007-4614289"]},
- "Info193698988007-4614289"->{
-  Cell[10526, 235, 303, 5, 62, "Print",
-   CellTags->"Info193698988007-4614289"]},
- "Info203698988007-4614289"->{
-  Cell[10832, 242, 305, 5, 62, "Print",
-   CellTags->"Info203698988007-4614289"]},
- "Info213698988007-4614289"->{
-  Cell[11140, 249, 358, 6, 87, "Print",
-   CellTags->"Info213698988007-4614289"]},
- "Info223698988007-4614289"->{
-  Cell[11501, 257, 356, 6, 87, "Print",
-   CellTags->"Info223698988007-4614289"]},
- "Info233698988007-4614289"->{
-  Cell[11860, 265, 235, 4, 62, "Print",
-   CellTags->"Info233698988007-4614289"]},
- "Info243698988007-4614289"->{
-  Cell[12098, 271, 246, 4, 62, "Print",
-   CellTags->"Info243698988007-4614289"]}
+   CellTags->"Info23701701035-6642900"]},
+ "Info33701701036-6642900"->{
+  Cell[6626, 133, 211, 4, 62, "Print",
+   CellTags->"Info33701701036-6642900"]},
+ "Info43701701036-6642900"->{
+  Cell[6840, 139, 248, 4, 62, "Print",
+   CellTags->"Info43701701036-6642900"]},
+ "Info53701701036-6642900"->{
+  Cell[7091, 145, 266, 5, 62, "Print",
+   CellTags->"Info53701701036-6642900"]},
+ "Info63701701036-6642900"->{
+  Cell[7360, 152, 238, 4, 62, "Print",
+   CellTags->"Info63701701036-6642900"]},
+ "Info73701701036-6642900"->{
+  Cell[7601, 158, 229, 4, 62, "Print",
+   CellTags->"Info73701701036-6642900"]},
+ "Info83701701036-6642900"->{
+  Cell[7833, 164, 281, 5, 62, "Print",
+   CellTags->"Info83701701036-6642900"]},
+ "Info93701701036-6642900"->{
+  Cell[8117, 171, 213, 4, 62, "Print",
+   CellTags->"Info93701701036-6642900"]},
+ "Info103701701036-6642900"->{
+  Cell[8333, 177, 212, 4, 62, "Print",
+   CellTags->"Info103701701036-6642900"]},
+ "Info113701701036-6642900"->{
+  Cell[8548, 183, 216, 4, 62, "Print",
+   CellTags->"Info113701701036-6642900"]},
+ "Info123701701036-6642900"->{
+  Cell[8767, 189, 218, 4, 62, "Print",
+   CellTags->"Info123701701036-6642900"]},
+ "Info133701701037-6642900"->{
+  Cell[8988, 195, 220, 4, 62, "Print",
+   CellTags->"Info133701701037-6642900"]},
+ "Info143701701037-6642900"->{
+  Cell[9211, 201, 208, 4, 62, "Print",
+   CellTags->"Info143701701037-6642900"]},
+ "Info153701701037-6642900"->{
+  Cell[9422, 207, 204, 4, 62, "Print",
+   CellTags->"Info153701701037-6642900"]},
+ "Info163701701037-6642900"->{
+  Cell[9629, 213, 203, 4, 62, "Print",
+   CellTags->"Info163701701037-6642900"]},
+ "Info173701701037-6642900"->{
+  Cell[9835, 219, 339, 6, 87, "Print",
+   CellTags->"Info173701701037-6642900"]},
+ "Info183701701037-6642900"->{
+  Cell[10177, 227, 339, 6, 87, "Print",
+   CellTags->"Info183701701037-6642900"]},
+ "Info193701701038-6642900"->{
+  Cell[10519, 235, 301, 5, 62, "Print",
+   CellTags->"Info193701701038-6642900"]},
+ "Info203701701038-6642900"->{
+  Cell[10823, 242, 304, 5, 62, "Print",
+   CellTags->"Info203701701038-6642900"]},
+ "Info213701701038-6642900"->{
+  Cell[11130, 249, 356, 6, 87, "Print",
+   CellTags->"Info213701701038-6642900"]},
+ "Info223701701038-6642900"->{
+  Cell[11489, 257, 356, 6, 87, "Print",
+   CellTags->"Info223701701038-6642900"]},
+ "Info233701701039-6642900"->{
+  Cell[11848, 265, 235, 4, 62, "Print",
+   CellTags->"Info233701701039-6642900"]},
+ "Info243701701039-6642900"->{
+  Cell[12086, 271, 244, 4, 62, "Print",
+   CellTags->"Info243701701039-6642900"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info23698988005-4614289", 137588, 3681},
- {"Info33698988005-4614289", 137702, 3684},
- {"Info43698988006-4614289", 137813, 3687},
- {"Info53698988006-4614289", 137924, 3690},
- {"Info63698988006-4614289", 138035, 3693},
- {"Info73698988006-4614289", 138146, 3696},
- {"Info83698988006-4614289", 138257, 3699},
- {"Info93698988006-4614289", 138368, 3702},
- {"Info103698988006-4614289", 138480, 3705},
- {"Info113698988006-4614289", 138593, 3708},
- {"Info123698988006-4614289", 138706, 3711},
- {"Info133698988006-4614289", 138819, 3714},
- {"Info143698988006-4614289", 138932, 3717},
- {"Info153698988006-4614289", 139045, 3720},
- {"Info163698988006-4614289", 139158, 3723},
- {"Info173698988007-4614289", 139271, 3726},
- {"Info183698988007-4614289", 139384, 3729},
- {"Info193698988007-4614289", 139498, 3732},
- {"Info203698988007-4614289", 139612, 3735},
- {"Info213698988007-4614289", 139726, 3738},
- {"Info223698988007-4614289", 139840, 3741},
- {"Info233698988007-4614289", 139954, 3744},
- {"Info243698988007-4614289", 140068, 3747}
+ {"Info23701701035-6642900", 130154, 3495},
+ {"Info33701701036-6642900", 130268, 3498},
+ {"Info43701701036-6642900", 130379, 3501},
+ {"Info53701701036-6642900", 130490, 3504},
+ {"Info63701701036-6642900", 130601, 3507},
+ {"Info73701701036-6642900", 130712, 3510},
+ {"Info83701701036-6642900", 130823, 3513},
+ {"Info93701701036-6642900", 130934, 3516},
+ {"Info103701701036-6642900", 131046, 3519},
+ {"Info113701701036-6642900", 131159, 3522},
+ {"Info123701701036-6642900", 131272, 3525},
+ {"Info133701701037-6642900", 131385, 3528},
+ {"Info143701701037-6642900", 131498, 3531},
+ {"Info153701701037-6642900", 131611, 3534},
+ {"Info163701701037-6642900", 131724, 3537},
+ {"Info173701701037-6642900", 131837, 3540},
+ {"Info183701701037-6642900", 131950, 3543},
+ {"Info193701701038-6642900", 132064, 3546},
+ {"Info203701701038-6642900", 132178, 3549},
+ {"Info213701701038-6642900", 132292, 3552},
+ {"Info223701701038-6642900", 132406, 3555},
+ {"Info233701701039-6642900", 132520, 3558},
+ {"Info243701701039-6642900", 132634, 3561}
  }
 *)
 (*NotebookFileOutline
@@ -3784,90 +3598,91 @@ Cell[CellGroupData[{
 Cell[1228, 39, 2163, 44, 1010, "Input"],
 Cell[CellGroupData[{
 Cell[3416, 87, 3207, 44, 1911, "Print",
- CellTags->"Info23698988005-4614289"],
-Cell[6626, 133, 209, 4, 62, "Print",
- CellTags->"Info33698988005-4614289"],
-Cell[6838, 139, 250, 4, 62, "Print",
- CellTags->"Info43698988006-4614289"],
-Cell[7091, 145, 268, 5, 62, "Print",
- CellTags->"Info53698988006-4614289"],
-Cell[7362, 152, 240, 4, 62, "Print",
- CellTags->"Info63698988006-4614289"],
-Cell[7605, 158, 231, 4, 62, "Print",
- CellTags->"Info73698988006-4614289"],
-Cell[7839, 164, 279, 5, 62, "Print",
- CellTags->"Info83698988006-4614289"],
-Cell[8121, 171, 210, 4, 62, "Print",
- CellTags->"Info93698988006-4614289"],
-Cell[8334, 177, 212, 4, 62, "Print",
- CellTags->"Info103698988006-4614289"],
-Cell[8549, 183, 218, 4, 62, "Print",
- CellTags->"Info113698988006-4614289"],
-Cell[8770, 189, 218, 4, 62, "Print",
- CellTags->"Info123698988006-4614289"],
-Cell[8991, 195, 220, 4, 62, "Print",
- CellTags->"Info133698988006-4614289"],
-Cell[9214, 201, 207, 4, 62, "Print",
- CellTags->"Info143698988006-4614289"],
-Cell[9424, 207, 206, 4, 62, "Print",
- CellTags->"Info153698988006-4614289"],
-Cell[9633, 213, 203, 4, 62, "Print",
- CellTags->"Info163698988006-4614289"],
-Cell[9839, 219, 339, 6, 87, "Print",
- CellTags->"Info173698988007-4614289"],
-Cell[10181, 227, 342, 6, 87, "Print",
- CellTags->"Info183698988007-4614289"],
-Cell[10526, 235, 303, 5, 62, "Print",
- CellTags->"Info193698988007-4614289"],
-Cell[10832, 242, 305, 5, 62, "Print",
- CellTags->"Info203698988007-4614289"],
-Cell[11140, 249, 358, 6, 87, "Print",
- CellTags->"Info213698988007-4614289"],
-Cell[11501, 257, 356, 6, 87, "Print",
- CellTags->"Info223698988007-4614289"],
-Cell[11860, 265, 235, 4, 62, "Print",
- CellTags->"Info233698988007-4614289"],
-Cell[12098, 271, 246, 4, 62, "Print",
- CellTags->"Info243698988007-4614289"]
+ CellTags->"Info23701701035-6642900"],
+Cell[6626, 133, 211, 4, 62, "Print",
+ CellTags->"Info33701701036-6642900"],
+Cell[6840, 139, 248, 4, 62, "Print",
+ CellTags->"Info43701701036-6642900"],
+Cell[7091, 145, 266, 5, 62, "Print",
+ CellTags->"Info53701701036-6642900"],
+Cell[7360, 152, 238, 4, 62, "Print",
+ CellTags->"Info63701701036-6642900"],
+Cell[7601, 158, 229, 4, 62, "Print",
+ CellTags->"Info73701701036-6642900"],
+Cell[7833, 164, 281, 5, 62, "Print",
+ CellTags->"Info83701701036-6642900"],
+Cell[8117, 171, 213, 4, 62, "Print",
+ CellTags->"Info93701701036-6642900"],
+Cell[8333, 177, 212, 4, 62, "Print",
+ CellTags->"Info103701701036-6642900"],
+Cell[8548, 183, 216, 4, 62, "Print",
+ CellTags->"Info113701701036-6642900"],
+Cell[8767, 189, 218, 4, 62, "Print",
+ CellTags->"Info123701701036-6642900"],
+Cell[8988, 195, 220, 4, 62, "Print",
+ CellTags->"Info133701701037-6642900"],
+Cell[9211, 201, 208, 4, 62, "Print",
+ CellTags->"Info143701701037-6642900"],
+Cell[9422, 207, 204, 4, 62, "Print",
+ CellTags->"Info153701701037-6642900"],
+Cell[9629, 213, 203, 4, 62, "Print",
+ CellTags->"Info163701701037-6642900"],
+Cell[9835, 219, 339, 6, 87, "Print",
+ CellTags->"Info173701701037-6642900"],
+Cell[10177, 227, 339, 6, 87, "Print",
+ CellTags->"Info183701701037-6642900"],
+Cell[10519, 235, 301, 5, 62, "Print",
+ CellTags->"Info193701701038-6642900"],
+Cell[10823, 242, 304, 5, 62, "Print",
+ CellTags->"Info203701701038-6642900"],
+Cell[11130, 249, 356, 6, 87, "Print",
+ CellTags->"Info213701701038-6642900"],
+Cell[11489, 257, 356, 6, 87, "Print",
+ CellTags->"Info223701701038-6642900"],
+Cell[11848, 265, 235, 4, 62, "Print",
+ CellTags->"Info233701701039-6642900"],
+Cell[12086, 271, 244, 4, 62, "Print",
+ CellTags->"Info243701701039-6642900"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12393, 281, 117, 1, 65, "Subsection"],
-Cell[12513, 284, 34039, 998, 5350, "Input"],
-Cell[46555, 1284, 46, 0, 31, "Need to generalize this to Cl(1,3)"]
+Cell[12379, 281, 117, 1, 65, "Subsection"],
+Cell[12499, 284, 34039, 998, 5350, "Input"],
+Cell[46541, 1284, 46, 0, 31, "Need to generalize this to Cl(1,3)"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[46638, 1289, 123, 1, 65, "Subsection"],
-Cell[46764, 1292, 21360, 510, 3676, "Input"]
+Cell[46624, 1289, 123, 1, 65, "Subsection"],
+Cell[46750, 1292, 21360, 510, 3676, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[68161, 1807, 172, 3, 65, "Subsection"],
+Cell[68147, 1807, 172, 3, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[68358, 1814, 5393, 126, 917, "Input"],
-Cell[73754, 1942, 5619, 133, 173, "Output"],
-Cell[79376, 2077, 5078, 169, 497, "Output"],
-Cell[84457, 2248, 4455, 118, 485, "Output"],
-Cell[88915, 2368, 3223, 79, 497, "Output"]
+Cell[68344, 1814, 5885, 138, 979, "Input"],
+Cell[74232, 1954, 5647, 134, 173, "Output"],
+Cell[79882, 2090, 5106, 170, 497, "Output"],
+Cell[84991, 2262, 4479, 119, 485, "Output"],
+Cell[89473, 2383, 3252, 80, 497, "Output"],
+Cell[92728, 2465, 3252, 80, 497, "Output"]
 }, Open  ]],
-Cell[92153, 2450, 245, 5, 48, "Input"]
+Cell[95995, 2548, 245, 5, 48, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[92435, 2460, 121, 1, 65, "Subsection"],
+Cell[96277, 2558, 121, 1, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[92581, 2465, 7027, 180, 917, "Input"],
-Cell[99611, 2647, 1303, 34, 80, "Output"],
-Cell[100917, 2683, 971, 23, 48, "Output"],
-Cell[101891, 2708, 505, 8, 48, "Output"]
+Cell[96423, 2563, 7027, 180, 917, "Input"],
+Cell[103453, 2745, 1303, 34, 80, "Output"],
+Cell[104759, 2781, 971, 23, 48, "Output"],
+Cell[105733, 2806, 505, 8, 48, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[102445, 2722, 186, 2, 65, "Subsection"],
+Cell[106287, 2820, 186, 2, 65, "Subsection"],
 Cell[CellGroupData[{
-Cell[102656, 2728, 8028, 225, 1692, "Input"],
-Cell[110687, 2955, 25657, 692, 957, "Output"]
+Cell[106498, 2826, 8028, 225, 1692, "Input"],
+Cell[114529, 3053, 14381, 408, 539, "Output"]
 }, Open  ]],
-Cell[136359, 3650, 734, 11, 82, "Input"],
-Cell[137096, 3663, 69, 1, 48, "Input"]
+Cell[128925, 3464, 734, 11, 48, "Input"],
+Cell[129662, 3477, 69, 1, 48, "Input"]
 }, Open  ]]
 }
 ]

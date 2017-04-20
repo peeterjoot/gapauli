@@ -394,14 +394,14 @@ GAdisplay[ v_grade, how_ ] :=
 
    http://mathematica.stackexchange.com/a/137007/10
  *)
-{D, TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl};
-
+{D, TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl, Format};
 
 Unprotect[ TraditionalForm, DisplayForm, StandardForm ] ;
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
+Format[ m_grade ] := GAdisplay[ m, 2 ] ;
 StandardForm[ m_grade ] := GAdisplay[ m, 3 ] ;
-Protect[ TraditionalForm, DisplayForm, StandardForm, D ] ;
+Protect[ TraditionalForm, DisplayForm, StandardForm ] ;
 
 Unprotect[ D, Grad, Div, Curl, Vcurl ];
 D[ m_grade, u_ ] := grade[ m // First, 

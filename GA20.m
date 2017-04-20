@@ -247,11 +247,19 @@ GAdisplay[ v_grade, how_ ] :=
     displayMapping ] ;
 (*End[ "`Private`" ]*)
 
-Unprotect[ TraditionalForm, DisplayForm, StandardForm ] ;
+(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
+   been loaded:
+
+   http://mathematica.stackexchange.com/a/137007/10
+ *)
+{D, TraditionalForm, DisplayForm, StandardForm, Format};
+
+Unprotect[ TraditionalForm, DisplayForm, StandardForm, Format ] ;
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
+Format[ m_grade ] := GAdisplay[ m, 2 ] ;
 StandardForm[ m_grade ] := GAdisplay[ m, 3 ] ;
-Protect[ TraditionalForm, DisplayForm, StandardForm ] ;
+Protect[ TraditionalForm, DisplayForm, StandardForm, Format ] ;
 
 Protect[ Scalar, Vector, Bivector,
 GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, e,

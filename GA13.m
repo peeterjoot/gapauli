@@ -522,21 +522,20 @@ GAdisplay[v_grade, how_] :=
 (* Must reference any global symbol (or some of them) before Unprotecting it,since it may not have been loaded:
    http://mathematica.stackexchange.com/a/137007/10 
  *)
-{D,
-  TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl};
+{D, TraditionalForm, DisplayForm, StandardForm, Format, Grad, Div, Curl};
 
-
-Unprotect[TraditionalForm, DisplayForm, StandardForm];
+Unprotect[TraditionalForm, DisplayForm, StandardForm, Format, D];
 TraditionalForm[m_grade] := ((GAdisplay[m, 2]) // TraditionalForm);
 DisplayForm[m_grade] := GAdisplay[m, 2];
+Format[m_grade] := GAdisplay[m, 2];
 StandardForm[m_grade] := GAdisplay[m, 3];
-Protect[TraditionalForm, DisplayForm, StandardForm, D];
 
 Unprotect[D, Grad, Div, Curl, Vcurl];
 D[m_grade, u_] :=
   grade[m // First,
    Map[complex[D[# // real // Simplify, u],
       D[# // imag // Simplify, u]] &, m // Last, {2}]];
+Protect[TraditionalForm, DisplayForm, StandardForm, Format, D];
 
 (* Grad::
 usage="grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to coordinates ct,x,y,z..";
@@ -559,7 +558,7 @@ grade /: Curl[grade[2, m_], u_List] := Grad[grade[2, m], u] // TrivectorSelectio
 grade /: Curl[grade[3, m_], u_List] := Grad[grade[3, m], u] // QuadvectorSelection;
 grade /: Curl[grade[4, m_], u_List] := 0
 
-Protect[D, Grad, Div, Curl, Scalar, Vector, Bivector, Trivector,
+Protect[Grad, Div, Curl, Scalar, Vector, Bivector, Trivector,
   GradeSelection, ScalarSelection, VectorSelection, BivectorSelection,
    TrivectorSelection, \[Gamma], ScalarValue, ScalarProduct];
 

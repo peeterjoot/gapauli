@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     86893,       2336]
-NotebookOptionsPosition[     81865,       2194]
-NotebookOutlinePosition[     84906,       2281]
-CellTagsIndexPosition[     84122,       2260]
+NotebookDataLength[     79469,       2172]
+NotebookOptionsPosition[     74404,       2029]
+NotebookOutlinePosition[     77445,       2116]
+CellTagsIndexPosition[     76661,       2095]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -39,9 +39,9 @@ Cell[BoxData[{
    RowBox[{"<<", " ", "GA20`"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"?", "GA20"}], "\n", 
+  RowBox[{"?", "GA20"}], "\[IndentingNewLine]", 
   RowBox[{"(*", 
-   RowBox[{"?", "grade"}], "*)"}]}], "\[IndentingNewLine]", 
+   RowBox[{"?", "grade"}], "*)"}]}], "\n", 
  RowBox[{"?", "Scalar"}], "\n", 
  RowBox[{"?", "Vector"}], "\n", 
  RowBox[{
@@ -148,111 +148,111 @@ without using one of TraditionalForm, DisplayForm, StandardForm ?\\n\\n2) Can \
 a package have options (i.e. to define the name of the e[ ] operator used in \
 StandardForm that represents a basis vector).\\n\\n3) proper packaging stuff: \
  private for internals.\\n\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69200891861174*^9},
- CellTags->"Info23691990918-8493090"],
+ CellChangeTimes->{3.701715844911933*^9},
+ CellTags->"Info23701701444-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"Scalar[ v ] constructs a scalar grade quantity with value v.\"\
 \>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008918712117*^9},
- CellTags->"Info33691990918-8493090"],
+ CellChangeTimes->{3.701715845005702*^9},
+ CellTags->"Info33701701444-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"Vector[ v, n ], where n = {1,2} constructs a vector grade \
 quantity with value v in direction n.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6920089188089848`*^9},
- CellTags->"Info43691990918-8493090"],
+ CellChangeTimes->{3.7017158450984993`*^9},
+ CellTags->"Info43701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"Bivector[ v ], constructs a bivector grade quantity with value \
 v in the plane e1,e2.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6920089189096746`*^9},
- CellTags->"Info53691990918-8493090"],
+ CellChangeTimes->{3.7017158451888447`*^9},
+ CellTags->"Info53701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeQ[ m, n ] tests if the multivector m is of grade n.  n = \
 -1 is used internally to represent values of more than one grade.\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919005817*^9},
- CellTags->"Info63691990918-8493090"],
+ CellChangeTimes->{3.7017158452746964`*^9},
+ CellTags->"Info63701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919100574*^9},
- CellTags->"Info73691990919-8493090"],
+ CellChangeTimes->{3.701715845359888*^9},
+ CellTags->"Info73701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"vectorQ[ m ] tests if the multivector m is of grade 1 (vector)\
 \"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919193791*^9},
- CellTags->"Info83691990919-8493090"],
+ CellChangeTimes->{3.70171584544867*^9},
+ CellTags->"Info83701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"bivectorQ[ m ] tests if the multivector m is of grade 2 \
 (bivector)\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919293322*^9},
- CellTags->"Info93691990919-8493090"],
+ CellChangeTimes->{3.701715845532795*^9},
+ CellTags->"Info93701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"bladeQ[ m ] tests if the multivector is of a single \
 grade.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919387607*^9},
- CellTags->"Info103691990919-8493090"],
+ CellChangeTimes->{3.701715845619658*^9},
+ CellTags->"Info103701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"gradeAnyQ[ ].  predicate pattern match for grade[ _ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.69200891948241*^9},
- CellTags->"Info113691990919-8493090"],
+ CellChangeTimes->{3.7017158457140083`*^9},
+ CellTags->"Info113701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"notGradeQ[ ].  predicate pattern match for !grade[ ]\"\>", 
   "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6920089195772676`*^9},
- CellTags->"Info123691990919-8493090"],
+ CellChangeTimes->{3.701715845805814*^9},
+ CellTags->"Info123701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"GradeSelection[ m, k ] selects the grade k elements from the \
 multivector m.  The selected result is represented internally as a grade[ ] \
 type (so scalar selection is not just a number).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.692008919675008*^9},
- CellTags->"Info133691990919-8493090"],
+ CellChangeTimes->{3.701715845901291*^9},
+ CellTags->"Info133701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarSelection[ m ] selects the grade 0 (scalar) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type (not just a number or an expression).\"\>", "MSG"]], "Print", \
 "PrintUsage",
- CellChangeTimes->{3.69200891980739*^9},
- CellTags->"Info143691990919-8493090"],
+ CellChangeTimes->{3.701715845995085*^9},
+ CellTags->"Info143701701445-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"VectorSelection[ m ] selects the grade 1 (vector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919899763*^9},
- CellTags->"Info153691990919-8493090"],
+ CellChangeTimes->{3.7017158460828114`*^9},
+ CellTags->"Info153701701446-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"BivectorSelection[ m ] selects the grade 2 (bivector) elements \
 from the multivector m.  The selected result is represented internally as a \
 grade[ ] type.\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.692008919993146*^9},
- CellTags->"Info163691990919-8493090"],
+ CellChangeTimes->{3.701715846172505*^9},
+ CellTags->"Info163701701446-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ \
 Esc ] m1 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6920089200891657`*^9},
- CellTags->"Info173691990920-8493090"],
+ CellChangeTimes->{3.701715846280299*^9},
+ CellTags->"Info173701701446-7575592"],
 
 Cell[BoxData[
  StyleBox["\<\"ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc \
 ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ].\"\>", "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.6920089201851597`*^9},
- CellTags->"Info183691990920-8493090"]
+ CellChangeTimes->{3.701715846361877*^9},
+ CellTags->"Info183701701446-7575592"]
 }, Open  ]]
 }, Open  ]],
 
@@ -406,7 +406,7 @@ Cell[BoxData[
      RowBox[{"{", 
       RowBox[{
       "e0", ",", "e1", ",", "e2", ",", "m01", ",", "m02", ",", "m12", ",", 
-       "m012"}], "}"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+       "m012"}], "}"}]}], ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -496,8 +496,8 @@ Cell[BoxData[
           RowBox[{"VectorSelection", "[", "#", "]"}], "\[Equal]", "0"}], 
          "]"}]}], "}"}], "&"}], "/@", 
      RowBox[{"{", 
-      RowBox[{"e0", ",", "e12", ",", "m02"}], "}"}]}], ";"}], "\n", 
-   "\[IndentingNewLine]", 
+      RowBox[{"e0", ",", "e12", ",", "m02"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -529,7 +529,7 @@ Cell[BoxData[
          "]"}]}], "}"}], "&"}], "/@", 
      RowBox[{"{", 
       RowBox[{"e0", ",", "e1", ",", "e2", ",", "m01"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"Minus", " ", "tests"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
@@ -581,12 +581,12 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"-", "m012"}], "\[Equal]", 
       RowBox[{
-       RowBox[{"-", "e0"}], "-", "e1", "-", "e21"}]}], "]"}], ";"}], "\n", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"-", "e0"}], "-", "e1", "-", "e21"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{
      RowBox[{"Scalar", "/", "Pseudoscalar"}], " ", "multiplication", " ", 
-     "tests"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     "tests"}], "*)"}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -729,7 +729,7 @@ Cell[BoxData[
           RowBox[{"2", " ", "e0"}], "+", 
           RowBox[{"2", " ", "e1"}], "+", 
           RowBox[{"2", " ", "e21"}]}]}], "}"}]}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   "\[IndentingNewLine]", "\n", "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"Tests", " ", "for", " ", 
@@ -737,7 +737,7 @@ Cell[BoxData[
        RowBox[{"non", "-", "commutitive"}], ")"}], " ", "multiplication"}], 
      ",", " ", 
      RowBox[{"dot", " ", "and", " ", 
-      RowBox[{"wedge", "."}]}]}], "*)"}], "\n", 
+      RowBox[{"wedge", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"ClearAll", "[", " ", 
      RowBox[{
@@ -746,8 +746,8 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"mbasis", "=", 
      RowBox[{"{", 
-      RowBox[{"e1", ",", "e2", ",", "e12"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", "\n", 
+      RowBox[{"e1", ",", "e2", ",", "e12"}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"ptable", "=", 
      RowBox[{"(*", 
@@ -765,8 +765,8 @@ Cell[BoxData[
        RowBox[{"{", 
         RowBox[{
          RowBox[{"-", "e2"}], ",", "e1", ",", 
-         RowBox[{"-", "e0"}]}], "}"}]}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", "\n", 
+         RowBox[{"-", "e0"}]}], "}"}]}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"dtable", "=", 
      RowBox[{"(*", 
@@ -784,8 +784,8 @@ Cell[BoxData[
        RowBox[{"{", 
         RowBox[{
          RowBox[{"-", "e2"}], ",", "e1", ",", 
-         RowBox[{"-", "e0"}]}], "}"}]}], "}"}]}], ";"}], "\n", 
-   "\[IndentingNewLine]", 
+         RowBox[{"-", "e0"}]}], "}"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{"wtable", "=", 
      RowBox[{"(*", 
@@ -800,8 +800,8 @@ Cell[BoxData[
         RowBox[{"e21", ",", "0", ",", "0"}], "}"}], ",", 
        RowBox[{"(*", "e12", "*)"}], 
        RowBox[{"{", 
-        RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", "\n", 
+        RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"stable", "=", 
      RowBox[{"(*", 
@@ -818,7 +818,7 @@ Cell[BoxData[
        RowBox[{"{", 
         RowBox[{"0", ",", "0", ",", 
          RowBox[{"-", "1"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]",
-    "\[IndentingNewLine]", "\n", "\n", 
+    "\n", "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Table", "[", " ", "\[IndentingNewLine]", 
      RowBox[{
@@ -999,7 +999,7 @@ Cell[BoxData[
       RowBox[{"{", 
        RowBox[{"j", ",", " ", "1", ",", " ", 
         RowBox[{"mbasis", " ", "//", " ", "Length"}]}], "}"}]}], "]"}], " ", 
-    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", "\n"}]}]], "Input",
+    ";"}], "\[IndentingNewLine]", "\n", "\[IndentingNewLine]"}]}]], "Input",
  CellChangeTimes->{{3.691718210439073*^9, 3.6917182571309843`*^9}, {
    3.6917182929298563`*^9, 3.6917183025319567`*^9}, {3.691750173495006*^9, 
    3.691750175245139*^9}, 3.691751017579562*^9, 3.691751071857938*^9, {
@@ -1098,25 +1098,25 @@ Cell[BoxData[{
      RowBox[{"Row", "[", 
       RowBox[{"{", "\[IndentingNewLine]", 
        RowBox[{
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "i", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\< \>\"", ",", "\[IndentingNewLine]", 
-        
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "j", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\< = \>\"", ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "i", "]"}], "]"}], " ", "**", " ", 
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "j", "]"}], "]"}]}], ")"}], "//", " ", 
-         "TraditionalForm"}]}], "\[IndentingNewLine]", "}"}], "]"}], ",", " ",
-      "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\< \>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\< = \>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], " ", "**", " ", 
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}], ")"}]}], 
+       RowBox[{"(*", 
+        RowBox[{"//", " ", "TraditionalForm"}], "*)"}], "\[IndentingNewLine]",
+        "}"}], "]"}], ",", " ", "\[IndentingNewLine]", 
      RowBox[{"{", 
       RowBox[{"i", ",", " ", "1", ",", " ", 
        RowBox[{"mbasis", " ", "//", " ", "Length"}]}], "}"}], ",", " ", 
@@ -1131,25 +1131,26 @@ Cell[BoxData[{
      RowBox[{"Row", "[", 
       RowBox[{"{", "\[IndentingNewLine]", 
        RowBox[{
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "i", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\<\[CenterDot]\>\"", ",", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\<\[CenterDot]\>\"", ",", 
         "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "j", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\< = \>\"", ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "i", "]"}], "]"}], ".", " ", 
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "j", "]"}], "]"}]}], ")"}], "//", " ", 
-         "TraditionalForm"}]}], "\[IndentingNewLine]", "}"}], "]"}], ",", " ",
-      "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\< = \>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], ".", " ", 
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}], ")"}]}], 
+       RowBox[{"(*", 
+        RowBox[{"//", " ", "TraditionalForm"}], "*)"}], "\[IndentingNewLine]",
+        "}"}], "]"}], ",", " ", "\[IndentingNewLine]", 
      RowBox[{"{", 
       RowBox[{"i", ",", " ", "1", ",", " ", 
        RowBox[{"mbasis", " ", "//", " ", "Length"}]}], "}"}], ",", " ", 
@@ -1164,25 +1165,25 @@ Cell[BoxData[{
      RowBox[{"Row", "[", 
       RowBox[{"{", "\[IndentingNewLine]", 
        RowBox[{
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "i", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\<\[Wedge]\>\"", ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "j", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\< = \>\"", ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "i", "]"}], "]"}], "\[Wedge]", " ", 
-           RowBox[{"mbasis", "[", 
-            RowBox[{"[", "j", "]"}], "]"}]}], ")"}], "//", " ", 
-         "TraditionalForm"}]}], "\[IndentingNewLine]", "}"}], "]"}], ",", " ",
-      "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\<\[Wedge]\>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\< = \>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "\[Wedge]", " ", 
+          RowBox[{"mbasis", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}], ")"}]}], 
+       RowBox[{"(*", 
+        RowBox[{"//", " ", "TraditionalForm"}], "*)"}], "\[IndentingNewLine]",
+        "}"}], "]"}], ",", " ", "\[IndentingNewLine]", 
      RowBox[{"{", 
       RowBox[{"i", ",", " ", "1", ",", " ", 
        RowBox[{"mbasis", " ", "//", " ", "Length"}]}], "}"}], ",", " ", 
@@ -1197,26 +1198,28 @@ Cell[BoxData[{
      RowBox[{"Row", "[", 
       RowBox[{"{", "\[IndentingNewLine]", 
        RowBox[{"\"\<<\>\"", ",", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "i", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\< \>\"", ",", "\[IndentingNewLine]", 
-        
-        RowBox[{
-         RowBox[{"mbasis", "[", 
-          RowBox[{"[", "j", "]"}], "]"}], " ", "//", " ", "TraditionalForm"}],
-         ",", "\[IndentingNewLine]", "\"\<>\>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\< \>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"mbasis", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], " ", 
+        RowBox[{"(*", 
+         RowBox[{"//", " ", "TraditionalForm"}], "*)"}], ",", 
+        "\[IndentingNewLine]", "\"\<>\>\"", ",", "\[IndentingNewLine]", 
         "\"\< = \>\"", ",", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{"\[LeftAngleBracket]", 
-           RowBox[{
-            RowBox[{"mbasis", "[", 
-             RowBox[{"[", "i", "]"}], "]"}], ",", " ", 
-            RowBox[{"mbasis", "[", 
-             RowBox[{"[", "j", "]"}], "]"}]}], "\[RightAngleBracket]"}], 
-          ")"}], "//", " ", "TraditionalForm"}]}], "\[IndentingNewLine]", 
-       "}"}], "]"}], ",", " ", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{"\[LeftAngleBracket]", 
+          RowBox[{
+           RowBox[{"mbasis", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", " ", 
+           RowBox[{"mbasis", "[", 
+            RowBox[{"[", "j", "]"}], "]"}]}], "\[RightAngleBracket]"}], 
+         ")"}]}], 
+       RowBox[{"(*", 
+        RowBox[{"//", " ", "TraditionalForm"}], "*)"}], "\[IndentingNewLine]",
+        "}"}], "]"}], ",", " ", "\[IndentingNewLine]", 
      RowBox[{"{", 
       RowBox[{"i", ",", " ", "1", ",", " ", 
        RowBox[{"mbasis", " ", "//", " ", "Length"}]}], "}"}], ",", " ", 
@@ -1239,7 +1242,17 @@ Cell[BoxData[{
     RowBox[{"{", 
      RowBox[{
      "e0", ",", "e1", ",", "e2", ",", "e12", ",", "m01", ",", "m02", ",", 
-      "m12", ",", "m012"}], "}"}]}], "]"}], "\n"}], "\[IndentingNewLine]", 
+      "m12", ",", "m012"}], "}"}]}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Column", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", "#", ")"}], "&"}], "/@", 
+    RowBox[{"{", 
+     RowBox[{
+     "e0", ",", "e1", ",", "e2", ",", "e12", ",", "m01", ",", "m02", ",", 
+      "m12", ",", "m012"}], "}"}]}], "]"}], "\n"}], "\n", 
  RowBox[{
   RowBox[{"Column", "[", 
    RowBox[{
@@ -1279,7 +1292,8 @@ Cell[BoxData[{
    3.691795841721541*^9, 3.691795844686182*^9}, {3.691877176350192*^9, 
    3.6918771763574247`*^9}, {3.691877317814925*^9, 3.691877377965032*^9}, {
    3.6918915221836243`*^9, 3.6918915475643578`*^9}, 3.691894212777133*^9, 
-   3.692008355674622*^9}],
+   3.692008355674622*^9, {3.701715865185787*^9, 3.701715932561586*^9}, {
+   3.701716022451016*^9, 3.7017160291443787`*^9}}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -1420,522 +1434,280 @@ Cell[BoxData[
    GridBoxAlignment->{"Columns" -> {{Left}}},
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Column"]], "Output",
- CellChangeTimes->{3.692008358361168*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.7017160306697197`*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
     {
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]}]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]}]},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]}]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", "1"}], TraditionalForm], TraditionalForm, Editable -> 
-        True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       RowBox[{"-", "1"}]},
       "RowDefault"]}
    },
    AutoDelete->False,
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Grid"]], "Output",
- CellChangeTimes->{3.692008358376863*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.701716030685483*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
     {
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]}]},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"]}]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],
-       "\"\[CenterDot]\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", "1"}], TraditionalForm], TraditionalForm, Editable -> 
-        True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[CenterDot]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       RowBox[{"-", "1"}]},
       "RowDefault"]}
    },
    AutoDelete->False,
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Grid"]], "Output",
- CellChangeTimes->{3.692008358393682*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.70171603069668*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
     {
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       "0"},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"",
+       RowBox[{"-", 
          SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", 
-           SubscriptBox[
-            StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]}], 
-         TraditionalForm], TraditionalForm, Editable -> True]},
+          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""]}]},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\"\[Wedge]\"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       "0"},
       "RowDefault"]},
     {
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[Wedge]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[Wedge]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\"\[Wedge]\"",
-       TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],
+       "\"\[Wedge]\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" = \"",
+       "0"},
       "RowDefault"]}
    },
    AutoDelete->False,
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Grid"]], "Output",
- CellChangeTimes->{3.69200835840994*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.7017160307074327`*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
     {
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\">\"",
+       "\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\">\"",
+       "\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\">\"",
+       "\" = \"","0"},
       "RowDefault"]},
     {
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\">\"",
+       "\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["1", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\">\"",
+       "\" = \"","1"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\">\"",
+       "\" = \"","0"},
       "RowDefault"]},
     {
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "1"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "1"],"\">\"",
+       "\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "2"], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox["0", TraditionalForm], TraditionalForm, Editable -> True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "2"],"\">\"",
+       "\" = \"","0"},
       "RowDefault"], 
-     TemplateBox[{"\"<\"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\" \"",TagBox[
-        FormBox[
-         SubscriptBox[
-          StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""], 
-         TraditionalForm], TraditionalForm, Editable -> True],"\">\"",
-       "\" = \"",TagBox[
-        FormBox[
-         RowBox[{"-", "1"}], TraditionalForm], TraditionalForm, Editable -> 
-        True]},
+     TemplateBox[{"\"<\"",SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\" \"",
+       SubscriptBox[
+        StyleBox["\"e\"", Bold, StripOnInput -> False], "\"12\""],"\">\"",
+       "\" = \"",RowBox[{"-", "1"}]},
       "RowDefault"]}
    },
    AutoDelete->False,
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Grid"]], "Output",
- CellChangeTimes->{3.692008358423526*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.701716030718297*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2033,45 +1805,8 @@ Cell[BoxData[
    GridBoxAlignment->{"Columns" -> {{Left}}},
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Column"]], "Output",
- CellChangeTimes->{3.692008358437271*^9}],
-
-Cell[BoxData[
- TagBox[GridBox[{
-    {"1"},
-    {
-     RowBox[{"e", "[", "1", "]"}]},
-    {
-     RowBox[{"e", "[", "2", "]"}]},
-    {
-     RowBox[{
-      RowBox[{"e", "[", "1", "]"}], " ", 
-      RowBox[{"e", "[", "2", "]"}]}]},
-    {
-     RowBox[{"1", "+", 
-      RowBox[{"e", "[", "1", "]"}]}]},
-    {
-     RowBox[{"1", "-", 
-      RowBox[{
-       RowBox[{"e", "[", "1", "]"}], " ", 
-       RowBox[{"e", "[", "2", "]"}]}]}]},
-    {
-     RowBox[{
-      RowBox[{"e", "[", "1", "]"}], "-", 
-      RowBox[{
-       RowBox[{"e", "[", "1", "]"}], " ", 
-       RowBox[{"e", "[", "2", "]"}]}]}]},
-    {
-     RowBox[{"1", "+", 
-      RowBox[{"e", "[", "1", "]"}], "-", 
-      RowBox[{
-       RowBox[{"e", "[", "1", "]"}], " ", 
-       RowBox[{"e", "[", "2", "]"}]}]}]}
-   },
-   DefaultBaseStyle->"Column",
-   GridBoxAlignment->{"Columns" -> {{Left}}},
-   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
-  "Column"]], "Output",
- CellChangeTimes->{3.692008358447073*^9}],
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.7017160307281027`*^9}],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -2128,7 +1863,105 @@ Cell[BoxData[
    GridBoxAlignment->{"Columns" -> {{Left}}},
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Column"]], "Output",
- CellChangeTimes->{3.692008358459161*^9}]
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.70171603073429*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     RowBox[{"e", "[", "1", "]"}]},
+    {
+     RowBox[{"e", "[", "2", "]"}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], " ", 
+      RowBox[{"e", "[", "2", "]"}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{"e", "[", "1", "]"}]}]},
+    {
+     RowBox[{"1", "-", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}]}]}]},
+    {
+     RowBox[{
+      RowBox[{"e", "[", "1", "]"}], "-", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}]}]}]},
+    {
+     RowBox[{"1", "+", 
+      RowBox[{"e", "[", "1", "]"}], "-", 
+      RowBox[{
+       RowBox[{"e", "[", "1", "]"}], " ", 
+       RowBox[{"e", "[", "2", "]"}]}]}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.701716030740237*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"1"},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "1"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "2"]},
+    {
+     SubscriptBox[
+      StyleBox["\<\"e\"\>",
+       StripOnInput->False,
+       FontWeight->Bold], "\<\"12\"\>"]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"]}]},
+    {
+     RowBox[{"1", "-", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"12\"\>"]}]},
+    {
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "-", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"12\"\>"]}]},
+    {
+     RowBox[{"1", "+", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "1"], "-", 
+      SubscriptBox[
+       StyleBox["\<\"e\"\>",
+        StripOnInput->False,
+        FontWeight->Bold], "\<\"12\"\>"]}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.692008358361168*^9, 3.7017159722680187`*^9, 
+  3.7017160307455473`*^9}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -2166,21 +1999,22 @@ Cell[BoxData[
        RowBox[{"1", ",", "2"}], "]"}], " ", "-", " ", 
       RowBox[{"Bivector", "[", "1", "]"}]}]}], " ", ";"}], " ", 
    "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"m1", ".", "m2"}], " ", "//", " ", "TraditionalForm"}], 
+   RowBox[{"m1", ".", "m2"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"//", " ", "TraditionalForm"}], "*)"}], 
    "\[IndentingNewLine]"}]}]], "Input",
  CellChangeTimes->{{3.691875800491975*^9, 3.691875809658766*^9}, {
-  3.691894037639244*^9, 3.6918940494691973`*^9}, {3.6920078010125427`*^9, 
-  3.692007803102578*^9}, {3.692007850722372*^9, 3.692007934001274*^9}, {
-  3.6920081954687862`*^9, 3.692008307979595*^9}, {3.692008611408082*^9, 
-  3.6920086707843313`*^9}, {3.692008737523641*^9, 3.692008851842248*^9}, {
-  3.6920089522646008`*^9, 3.692008989460525*^9}, {3.692009053324778*^9, 
-  3.692009079959097*^9}, {3.6920091458202543`*^9, 3.6920092718791637`*^9}, {
-  3.692009335807555*^9, 3.692009357277741*^9}, {3.692009468340424*^9, 
-  3.6920095174128113`*^9}, {3.692011154866823*^9, 3.6920111679047127`*^9}}],
+   3.691894037639244*^9, 3.6918940494691973`*^9}, {3.6920078010125427`*^9, 
+   3.692007803102578*^9}, {3.692007850722372*^9, 3.692007934001274*^9}, {
+   3.6920081954687862`*^9, 3.692008307979595*^9}, {3.692008611408082*^9, 
+   3.6920086707843313`*^9}, {3.692008737523641*^9, 3.692008851842248*^9}, {
+   3.6920089522646008`*^9, 3.692008989460525*^9}, {3.692009053324778*^9, 
+   3.692009079959097*^9}, {3.6920091458202543`*^9, 3.6920092718791637`*^9}, {
+   3.692009335807555*^9, 3.692009357277741*^9}, {3.692009468340424*^9, 
+   3.6920095174128113`*^9}, {3.692011154866823*^9, 3.6920111679047127`*^9}, 
+   3.701715942437066*^9}],
 
-Cell[BoxData[
- FormBox["3", TraditionalForm]], "Output",
+Cell[BoxData["3"], "Output",
  CellChangeTimes->{
   3.691894056730894*^9, 3.692007804959461*^9, {3.692007852070221*^9, 
    3.6920078719115267`*^9}, {3.692007910309023*^9, 3.692007935692668*^9}, 
@@ -2189,7 +2023,8 @@ Cell[BoxData[
    3.692008781682931*^9, 3.692008852442244*^9}, 3.6920089391140213`*^9, 
    3.6920089905016127`*^9, 3.692009080840979*^9, {3.692009213549879*^9, 
    3.692009234341085*^9}, 3.692009273253623*^9, 3.692009358975376*^9, {
-   3.692009469085383*^9, 3.69200952028538*^9}, 3.692011156609562*^9}]
+   3.692009469085383*^9, 3.69200952028538*^9}, 3.692011156609562*^9, 
+   3.701716039001183*^9}]
 }, Open  ]]
 },
 WindowSize->{1440, 813},
@@ -2204,78 +2039,78 @@ StyleDefinitions->"Default.nb"
 (* Internal cache information *)
 (*CellTagsOutline
 CellTagsIndex->{
- "Info23691990918-8493090"->{
-  Cell[3904, 113, 2804, 38, 1736, "Print",
-   CellTags->"Info23691990918-8493090"]},
- "Info33691990918-8493090"->{
-  Cell[6711, 153, 209, 4, 62, "Print",
-   CellTags->"Info33691990918-8493090"]},
- "Info43691990918-8493090"->{
-  Cell[6923, 159, 246, 4, 62, "Print",
-   CellTags->"Info43691990918-8493090"]},
- "Info53691990918-8493090"->{
-  Cell[7172, 165, 235, 4, 62, "Print",
-   CellTags->"Info53691990918-8493090"]},
- "Info63691990918-8493090"->{
-  Cell[7410, 171, 279, 5, 62, "Print",
-   CellTags->"Info63691990918-8493090"]},
- "Info73691990919-8493090"->{
-  Cell[7692, 178, 211, 4, 62, "Print",
-   CellTags->"Info73691990919-8493090"]},
- "Info83691990919-8493090"->{
-  Cell[7906, 184, 211, 4, 62, "Print",
-   CellTags->"Info83691990919-8493090"]},
- "Info93691990919-8493090"->{
-  Cell[8120, 190, 215, 4, 62, "Print",
-   CellTags->"Info93691990919-8493090"]},
- "Info103691990919-8493090"->{
-  Cell[8338, 196, 208, 4, 62, "Print",
-   CellTags->"Info103691990919-8493090"]},
- "Info113691990919-8493090"->{
-  Cell[8549, 202, 203, 4, 62, "Print",
-   CellTags->"Info113691990919-8493090"]},
- "Info123691990919-8493090"->{
-  Cell[8755, 208, 205, 4, 62, "Print",
-   CellTags->"Info123691990919-8493090"]},
- "Info133691990919-8493090"->{
-  Cell[8963, 214, 339, 6, 87, "Print",
-   CellTags->"Info133691990919-8493090"]},
- "Info143691990919-8493090"->{
-  Cell[9305, 222, 339, 6, 87, "Print",
-   CellTags->"Info143691990919-8493090"]},
- "Info153691990919-8493090"->{
-  Cell[9647, 230, 301, 5, 62, "Print",
-   CellTags->"Info153691990919-8493090"]},
- "Info163691990919-8493090"->{
-  Cell[9951, 237, 305, 5, 62, "Print",
-   CellTags->"Info163691990919-8493090"]},
- "Info173691990920-8493090"->{
-  Cell[10259, 244, 237, 4, 62, "Print",
-   CellTags->"Info173691990920-8493090"]},
- "Info183691990920-8493090"->{
-  Cell[10499, 250, 246, 4, 62, "Print",
-   CellTags->"Info183691990920-8493090"]}
+ "Info23701701444-7575592"->{
+  Cell[3904, 113, 2805, 38, 1736, "Print",
+   CellTags->"Info23701701444-7575592"]},
+ "Info33701701444-7575592"->{
+  Cell[6712, 153, 209, 4, 62, "Print",
+   CellTags->"Info33701701444-7575592"]},
+ "Info43701701445-7575592"->{
+  Cell[6924, 159, 246, 4, 62, "Print",
+   CellTags->"Info43701701445-7575592"]},
+ "Info53701701445-7575592"->{
+  Cell[7173, 165, 235, 4, 62, "Print",
+   CellTags->"Info53701701445-7575592"]},
+ "Info63701701445-7575592"->{
+  Cell[7411, 171, 281, 5, 62, "Print",
+   CellTags->"Info63701701445-7575592"]},
+ "Info73701701445-7575592"->{
+  Cell[7695, 178, 211, 4, 62, "Print",
+   CellTags->"Info73701701445-7575592"]},
+ "Info83701701445-7575592"->{
+  Cell[7909, 184, 210, 4, 62, "Print",
+   CellTags->"Info83701701445-7575592"]},
+ "Info93701701445-7575592"->{
+  Cell[8122, 190, 215, 4, 62, "Print",
+   CellTags->"Info93701701445-7575592"]},
+ "Info103701701445-7575592"->{
+  Cell[8340, 196, 208, 4, 62, "Print",
+   CellTags->"Info103701701445-7575592"]},
+ "Info113701701445-7575592"->{
+  Cell[8551, 202, 206, 4, 62, "Print",
+   CellTags->"Info113701701445-7575592"]},
+ "Info123701701445-7575592"->{
+  Cell[8760, 208, 203, 4, 62, "Print",
+   CellTags->"Info123701701445-7575592"]},
+ "Info133701701445-7575592"->{
+  Cell[8966, 214, 339, 6, 87, "Print",
+   CellTags->"Info133701701445-7575592"]},
+ "Info143701701445-7575592"->{
+  Cell[9308, 222, 340, 6, 87, "Print",
+   CellTags->"Info143701701445-7575592"]},
+ "Info153701701446-7575592"->{
+  Cell[9651, 230, 303, 5, 62, "Print",
+   CellTags->"Info153701701446-7575592"]},
+ "Info163701701446-7575592"->{
+  Cell[9957, 237, 305, 5, 62, "Print",
+   CellTags->"Info163701701446-7575592"]},
+ "Info173701701446-7575592"->{
+  Cell[10265, 244, 235, 4, 62, "Print",
+   CellTags->"Info173701701446-7575592"]},
+ "Info183701701446-7575592"->{
+  Cell[10503, 250, 244, 4, 62, "Print",
+   CellTags->"Info183701701446-7575592"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info23691990918-8493090", 82218, 2206},
- {"Info33691990918-8493090", 82333, 2209},
- {"Info43691990918-8493090", 82444, 2212},
- {"Info53691990918-8493090", 82555, 2215},
- {"Info63691990918-8493090", 82666, 2218},
- {"Info73691990919-8493090", 82777, 2221},
- {"Info83691990919-8493090", 82888, 2224},
- {"Info93691990919-8493090", 82999, 2227},
- {"Info103691990919-8493090", 83111, 2230},
- {"Info113691990919-8493090", 83224, 2233},
- {"Info123691990919-8493090", 83337, 2236},
- {"Info133691990919-8493090", 83450, 2239},
- {"Info143691990919-8493090", 83563, 2242},
- {"Info153691990919-8493090", 83676, 2245},
- {"Info163691990919-8493090", 83789, 2248},
- {"Info173691990920-8493090", 83902, 2251},
- {"Info183691990920-8493090", 84016, 2254}
+ {"Info23701701444-7575592", 74757, 2041},
+ {"Info33701701444-7575592", 74872, 2044},
+ {"Info43701701445-7575592", 74983, 2047},
+ {"Info53701701445-7575592", 75094, 2050},
+ {"Info63701701445-7575592", 75205, 2053},
+ {"Info73701701445-7575592", 75316, 2056},
+ {"Info83701701445-7575592", 75427, 2059},
+ {"Info93701701445-7575592", 75538, 2062},
+ {"Info103701701445-7575592", 75650, 2065},
+ {"Info113701701445-7575592", 75763, 2068},
+ {"Info123701701445-7575592", 75876, 2071},
+ {"Info133701701445-7575592", 75989, 2074},
+ {"Info143701701445-7575592", 76102, 2077},
+ {"Info153701701446-7575592", 76215, 2080},
+ {"Info163701701446-7575592", 76328, 2083},
+ {"Info173701701446-7575592", 76441, 2086},
+ {"Info183701701446-7575592", 76555, 2089}
  }
 *)
 (*NotebookFileOutline
@@ -2284,59 +2119,60 @@ Cell[558, 20, 475, 11, 194, "Text"],
 Cell[CellGroupData[{
 Cell[1058, 35, 2821, 74, 1196, "Input"],
 Cell[CellGroupData[{
-Cell[3904, 113, 2804, 38, 1736, "Print",
- CellTags->"Info23691990918-8493090"],
-Cell[6711, 153, 209, 4, 62, "Print",
- CellTags->"Info33691990918-8493090"],
-Cell[6923, 159, 246, 4, 62, "Print",
- CellTags->"Info43691990918-8493090"],
-Cell[7172, 165, 235, 4, 62, "Print",
- CellTags->"Info53691990918-8493090"],
-Cell[7410, 171, 279, 5, 62, "Print",
- CellTags->"Info63691990918-8493090"],
-Cell[7692, 178, 211, 4, 62, "Print",
- CellTags->"Info73691990919-8493090"],
-Cell[7906, 184, 211, 4, 62, "Print",
- CellTags->"Info83691990919-8493090"],
-Cell[8120, 190, 215, 4, 62, "Print",
- CellTags->"Info93691990919-8493090"],
-Cell[8338, 196, 208, 4, 62, "Print",
- CellTags->"Info103691990919-8493090"],
-Cell[8549, 202, 203, 4, 62, "Print",
- CellTags->"Info113691990919-8493090"],
-Cell[8755, 208, 205, 4, 62, "Print",
- CellTags->"Info123691990919-8493090"],
-Cell[8963, 214, 339, 6, 87, "Print",
- CellTags->"Info133691990919-8493090"],
-Cell[9305, 222, 339, 6, 87, "Print",
- CellTags->"Info143691990919-8493090"],
-Cell[9647, 230, 301, 5, 62, "Print",
- CellTags->"Info153691990919-8493090"],
-Cell[9951, 237, 305, 5, 62, "Print",
- CellTags->"Info163691990919-8493090"],
-Cell[10259, 244, 237, 4, 62, "Print",
- CellTags->"Info173691990920-8493090"],
-Cell[10499, 250, 246, 4, 62, "Print",
- CellTags->"Info183691990920-8493090"]
+Cell[3904, 113, 2805, 38, 1736, "Print",
+ CellTags->"Info23701701444-7575592"],
+Cell[6712, 153, 209, 4, 62, "Print",
+ CellTags->"Info33701701444-7575592"],
+Cell[6924, 159, 246, 4, 62, "Print",
+ CellTags->"Info43701701445-7575592"],
+Cell[7173, 165, 235, 4, 62, "Print",
+ CellTags->"Info53701701445-7575592"],
+Cell[7411, 171, 281, 5, 62, "Print",
+ CellTags->"Info63701701445-7575592"],
+Cell[7695, 178, 211, 4, 62, "Print",
+ CellTags->"Info73701701445-7575592"],
+Cell[7909, 184, 210, 4, 62, "Print",
+ CellTags->"Info83701701445-7575592"],
+Cell[8122, 190, 215, 4, 62, "Print",
+ CellTags->"Info93701701445-7575592"],
+Cell[8340, 196, 208, 4, 62, "Print",
+ CellTags->"Info103701701445-7575592"],
+Cell[8551, 202, 206, 4, 62, "Print",
+ CellTags->"Info113701701445-7575592"],
+Cell[8760, 208, 203, 4, 62, "Print",
+ CellTags->"Info123701701445-7575592"],
+Cell[8966, 214, 339, 6, 87, "Print",
+ CellTags->"Info133701701445-7575592"],
+Cell[9308, 222, 340, 6, 87, "Print",
+ CellTags->"Info143701701445-7575592"],
+Cell[9651, 230, 303, 5, 62, "Print",
+ CellTags->"Info153701701446-7575592"],
+Cell[9957, 237, 305, 5, 62, "Print",
+ CellTags->"Info163701701446-7575592"],
+Cell[10265, 244, 235, 4, 62, "Print",
+ CellTags->"Info173701701446-7575592"],
+Cell[10503, 250, 244, 4, 62, "Print",
+ CellTags->"Info183701701446-7575592"]
 }, Open  ]]
 }, Open  ]],
-Cell[10772, 258, 27253, 761, 3366, "Input"],
-Cell[38028, 1021, 166, 3, 46, "Text"],
+Cell[10774, 258, 27253, 761, 3366, "Input"],
+Cell[38030, 1021, 166, 3, 46, "Text"],
 Cell[CellGroupData[{
-Cell[38219, 1028, 10400, 253, 2064, "Input"],
-Cell[48622, 1283, 5168, 139, 190, "Output"],
-Cell[53793, 1424, 5363, 131, 112, "Output"],
-Cell[59159, 1557, 5309, 133, 112, "Output"],
-Cell[64471, 1692, 5033, 124, 112, "Output"],
-Cell[69507, 1818, 4924, 119, 112, "Output"],
-Cell[74434, 1939, 2344, 96, 242, "Output"],
-Cell[76781, 2037, 984, 36, 242, "Output"],
-Cell[77768, 2075, 1444, 55, 242, "Output"]
+Cell[38221, 1028, 11045, 267, 2126, "Input"],
+Cell[49269, 1297, 5219, 140, 173, "Output"],
+Cell[54491, 1439, 2881, 71, 95, "Output"],
+Cell[57375, 1512, 2784, 66, 95, "Output"],
+Cell[60162, 1580, 2577, 63, 95, "Output"],
+Cell[62742, 1645, 2524, 64, 95, "Output"],
+Cell[65269, 1711, 2395, 97, 225, "Output"],
+Cell[67667, 1810, 1492, 56, 225, "Output"],
+Cell[69162, 1868, 1033, 37, 225, "Output"],
+Cell[70198, 1907, 1495, 56, 225, "Output"]
 }, Open  ]],
-Cell[79227, 2133, 245, 5, 48, "Input"],
+Cell[71708, 1966, 245, 5, 48, "Input"],
 Cell[CellGroupData[{
-Cell[79497, 2142, 1687, 37, 204, "Input"],
-Cell[81187, 2181, 662, 10, 60, "Output"]
+Cell[71978, 1975, 1747, 39, 204, "Input"],
+Cell[73728, 2016, 660, 10, 82, "Output"]
 }, Open  ]]
 }
 ]
