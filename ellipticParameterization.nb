@@ -1,0 +1,330 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12754,        322]
+NotebookOptionsPosition[     12203,        298]
+NotebookOutlinePosition[     12560,        314]
+CellTagsIndexPosition[     12517,        311]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["This illustrates a GA (even multivector) \
+parameterization of an ellipse.", "Subsection"]], "Text",
+ CellChangeTimes->{{3.701863567911253*^9, 3.7018636218924513`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"<<", " ", "GA30`"}], ";"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{"e1", ",", "i", ",", "m", ",", "cosheven", ",", " ", "ellipse"}], 
+   "]"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"e1", " ", "=", " ", 
+   RowBox[{"Vector", "[", 
+    RowBox[{"1", ",", "1"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"i", " ", "=", " ", 
+   RowBox[{"Bivector", "[", 
+    RowBox[{"1", ",", "1", ",", "2"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{"cosheven", "[", 
+    RowBox[{"m_grade", ",", " ", 
+     RowBox[{"j_", "?", "bivectorQ"}]}], "]"}], " ", ":=", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"s", " ", "=", " ", 
+        RowBox[{"m", " ", "//", " ", "ScalarValue"}]}], ",", " ", 
+       RowBox[{"b", "  ", "=", " ", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"m", " ", ".", " ", "j"}]}], " ", "//", " ", 
+         "ScalarValue"}]}]}], "}"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Cosh", "[", "s", "]"}], 
+       RowBox[{"Cos", "[", "b", "]"}]}], " ", "+", " ", 
+      RowBox[{"j", " ", 
+       RowBox[{"Sinh", "[", "s", "]"}], 
+       RowBox[{"Sin", "[", "b", "]"}]}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ellipse", "[", 
+    RowBox[{"a_", ",", "b_", ",", " ", "theta_"}], "]"}], " ", ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "alpha", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"alpha", "=", 
+       RowBox[{"ArcTanh", "[", 
+        RowBox[{"b", "/", "a"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"a", " ", 
+       RowBox[{
+        RowBox[{"e1", " ", "**", " ", 
+         RowBox[{"cosheven", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Scalar", "[", "alpha", "]"}], " ", "+", " ", 
+            RowBox[{"theta", " ", "*", "i"}]}], " ", ",", "i"}], "]"}]}], "/", 
+        RowBox[{"Cosh", "[", "alpha", "]"}]}]}]}]}], "\[IndentingNewLine]", 
+    "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"ellipse", "[", 
+  RowBox[{"3", ",", "2", ",", "\[Theta]"}], 
+  "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.7018172121455297`*^9, 3.701817327493451*^9}, {
+  3.701817396261128*^9, 3.701817518742011*^9}, {3.701817767107815*^9, 
+  3.701817806747397*^9}, {3.701817840721195*^9, 3.7018179606927843`*^9}, {
+  3.701818002451851*^9, 3.701818108959207*^9}, {3.7018181597002163`*^9, 
+  3.7018181950609493`*^9}, {3.701818314908352*^9, 3.701818370378227*^9}, {
+  3.701818410040298*^9, 3.701818438999075*^9}, {3.701818732787376*^9, 
+  3.7018187432334747`*^9}, {3.7018188060258293`*^9, 3.701818904802554*^9}, {
+  3.701818972866269*^9, 3.7018190371480303`*^9}, {3.7018191557057743`*^9, 
+  3.701819158775741*^9}, {3.701863118907823*^9, 3.701863170473885*^9}, {
+  3.701863224153553*^9, 3.701863300124763*^9}, {3.701863345021084*^9, 
+  3.7018633805075903`*^9}, {3.70186348713818*^9, 3.701863553423189*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"3", " ", 
+   RowBox[{"Cos", "[", "\[Theta]", "]"}], " ", 
+   SubscriptBox[
+    StyleBox["\<\"e\"\>",
+     StripOnInput->False,
+     FontWeight->Bold], "1"]}], "+", 
+  RowBox[{"2", " ", 
+   RowBox[{"Sin", "[", "\[Theta]", "]"}], " ", 
+   SubscriptBox[
+    StyleBox["\<\"e\"\>",
+     StripOnInput->False,
+     FontWeight->Bold], "2"]}]}]], "Output",
+ CellChangeTimes->{{3.701817437320488*^9, 3.701817461537668*^9}, 
+   3.70181752064844*^9, 3.7018178129986477`*^9, {3.7018179143425417`*^9, 
+   3.70181796176143*^9}, 3.701818009988974*^9, {3.7018180419716997`*^9, 
+   3.701818057066379*^9}, {3.701818098573346*^9, 3.701818109774365*^9}, 
+   3.701818744158475*^9, {3.701818830885666*^9, 3.701818905474362*^9}, {
+   3.701818982043516*^9, 3.701819038464745*^9}, 3.7018191599434*^9, {
+   3.7018631330993547`*^9, 3.7018631716939077`*^9}, 3.701863252836885*^9, {
+   3.7018632861159*^9, 3.701863300902089*^9}, 3.701863381549365*^9, 
+   3.701863557062627*^9}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["The same parameterization can be used with complex \
+numbers (which makes plotting easy)", "Subsection"]], "Text",
+ CellChangeTimes->{{3.701865102269985*^9, 3.701865113868167*^9}, {
+  3.701865144453196*^9, 3.701865149827787*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "ellipseComplex", "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ellipseComplex", "[", 
+     RowBox[{"p_", ",", "a_", ",", "b_", ",", "rot_", ",", "theta_"}], "]"}], 
+    " ", ":=", " ", 
+    RowBox[{"p", " ", "+", " ", 
+     RowBox[{"a", " ", 
+      RowBox[{"Exp", "[", 
+       RowBox[{"I", " ", "rot"}], "]"}], " ", 
+      RowBox[{
+       RowBox[{"Cosh", "[", 
+        RowBox[{
+         RowBox[{"ArcTanh", "[", 
+          RowBox[{"b", "/", "a"}], "]"}], " ", "+", " ", 
+         RowBox[{"I", " ", "theta"}]}], "]"}], "/", 
+       RowBox[{"Cosh", "[", 
+        RowBox[{"ArcTanh", "[", 
+         RowBox[{"b", "/", "a"}], "]"}], " ", "]"}]}]}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "el", "}"}], ",", " ", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"el", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"ellipseComplex", "[", 
+          RowBox[{
+           RowBox[{"pr", " ", "+", " ", 
+            RowBox[{"I", " ", "pi"}]}], ",", "a", ",", " ", 
+           RowBox[{"a", " ", "e"}], ",", 
+           RowBox[{"2", " ", "Pi", " ", 
+            RowBox[{"r", "/", "360"}]}], ",", "#"}], "]"}], "&"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ParametricPlot", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"el", "[", "t", "]"}], "//", "Re"}], ",", 
+           RowBox[{
+            RowBox[{"el", "[", "t", "]"}], "//", "Im"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", "0", ",", 
+           RowBox[{"2", "Pi"}]}], "}"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "pr", ",", "5", ",", " ", 
+        "\"\<\!\(\*SubscriptBox[\(x\), \(0\)]\)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "100"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "pi", ",", "5", ",", " ", 
+        "\"\<\!\(\*SubscriptBox[\(y\), \(0\)]\)\>\""}], "}"}], ",", " ", "0", 
+      ",", " ", "100"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a", ",", "5", ",", " ", "\"\<a\>\""}], "}"}], ",", " ", "1", 
+      ",", " ", "100"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"e", ",", "0.5", ",", " ", "\"\<b/a\>\""}], "}"}], ",", " ", 
+      "0.001", ",", 
+      RowBox[{"1", "-", "0.001"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"r", ",", "0", ",", "\"\<\[Theta]\>\""}], "}"}], ",", "0", ",",
+       " ", 
+      RowBox[{"360", "/", "2"}]}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.701863635014866*^9, 3.701863717354477*^9}, {
+   3.70186376996941*^9, 3.7018638431506643`*^9}, {3.701863892608173*^9, 
+   3.7018640131814747`*^9}, {3.701864073588757*^9, 3.701864103527424*^9}, {
+   3.701864184818033*^9, 3.701864325516971*^9}, {3.701864377604765*^9, 
+   3.7018644222993183`*^9}, {3.70186445593156*^9, 3.701864510995905*^9}, {
+   3.7018645454506397`*^9, 3.7018646133356237`*^9}, {3.70186470471743*^9, 
+   3.7018647394045973`*^9}, {3.701864771221818*^9, 3.701864935691524*^9}, {
+   3.701864967617507*^9, 3.701864993504442*^9}, 3.701865040871323*^9, {
+   3.70186508825508*^9, 3.701865094014907*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{GA30`a$$ = 13.4, GA30`e$$ = 0.419, $CellContext`pi$$ = 
+    38.400000000000006`, $CellContext`pr$$ = 12.200000000000001`, GA30`r$$ = 
+    143.20000000000002`, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`pr$$], 5, "\!\(\*SubscriptBox[\(x\), \(0\)]\)"}, 0, 
+      100}, {{
+       Hold[$CellContext`pi$$], 5, "\!\(\*SubscriptBox[\(y\), \(0\)]\)"}, 0, 
+      100}, {{
+       Hold[GA30`a$$], 5, "a"}, 1, 100}, {{
+       Hold[GA30`e$$], 0.5, "b/a"}, 0.001, 0.999}, {{
+       Hold[GA30`r$$], 0, "\[Theta]"}, 0, 180}}, Typeset`size$$ = {
+    360., {140., 144.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`pr$63462$$ = 
+    0, $CellContext`pi$63463$$ = 0, GA30`a$63464$$ = 0, GA30`e$63465$$ = 0, 
+    GA30`r$63466$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {
+       GA30`a$$ = 5, GA30`e$$ = 0.5, $CellContext`pi$$ = 5, $CellContext`pr$$ = 
+        5, GA30`r$$ = 0}, "ControllerVariables" :> {
+        Hold[$CellContext`pr$$, $CellContext`pr$63462$$, 0], 
+        Hold[$CellContext`pi$$, $CellContext`pi$63463$$, 0], 
+        Hold[GA30`a$$, GA30`a$63464$$, 0], 
+        Hold[GA30`e$$, GA30`e$63465$$, 0], 
+        Hold[GA30`r$$, GA30`r$63466$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`el$}, $CellContext`el$ = \
+$CellContext`ellipseComplex[$CellContext`pr$$ + I $CellContext`pi$$, GA30`a$$,
+            GA30`a$$ GA30`e$$, 2 Pi (GA30`r$$/360), #]& ; ParametricPlot[{
+           Re[
+            $CellContext`el$[GA30`t]], 
+           Im[
+            $CellContext`el$[GA30`t]]}, {GA30`t, 0, 2 Pi}]], 
+      "Specifications" :> {{{$CellContext`pr$$, 5, 
+          "\!\(\*SubscriptBox[\(x\), \(0\)]\)"}, 0, 
+         100}, {{$CellContext`pi$$, 5, "\!\(\*SubscriptBox[\(y\), \(0\)]\)"}, 
+         0, 100}, {{GA30`a$$, 5, "a"}, 1, 100}, {{GA30`e$$, 0.5, "b/a"}, 
+         0.001, 0.999}, {{GA30`r$$, 0, "\[Theta]"}, 0, 180}}, "Options" :> {},
+       "DefaultOptions" :> {}],
+     ImageSizeCache->{405., {241., 247.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7018640068713427`*^9, 3.7018640138454*^9}, 
+   3.7018640775762577`*^9, 3.7018642185751457`*^9, {3.7018642963077803`*^9, 
+   3.701864306108118*^9}, 3.7018644233988733`*^9, {3.701864501212153*^9, 
+   3.70186451202004*^9}, 3.701864552066099*^9, {3.701864729545409*^9, 
+   3.701864740414307*^9}, 3.70186481464887*^9, 3.701864939183873*^9, {
+   3.701864969494472*^9, 3.70186499427407*^9}}]
+}, Open  ]]
+},
+WindowSize->{911, 781},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 192, 2, 38, "Text"],
+Cell[753, 24, 72, 2, 32, "Input"],
+Cell[CellGroupData[{
+Cell[850, 30, 3066, 73, 348, "Input"],
+Cell[3919, 105, 982, 22, 32, "Output"]
+}, Open  ]],
+Cell[4916, 130, 253, 3, 38, "Text"],
+Cell[CellGroupData[{
+Cell[5194, 137, 3685, 93, 390, "Input"],
+Cell[8882, 232, 3305, 63, 505, "Output"]
+}, Open  ]]
+}
+]
+*)
+
