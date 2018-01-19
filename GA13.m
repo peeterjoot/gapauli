@@ -55,6 +55,7 @@ The following built-in methods are overridden:
    - TraditionalForm
    - DisplayForm
    - StandardForm
+   - TeXForm
 
 Internal functions:
 
@@ -496,22 +497,22 @@ ScalarProduct[m1_grade, m2_grade] := AngleBracket[m1, m2];
 ClearAll[displayMapping, gsub, GAdisplay]
 gsub = Subscript["\[Gamma]", #] &;
 displayMapping = {
-   {Scalar[1], 1, 1},
-   {Vector[-1, 1], gsub[1], \[Gamma][1]},
-   {Vector[-1, 2], gsub[2], \[Gamma][2]},
-   {Vector[-1, 3], gsub[3], \[Gamma][3]},
-   {Vector[1, 0], gsub[3], \[Gamma][0]},
-   {Bivector[-1, 1, 2], gsub["12"], \[Gamma][1] \[Gamma][2]},
-   {Bivector[-1, 1, 3], gsub["13"], \[Gamma][1] \[Gamma][3]},
-   {Bivector[-1, 2, 3], gsub["23"], \[Gamma][2] \[Gamma][3]},
-   {Bivector[1, 1, 0], gsub["10"], \[Gamma][1] \[Gamma][0]},
-   {Bivector[1, 2, 0], gsub["20"], \[Gamma][2] \[Gamma][0]},
-   {Bivector[1, 3, 0], gsub["30"], \[Gamma][3] \[Gamma][0]},
-   {Trivector[1, 1, 2, 3], gsub["123"], \[Gamma][1] \[Gamma][2] \[Gamma][3]},
-   {Trivector[-1, 1, 2, 0], gsub["120"], \[Gamma][1] \[Gamma][2] \[Gamma][0]},
-   {Trivector[-1, 1, 3, 0], gsub["130"], \[Gamma][1] \[Gamma][3] \[Gamma][0]},
-   {Trivector[-1, 2, 3, 0], gsub["230"], \[Gamma][2] \[Gamma][3] \[Gamma][0]},
-   {Quadvector[1], gsub["0123"], \[Gamma][0] \[Gamma][1] \[Gamma][2] \[Gamma][3]}
+   {Scalar[1], 1, 1, 1},
+   {Vector[-1, 1], gsub[1], \[Gamma][1], "\\gamma_1"},
+   {Vector[-1, 2], gsub[2], \[Gamma][2], "\\gamma_2"},
+   {Vector[-1, 3], gsub[3], \[Gamma][3], "\\gamma_3"},
+   {Vector[1, 0], gsub[3], \[Gamma][0], "\\gamma_0"},
+   {Bivector[-1, 1, 2], gsub["12"], \[Gamma][1] \[Gamma][2], "\\gamma_{12}"},
+   {Bivector[-1, 1, 3], gsub["13"], \[Gamma][1] \[Gamma][3], "\\gamma_{13}"},
+   {Bivector[-1, 2, 3], gsub["23"], \[Gamma][2] \[Gamma][3], "\\gamma_{23}"},
+   {Bivector[1, 1, 0], gsub["10"], \[Gamma][1] \[Gamma][0], "\\gamma_{10}"},
+   {Bivector[1, 2, 0], gsub["20"], \[Gamma][2] \[Gamma][0], "\\gamma_{20}"},
+   {Bivector[1, 3, 0], gsub["30"], \[Gamma][3] \[Gamma][0], "\\gamma_{30}"},
+   {Trivector[1, 1, 2, 3], gsub["123"], \[Gamma][1] \[Gamma][2] \[Gamma][3], "\\gamma_{123}"},
+   {Trivector[-1, 1, 2, 0], gsub["120"], \[Gamma][1] \[Gamma][2] \[Gamma][0], "\\gamma_{120}"},
+   {Trivector[-1, 1, 3, 0], gsub["130"], \[Gamma][1] \[Gamma][3] \[Gamma][0], "\\gamma_{130}"},
+   {Trivector[-1, 2, 3, 0], gsub["230"], \[Gamma][2] \[Gamma][3] \[Gamma][0], "\\gamma_{230}"},
+   {Quadvector[1], gsub["0123"], \[Gamma][0] \[Gamma][1] \[Gamma][2] \[Gamma][3], "\\gamma_{0123}"}
 };
 
 GAdisplay[v_grade, how_] :=
@@ -520,11 +521,11 @@ GAdisplay[v_grade, how_] :=
 (*End["`Private`"]*)
 
 (* Must reference any global symbol (or some of them) before Unprotecting it,since it may not have been loaded:
-   http://mathematica.stackexchange.com/a/137007/10 
+   http://mathematica.stackexchange.com/a/137007/10
  *)
 {D, TraditionalForm, DisplayForm, StandardForm, Format, Grad, Div, Curl};
 
-Unprotect[TraditionalForm, DisplayForm, StandardForm, Format, D];
+Unprotect[TraditionalForm, DisplayForm, StandardForm, TeXForm, Format, D];
 TraditionalForm[m_grade] := ((GAdisplay[m, 2]) // TraditionalForm);
 DisplayForm[m_grade] := GAdisplay[m, 2];
 Format[m_grade] := GAdisplay[m, 2];
@@ -535,7 +536,20 @@ D[m_grade, u_] :=
   grade[m // First,
    Map[complex[D[# // real // Simplify, u],
       D[# // imag // Simplify, u]] &, m // Last, {2}]];
-Protect[TraditionalForm, DisplayForm, StandardForm, Format, D];
+
+ClearAll[oneTeXForm]
+
+oneTeXForm[m_, blade_, disp_] := Module[{p},
+  p = AngleBracket[blade, m];
+  If[ p // PossibleZeroQ, 0,
+   If[ p === 1, disp,
+    Times[p // TeXForm, disp]]
+   ]
+  ]
+
+TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
+
+Protect[TraditionalForm, DisplayForm, StandardForm, TeXForm, Format, D];
 
 (* Grad::
 usage="grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to coordinates ct,x,y,z..";

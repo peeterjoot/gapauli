@@ -50,6 +50,7 @@ The following built-in methods are overridden:
    - TraditionalForm
    - DisplayForm
    - StandardForm
+   - TeXForm
 
 Internal functions:
 
@@ -236,10 +237,10 @@ ClearAll[ displayMapping, bold, esub, GAdisplay ]
 bold = Style[ #, Bold ] & ;
 esub = Subscript[ bold[ "e" ], # ] & ;
 displayMapping = {
-   {Scalar[ 1 ], 1, 1},
-   {Vector[ 1, 1 ], esub[ 1 ], e[ 1 ]},
-   {Vector[ 1, 2 ], esub[ 2 ], e[ 2 ]},
-   {Bivector[ -1 ], esub[ "12" ], e[ 1 ]e[ 2 ]}
+   {Scalar[ 1 ], 1, 1, 1},
+   {Vector[ 1, 1 ], esub[ 1 ], e[ 1 ], "\\mathbf{e}_1"},
+   {Vector[ 1, 2 ], esub[ 2 ], e[ 2 ], "\\mathbf{e}_2"},
+   {Bivector[ -1 ], esub[ "12" ], e[ 1 ]e[ 2 ], "\\mathbf{e}_{12}"}
 } ;
 
 GAdisplay[ v_grade, how_ ] :=
@@ -254,12 +255,25 @@ GAdisplay[ v_grade, how_ ] :=
  *)
 {D, TraditionalForm, DisplayForm, StandardForm, Format};
 
-Unprotect[ TraditionalForm, DisplayForm, StandardForm, Format ] ;
+Unprotect[ TraditionalForm, DisplayForm, StandardForm, Format, TeXForm ] ;
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
 Format[ m_grade ] := GAdisplay[ m, 2 ] ;
 StandardForm[ m_grade ] := GAdisplay[ m, 3 ] ;
-Protect[ TraditionalForm, DisplayForm, StandardForm, Format ] ;
+
+ClearAll[oneTeXForm]
+
+oneTeXForm[m_, blade_, disp_] := Module[{p},
+  p = AngleBracket[blade, m];
+  If[ p // PossibleZeroQ, 0,
+   If[ p === 1, disp,
+    Times[p // TeXForm, disp]]
+   ]
+  ]
+
+TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
+
+Protect[ TraditionalForm, DisplayForm, StandardForm, Format, TeXForm ] ;
 
 Protect[ Scalar, Vector, Bivector,
 GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, e,
