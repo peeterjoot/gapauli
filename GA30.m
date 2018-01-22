@@ -13,7 +13,11 @@ BeginPackage[ "GA30`" ]
 Unprotect[
    Bivector,
    BivectorSelection,
+   Curl,
+   D,
    DisplayForm,
+   Div,
+   Grad,
    GradeSelection,
    Scalar,
    ScalarProduct,
@@ -24,6 +28,7 @@ Unprotect[
    TraditionalForm,
    Trivector,
    TrivectorSelection,
+   Vcurl,
    Vector,
    VectorSelection,
    complex,
@@ -218,14 +223,12 @@ pauliMatrix[
 pauliMatrix[ 3 ] := PauliMatrix[ 3 ] ;
 conjugateTranspose[ m_List ] := Transpose[ matrixconj[ m ] ] ;
 
-Unprotect[ TraditionalForm, DisplayForm, StandardForm ] ;
 TraditionalForm[ z_complex ] := (((z // real) + I (z // imag)) // TraditionalForm)
 DisplayForm[ z_complex ] := (((z // real) + I (z // imag)) // DisplayForm)
 StandardForm[ z_complex ] := (((z // real) + I (z // imag)) // StandardForm)
 
 (* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
-Unprotect[ Scalar, Vector, Bivector, Trivector,
 GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
 ScalarValue, ScalarProduct
 ] ;
@@ -425,7 +428,6 @@ oneTeXForm[m_, blade_, disp_] := Module[{p},
 
 TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
 
-Unprotect[ D, Grad, Div, Curl, Vcurl ];
 D[ m_grade, u_ ] := grade[ m // First,
    Map[
      complex[
