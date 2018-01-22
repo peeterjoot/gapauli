@@ -217,8 +217,8 @@ ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [
 (*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
 Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
 
-(* Begin Private Context *) 
-Begin["`Private`"] 
+(* Begin Private Context *)
+Begin["`Private`"]
 
 complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
 complex /: r1_ + complex[ r2_, i2_ ] := complex[ r1 + r2, i2 ] ;

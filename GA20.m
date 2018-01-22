@@ -147,8 +147,8 @@ a Scalar (i.e. scaled diagonal matrix)." ;
 ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
 ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
 
-(* Begin Private Context *) 
-Begin["`Private`"] 
+(* Begin Private Context *)
+Begin["`Private`"]
 
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, v PauliMatrix[ 1 ] ] ;

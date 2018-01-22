@@ -260,8 +260,8 @@ ScalarValue::usage =
 ScalarProduct::usage =
   "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ].";
 
-(* Begin Private Context *) 
-Begin["`Private`"] 
+(* Begin Private Context *)
+Begin["`Private`"]
 
 complex /: complex[r1_, i1_] + complex[r2_, i2_] := complex[r1 + r2, i1 + i2];
 complex /: r1_ + complex[r2_, i2_] := complex[r1 + r2, i2];
