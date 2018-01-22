@@ -72,17 +72,59 @@ TODO:
 
 3) proper packaging stuff:  private for internals.
 " ;
-
-(*BEGIN: << altcomplex`;*)
-
-(* copy this module to a directory in $Path.  Then invoke with <<GA30` *)
-(*BeginPackage[ "complex`" ]*)
-
-Unprotect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
-
 complex::usage =
   "complex.  A limited use complex number implementation to use internally in \
 a Pauli or Dirac matrix basis representation, independent of any Complex" ;
+norm::usage = "norm[ z ].  A Norm like function for complex[ ]" ;
+complexQ::usage = "complexQ[ z ].  predicate pattern match for complex[ ]" ;
+notComplexQ::usage = "notComplexQ[ z ].  predicate pattern match for !complex[ ]" ;
+real::usage = "real[ z ].  Re[ z ] like function for complex[ ]" ;
+imag::usage = "imag[ z ].  Im[ z ] like function for complex[ ]" ;
+conjugate::usage = "conjugate[ z ].  Conjugate[ z ] like function for complex[ ]" ;
+complexI::usage = "complexI.  I like unit imaginary for complex[ ]" ;
+fMatrix::usage = "thread a function f over all the elements p in a list." ;
+matrixreal::usage =
+  "matrixreal.  method to apply real to all elements in matrix.  This is a hack.  \
+Can probably set an attribute on the real function to do this." ;
+matriximag::usage =
+  "matriximag.  method to apply imag to all elements in matrix.  This is a hack.  \
+Can probably set an attribute on the imag function to do this." ;
+matrixconj::usage =
+  "matrixconj.  method to apply conjugate to all elements in matrix.  This is a \
+hack.  Can probably set an attribute on the conj function to do this." ;
+pauliMatrix::usage =
+  "pauliMatrix[ n ], n = 1,2,3.  PauliMatrix[ ] implemented with complex[ ], instead of Complex[ ]." ;
+conjugateTranspose::usage =
+  "conjugateTranspose[ ].  ConjugateTranspose[ ] like operation for pauliMatrix." ;
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
+Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
+Vector::usage = "Vector[ v, n ], where n = {1,2,3} constructs a vector grade quantity with value v in direction n." ;
+Bivector::usage = "Bivector[ v, n1, n2 ], where n1,n2 = {1,2,3} constructs a bivector grade quantity with value v in the plane n1,n2." ;
+Trivector::usage = "Trivector[ v ] constructs a trivector (pseudoscalar) grade quantity scaled by v." ;
+gradeQ::usage = "gradeQ[ m, n ] tests if the multivector m is of grade n.  n = -1 is used internally to represent values of more than one grade." ;
+scalarQ::usage = "scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)" ;
+vectorQ::usage = "vectorQ[ m ] tests if the multivector m is of grade 1 (vector)" ;
+bivectorQ::usage = "bivectorQ[ m ] tests if the multivector m is of grade 2 (bivector)" ;
+trivectorQ::usage = "trivectorQ[ m ] tests if the multivector m is of grade 3 (trivector)" ;
+bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade." ;
+gradeAnyQ::usage = "gradeAnyQ[ ].  predicate pattern match for grade[ _ ]" ;
+notGradeQ::usage = "notGradeQ[ ].  predicate pattern match for !grade[ ]" ;
+GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number)." ;
+ScalarSelection::usage = "ScalarSelection[ m ] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[ ] type (not just a number or an expression)." ;
+VectorSelection::usage = "VectorSelection[ m ] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
+BivectorSelection::usage = "BivectorSelection[ m ] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
+TrivectorSelection::usage = "TrivectorSelection[ m ] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[ ] type (not just an number or expression)." ;
+pmagnitude::usage = "pmagnitude[ ].  select the 1,1 element from a pauli matrix assuming it represents \
+either a Scalar, or a Trivector (i.e. scaled diagonal matrix)." ;
+ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
+ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
+(*Grad::usage = "grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to cartesian coordinates x,y,z..";*)
+(*Div::usage = "div[m,{x,y,z}] of a grade k+1 blade m, computes < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
+(*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
+Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
+
+Unprotect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
+
 ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ] ;
 
 complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
@@ -95,7 +137,6 @@ complex /: complex[ re_, 0 ] := re ;
 
 complex /: complex[ r1_, i1_ ] complex[ r2_, i2_ ] := complex[ r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
 
-norm::usage = "norm[ z ].  A Norm like function for complex[ ]" ;
 norm[ z_complex ] := ((z // First)^2 + (z // Last)^2) ;
 
 (*special case this one to deal with the sort of products that are \
@@ -106,50 +147,31 @@ complex /: Power[ z_complex, n_ ] :=
   Module[ {r = norm[ z ]^(n/2), theta = n ArcTan[ z // First, z // Last ]},
     r complex[ Cos[ theta ], Sin[ theta ] ] ] ;
 
-complexQ::usage = "complexQ[ z ].  predicate pattern match for complex[ ]" ;
 complexQ[ z_complex ] := True ;
 complexQ[ _ ] := False ;
-notComplexQ::usage = "notComplexQ[ z ].  predicate pattern match for !complex[ ]" ;
 notComplexQ[ v_ ] := Not[ complexQ[ v ] ] ;
 
 complex /: (v_?notComplexQ) complex[ re_, im_ ] := complex[ v re, v im ] ;
 
-real::usage = "real[ z ].  Re[ z ] like function for complex[ ]" ;
 real[ z_complex ] := (z // First) ;
-imag::usage = "imag[ z ].  Im[ z ] like function for complex[ ]" ;
 imag[ z_complex ] := (z // Last) ;
 real[ ex_ ] := ex ;
 imag[ ex_ ] := 0 ;
-conjugate::usage = "conjugate[ z ].  Conjugate[ z ] like function for complex[ ]" ;
 conjugate[ z_complex ] := complex[ z // First, -z // Last ] ;
 conjugate[ ex_ ] := ex ;
 
 ClearAll[ complexI, fMatrix, matrixreal, matriximag, matrixconj ]
-complexI::usage = "complexI.  I like unit imaginary for complex[ ]" ;
 complexI := complex[ 0, 1 ] ;
 
-fMatrix::usage = "thread a function f over all the elements p in a list." ;
 fMatrix[ p_, f_ ] := (Function[ a, f@a, Listable ]@p)
 
-matrixreal::usage =
-  "matrixreal.  method to apply real to all elements in matrix.  This is a hack.  \
-Can probably set an attribute on the real function to do this." ;
 matrixreal[ m_ ] := fMatrix[ m, real ] ;
 
-matriximag::usage =
-  "matriximag.  method to apply imag to all elements in matrix.  This is a hack.  \
-Can probably set an attribute on the imag function to do this." ;
 matriximag[ m_ ] := fMatrix[ m, imag ] ;
 
-matrixconj::usage =
-  "matrixconj.  method to apply conjugate to all elements in matrix.  This is a \
-hack.  Can probably set an attribute on the conj function to do this." ;
 matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 
 Protect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
-
-(*EndPackage[ ]*)
-(*END: << altcomplex`;*)
 
 Unprotect[ Scalar, Vector, Bivector, Trivector,
 GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
@@ -157,17 +179,12 @@ ScalarValue, ScalarProduct
 ] ;
 
 ClearAll[ pauliMatrix, conjugateTranspose ]
-pauliMatrix::usage =
-  "pauliMatrix[ n ], n = 1,2,3.  PauliMatrix[ ] implemented with complex[ ], instead of Complex[ ]." ;
 pauliMatrix[ 1 ] := PauliMatrix[ 1 ] ;
 pauliMatrix[
    2 ] := (PauliMatrix[ 2 ] /. {Complex[ 0, 1 ] -> complexI,
      Complex[ 0, -1 ] -> -complexI}) ;
 pauliMatrix[ 3 ] := PauliMatrix[ 3 ] ;
-conjugateTranspose::usage =
-  "conjugateTranspose[ ].  ConjugateTranspose[ ] like operation for pauliMatrix." ;
 conjugateTranspose[ m_List ] := Transpose[ matrixconj[ m ] ] ;
-(*End[ "`Private`" ]*)
 
 Unprotect[ TraditionalForm, DisplayForm, StandardForm ] ;
 TraditionalForm[ z_complex ] := (((z // real) + I (z // imag)) // TraditionalForm)
@@ -183,35 +200,21 @@ ScalarValue, ScalarProduct
 ] ;
 
 ClearAll[ Vector, Scalar, Bivector, Trivector, grade ]
-grade::usage = "grade.  (internal) An upvalue type that represents a CL(3,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
-Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
-Vector::usage = "Vector[ v, n ], where n = {1,2,3} constructs a vector grade quantity with value v in direction n." ;
 Vector[ v_, k_Integer /; k >= 1 && k <= 3 ] :=
   grade[ 1, v pauliMatrix[ k ] ] ;
-Bivector::usage = "Bivector[ v, n1, n2 ], where n1,n2 = {1,2,3} constructs a bivector grade quantity with value v in the plane n1,n2." ;
 Bivector[ v_, k_Integer /; k >= 1 && k <= 3, j_Integer /; j >= 1 && j <= 3 ] := grade[ 2, v pauliMatrix[ k ].pauliMatrix[ j ] ] ;
-Trivector::usage = "Trivector[ v ] constructs a trivector (pseudoscalar) grade quantity scaled by v." ;
 Trivector[ v_ ] := grade[ 3, complexI v IdentityMatrix[ 2 ] ] ;
 
-(*Begin[ "`Private`" ]*)
 ClearAll[ scalarQ, vectorQ, bivectorQ, trivectorQ, bladeQ ]
-gradeQ::usage = "gradeQ[ m, n ] tests if the multivector m is of grade n.  n = -1 is used internally to represent values of more than one grade." ;
 gradeQ[ m_grade, n_Integer ] := ((m // First) == n)
-scalarQ::usage = "scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)" ;
 scalarQ[ m_grade ] := gradeQ[ m, 0 ]
-vectorQ::usage = "vectorQ[ m ] tests if the multivector m is of grade 1 (vector)" ;
 vectorQ[ m_grade ] := gradeQ[ m, 1 ]
-bivectorQ::usage = "bivectorQ[ m ] tests if the multivector m is of grade 2 (bivector)" ;
 bivectorQ[ m_grade ] := gradeQ[ m, 2 ]
-trivectorQ::usage = "trivectorQ[ m ] tests if the multivector m is of grade 3 (trivector)" ;
 trivectorQ[ m_grade ] := gradeQ[ m, 3 ]
-bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade." ;
 bladeQ[ m_grade ] := ((m // First) >= 0)
-gradeAnyQ::usage = "gradeAnyQ[ ].  predicate pattern match for grade[ _ ]" ;
 gradeAnyQ[ m_grade ] := True
 gradeAnyQ[ _ ] := False
-notGradeQ::usage = "notGradeQ[ ].  predicate pattern match for !grade[ ]" ;
 notGradeQ[ v_ ] := Not[ gradeAnyQ[ v ] ]
 
 ClearAll[ directProduct, signedSymmetric, symmetric, antisymmetric ]
@@ -239,23 +242,17 @@ pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
 pauliGradeSelect1 := pauliGradeSelect[ #, 1 ] & ;
 pauliGradeSelect2 := pauliGradeSelect[ #, 2 ] & ;
 pauliGradeSelect3 := pauliGradeSelect[ #, 3 ] & ;
-(*End[ "`Private`" ]*)
 
 ClearAll[ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection ]
 
-GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number)." ;
 GradeSelection[ m_?scalarQ, 0 ] := m ;
 GradeSelection[ m_?vectorQ, 1 ] := m ;
 GradeSelection[ m_?bivectorQ, 2 ] := m ;
 GradeSelection[ m_?trivectorQ, 3 ] := m ;
 GradeSelection[ m_, k_Integer /; k >= 0 && k <= 3 ] := grade[ k, pauliGradeSelect[ m // Last, k ] ] ;
-ScalarSelection::usage = "ScalarSelection[ m ] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[ ] type (not just a number or an expression)." ;
 ScalarSelection := GradeSelection[ #, 0 ] & ;
-VectorSelection::usage = "VectorSelection[ m ] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
 VectorSelection := GradeSelection[ #, 1 ] & ;
-BivectorSelection::usage = "BivectorSelection[ m ] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
 BivectorSelection := GradeSelection[ #, 2 ] & ;
-TrivectorSelection::usage = "TrivectorSelection[ m ] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[ ] type (not just an number or expression)." ;
 TrivectorSelection := GradeSelection[ #, 3 ] & ;
 
 ClearAll[ binaryOperator ]
@@ -331,12 +328,7 @@ grade /: grade[ g1_, m1_ ] \[Wedge] grade[ g2_, m2_ ]:= binaryOperator[ Wedge, g
 
 ClearAll[ pmagnitude ]
 
-(*Begin[ "`Private`" ]*)
-pmagnitude::usage =
-  "pmagnitude[ ].  select the 1,1 element from a pauli matrix assuming it represents \
-either a Scalar, or a Trivector (i.e. scaled diagonal matrix)." ;
 pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
-(*End[ "`Private`" ]*)
 
 (* AngleBracket,single operand forms, enter with[ Esc ]<[ Esc ] \
 v[ Esc ]>[ Esc ] *)
@@ -347,7 +339,6 @@ grade /: AngleBracket[ grade[ 3, _ ] ] := 0
 grade /: AngleBracket[ grade[ _, m_ ] ] := ((pauliGradeSelect[ m, 0 ]) // pmagnitude)
 
 ClearAll[ ScalarValue ] ;
-ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
 ScalarValue[ m_grade ] := AngleBracket[ m ] ;
 
 (* AngleBracket,two operand forms. *)
@@ -367,10 +358,8 @@ grade /: AngleBracket[ grade[ _, _ ], grade[ 3, t1_ ] ] := 0 ;
 grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1.m2, 0 ] // pmagnitude) ;
 
 ClearAll[ ScalarProduct ] ;
-ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
-(*Begin[ "`Private`" ]*)
 ClearAll[ displayMapping, bold, esub, GAdisplay ]
 bold = Style[ #, Bold ] & ;
 esub = Subscript[ bold[ "e" ], # ] & ;
@@ -388,7 +377,6 @@ displayMapping = {
 GAdisplay[ v_grade, how_ ] :=
   Total[ (Times[ (AngleBracket[ # // First, v ] (*// Simplify*)), #[ [how ] ] ]) & /@
     displayMapping ] ;
-(*End[ "`Private`" ]*)
 
 (* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
    been loaded:
@@ -428,20 +416,16 @@ D[ m_grade, u_ ] := grade[ m // First,
    ]
 ] ;
 
-(*Grad::usage = "grad[m,{x,y,z}] computes the vector product of the gradient with multivector m with respect to cartesian coordinates x,y,z..";*)
 grade /: Grad[ grade[ k_, m_ ], u_List ] := ( ( Vector[1, #] ** D[ grade[k, m], u[[#]] ] ) & /@ Range[3] ) // Total ;
 
-(*Div::usage = "div[m,{x,y,z}] of a grade k+1 blade m, computes < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
 grade /: Div[ grade[ 1, m_], u_List ] := Grad[ grade[1, m], u ] // ScalarSelection ;
 grade /: Div[ grade[ 2, m_], u_List ] := Grad[ grade[2, m], u ] // VectorSelection ;
 grade /: Div[ grade[ 3, m_], u_List ] := Grad[ grade[3, m], u ] // BivectorSelection ;
 
-(*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
 grade /: Curl[ grade[ 1, m_], u_List ] := Grad[ grade[1, m], u ] // BivectorSelection ;
 grade /: Curl[ grade[ 2, m_], u_List ] := Grad[ grade[2, m], u ] // TrivectorSelection ;
 grade /: Curl[ grade[ 3, m_], u_List ] := 0
 
-Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
 Vcurl[ m_?vectorQ, u_List ] := -Trivector[1] Curl[ m, u ] ;
 Protect[ D, Grad, Div, Curl, Vcurl ];
 
