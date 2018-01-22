@@ -2,6 +2,44 @@
 
 (* copy this module to a directory in $Path.  Then invoke with <<GA30` *)
 BeginPackage[ "GA30`" ]
+
+(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
+   been loaded:
+
+   http://mathematica.stackexchange.com/a/137007/10
+ *)
+{D, TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl, Format};
+
+Unprotect[
+   Bivector,
+   BivectorSelection,
+   DisplayForm,
+   GradeSelection,
+   Scalar,
+   ScalarProduct,
+   ScalarSelection,
+   ScalarValue,
+   StandardForm,
+   TeXForm,
+   TraditionalForm,
+   Trivector,
+   TrivectorSelection,
+   Vector,
+   VectorSelection,
+   complex,
+   complexI,
+   complexQ,
+   conjugate,
+   e,
+   fMatrix,
+   imag,
+   matrixconj,
+   matriximag,
+   matrixreal,
+   notComplexQ,
+   real
+];
+
 GA30::usage = "GA30: An implementation of Euclidean (CL(3,0)) Geometric Algebra.
 
 Pauli matrices are used to represent the algebraic elements.  This provides an efficient and compact representation
@@ -123,8 +161,6 @@ ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [
 (*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
 Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
 
-Unprotect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
-
 ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ] ;
 
 complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
@@ -173,10 +209,6 @@ matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 
 Protect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
 
-Unprotect[ Scalar, Vector, Bivector, Trivector,
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
-ScalarValue, ScalarProduct
-] ;
 
 ClearAll[ pauliMatrix, conjugateTranspose ]
 pauliMatrix[ 1 ] := PauliMatrix[ 1 ] ;
@@ -378,14 +410,6 @@ GAdisplay[ v_grade, how_ ] :=
   Total[ (Times[ (AngleBracket[ # // First, v ] (*// Simplify*)), #[ [how ] ] ]) & /@
     displayMapping ] ;
 
-(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
-   been loaded:
-
-   http://mathematica.stackexchange.com/a/137007/10
- *)
-{D, TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl, Format};
-
-Unprotect[ TraditionalForm, DisplayForm, StandardForm, TeXForm ] ;
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
 Format[ m_grade ] := GAdisplay[ m, 2 ] ;
