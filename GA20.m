@@ -301,11 +301,22 @@ oneTeXForm[m_, blade_, disp_] := Module[{p},
 
 TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
 
-Protect[ TraditionalForm, DisplayForm, StandardForm, Format, TeXForm ] ;
-
-Protect[ Scalar, Vector, Bivector,
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, e,
-ScalarValue, ScalarProduct
-] ;
+Protect[ 
+   TraditionalForm,
+   DisplayForm,
+   StandardForm,
+   Format,
+   TeXForm,
+   Scalar,
+   Vector,
+   Bivector,
+   GradeSelection,
+   ScalarSelection,
+   VectorSelection,
+   BivectorSelection,
+   e,
+   ScalarValue,
+   ScalarProduct
+]
 
 EndPackage[ ]
