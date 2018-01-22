@@ -263,8 +263,6 @@ ScalarProduct::usage =
 
 (* Begin Private Context *) 
 Begin["`Private`"] 
-(*
-*)
 
 complex /: complex[r1_, i1_] + complex[r2_, i2_] := complex[r1 + r2, i1 + i2];
 complex /: r1_ + complex[r2_, i2_] := complex[r1 + r2, i2];
@@ -620,8 +618,6 @@ grade /: Curl[grade[3, m_], u_List] := Grad[grade[3, m], u] // QuadvectorSelecti
 grade /: Curl[grade[4, m_], u_List] := 0;
 
 (* End Private Context *)
-(* 
-*)
 End[]
 
 Protect[
