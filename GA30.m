@@ -161,6 +161,9 @@ ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [
 (*Curl::usage = "Given a grade (k-1) blade m, curl[ m, {x, y, z} ] = < \[Del] m >_k, where the gradient is evaluated with respect to cartesian coordinates x,y,z." ;*)
 Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vector valued curl of that vector with respect to cartesian coordinates x,y,z." ;
 
+(* Begin Private Context *) 
+Begin["`Private`"] 
+
 ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ] ;
 
 complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
@@ -207,9 +210,6 @@ matriximag[ m_ ] := fMatrix[ m, imag ] ;
 
 matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 
-Protect[ complex, complexQ, notComplexQ, real, imag, conjugate, complexI, fMatrix, matrixreal, matriximag, matrixconj ] ;
-
-
 ClearAll[ pauliMatrix, conjugateTranspose ]
 pauliMatrix[ 1 ] := PauliMatrix[ 1 ] ;
 pauliMatrix[
@@ -222,7 +222,6 @@ Unprotect[ TraditionalForm, DisplayForm, StandardForm ] ;
 TraditionalForm[ z_complex ] := (((z // real) + I (z // imag)) // TraditionalForm)
 DisplayForm[ z_complex ] := (((z // real) + I (z // imag)) // DisplayForm)
 StandardForm[ z_complex ] := (((z // real) + I (z // imag)) // StandardForm)
-Protect[ TraditionalForm, DisplayForm, StandardForm ] ;
 
 (* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
@@ -426,8 +425,6 @@ oneTeXForm[m_, blade_, disp_] := Module[{p},
 
 TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
 
-Protect[ TraditionalForm, DisplayForm, StandardForm, TeXForm ] ;
-
 Unprotect[ D, Grad, Div, Curl, Vcurl ];
 D[ m_grade, u_ ] := grade[ m // First,
    Map[
@@ -451,11 +448,43 @@ grade /: Curl[ grade[ 2, m_], u_List ] := Grad[ grade[2, m], u ] // TrivectorSel
 grade /: Curl[ grade[ 3, m_], u_List ] := 0
 
 Vcurl[ m_?vectorQ, u_List ] := -Trivector[1] Curl[ m, u ] ;
-Protect[ D, Grad, Div, Curl, Vcurl ];
 
-Protect[ Scalar, Vector, Bivector, Trivector,
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
-ScalarValue, ScalarProduct
+(* End Private Context *)
+End[]
+
+Protect[
+   Bivector,
+   BivectorSelection,
+   Curl,
+   D,
+   DisplayForm,
+   Div,
+   Grad,
+   GradeSelection,
+   Scalar,
+   ScalarProduct,
+   ScalarSelection,
+   ScalarValue,
+   StandardForm,
+   TeXForm,
+   TraditionalForm,
+   Trivector,
+   TrivectorSelection,
+   Vcurl,
+   Vector,
+   VectorSelection,
+   complex,
+   complexI,
+   complexQ,
+   conjugate,
+   e,
+   fMatrix,
+   imag,
+   matrixconj,
+   matriximag,
+   matrixreal,
+   notComplexQ,
+   real
 ] ;
 
 EndPackage[ ]
