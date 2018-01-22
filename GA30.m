@@ -43,7 +43,58 @@ Unprotect[
    matrixreal,
    notComplexQ,
    real
-];
+]
+
+ClearAll[
+   Bivector,
+   BivectorSelection,
+   GAdisplay,
+   GradeSelection,
+   Scalar,
+   ScalarProduct,
+   ScalarSelection,
+   ScalarValue,
+   Trivector,
+   TrivectorSelection,
+   Vector,
+   VectorSelection,
+   antisymmetric,
+   binaryOperator,
+   bivectorQ,
+   bladeQ,
+   bold,
+   complex,
+   complexI,
+   complexQ,
+   conjugate,
+   conjugateTranspose,
+   directProduct,
+   displayMapping,
+   esub,
+   fMatrix,
+   grade,
+   imag,
+   matrixconj,
+   matriximag,
+   matrixreal,
+   notComplexQ,
+   oneTeXForm,
+   pauliGradeSelect,
+   pauliGradeSelect0,
+   pauliGradeSelect01,
+   pauliGradeSelect1,
+   pauliGradeSelect2,
+   pauliGradeSelect23,
+   pauliGradeSelect3,
+   pauliMatrix,
+   pmagnitude,
+   real,
+   scalarQ,
+   signedSymmetric,
+   symmetric,
+   trivectorQ,
+   vectorQ
+]
 
 GA30::usage = "GA30: An implementation of Euclidean (CL(3,0)) Geometric Algebra.
 
@@ -169,8 +220,6 @@ Vcurl::usage = "Given a vector m, vcurl[m,{x,y,z}] computes the traditional vect
 (* Begin Private Context *) 
 Begin["`Private`"] 
 
-ClearAll[ complex, complexQ, notComplexQ, real, imag, conjugate ] ;
-
 complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
 complex /: r1_ + complex[ r2_, i2_ ] := complex[ r1 + r2, i2 ] ;
 
@@ -204,7 +253,6 @@ imag[ ex_ ] := 0 ;
 conjugate[ z_complex ] := complex[ z // First, -z // Last ] ;
 conjugate[ ex_ ] := ex ;
 
-ClearAll[ complexI, fMatrix, matrixreal, matriximag, matrixconj ]
 complexI := complex[ 0, 1 ] ;
 
 fMatrix[ p_, f_ ] := (Function[ a, f@a, Listable ]@p)
@@ -215,7 +263,6 @@ matriximag[ m_ ] := fMatrix[ m, imag ] ;
 
 matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 
-ClearAll[ pauliMatrix, conjugateTranspose ]
 pauliMatrix[ 1 ] := PauliMatrix[ 1 ] ;
 pauliMatrix[
    2 ] := (PauliMatrix[ 2 ] /. {Complex[ 0, 1 ] -> complexI,
@@ -229,18 +276,12 @@ StandardForm[ z_complex ] := (((z // real) + I (z // imag)) // StandardForm)
 
 (* End of complex, and pauliMatrix section.  Define the basic CL(3,0) operations. *)
 
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection, e,
-ScalarValue, ScalarProduct
-] ;
-
-ClearAll[ Vector, Scalar, Bivector, Trivector, grade ]
 Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
 Vector[ v_, k_Integer /; k >= 1 && k <= 3 ] :=
   grade[ 1, v pauliMatrix[ k ] ] ;
 Bivector[ v_, k_Integer /; k >= 1 && k <= 3, j_Integer /; j >= 1 && j <= 3 ] := grade[ 2, v pauliMatrix[ k ].pauliMatrix[ j ] ] ;
 Trivector[ v_ ] := grade[ 3, complexI v IdentityMatrix[ 2 ] ] ;
 
-ClearAll[ scalarQ, vectorQ, bivectorQ, trivectorQ, bladeQ ]
 gradeQ[ m_grade, n_Integer ] := ((m // First) == n)
 scalarQ[ m_grade ] := gradeQ[ m, 0 ]
 vectorQ[ m_grade ] := gradeQ[ m, 1 ]
@@ -251,8 +292,6 @@ gradeAnyQ[ m_grade ] := True
 gradeAnyQ[ _ ] := False
 notGradeQ[ v_ ] := Not[ gradeAnyQ[ v ] ]
 
-ClearAll[ directProduct, signedSymmetric, symmetric, antisymmetric ]
-
 directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last).(v2 // Last) ] ;
 signedSymmetric[ t_, v1_, v2_, s_ ] :=
   Module[ {a = (v1 // Last), b = (v2 // Last)},
@@ -262,8 +301,6 @@ antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 
 (*These operator on just the Pauli matrix portions x of \
 pauliGradeSelect[ ,x ]*)
-ClearAll[ pauliGradeSelect01, \
-pauliGradeSelect23, pauliGradeSelect ]
 pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) & ;
 pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) & ;
 pauliGradeSelect[ m_, 0 ] := IdentityMatrix[ 2 ] (m/2 // Tr // real // Simplify) ;
@@ -271,13 +308,10 @@ pauliGradeSelect[ m_, 1 ] := ((pauliGradeSelect01[ m ] - pauliGradeSelect[ m, 0 
 pauliGradeSelect[ m_, 2 ] := ((pauliGradeSelect23[ m ] - pauliGradeSelect[ m, 3 ]) // Simplify) ;
 pauliGradeSelect[ m_, 3 ] := complexI IdentityMatrix[ 2 ] (m/2 // Tr // imag // Simplify) ;
 
-ClearAll[ pauliGradeSelect0, pauliGradeSelect1, pauliGradeSelect2, pauliGradeSelect3 ]
 pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
 pauliGradeSelect1 := pauliGradeSelect[ #, 1 ] & ;
 pauliGradeSelect2 := pauliGradeSelect[ #, 2 ] & ;
 pauliGradeSelect3 := pauliGradeSelect[ #, 3 ] & ;
-
-ClearAll[ GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, TrivectorSelection ]
 
 GradeSelection[ m_?scalarQ, 0 ] := m ;
 GradeSelection[ m_?vectorQ, 1 ] := m ;
@@ -289,7 +323,6 @@ VectorSelection := GradeSelection[ #, 1 ] & ;
 BivectorSelection := GradeSelection[ #, 2 ] & ;
 TrivectorSelection := GradeSelection[ #, 3 ] & ;
 
-ClearAll[ binaryOperator ]
 binaryOperator[ f_, b_?bladeQ, m_grade ] := Total[ f[ b, # ] & /@ (GradeSelection[ m, # ] & /@ (Range[ 3+1 ] - 1)) ]
 binaryOperator[ f_, m_grade, b_?bladeQ ] := Total[ f[ #, b ] & /@ (GradeSelection[ m, # ] & /@ (Range[ 3+1 ] - 1)) ]
 binaryOperator[ f_, m1_grade, m2_grade ] := Total[ f[ # // First, # // Last ] & /@ (
@@ -360,8 +393,6 @@ grade /: b_?bladeQ \[Wedge] grade[ 3, _ ] := 0 ;
 
 grade /: grade[ g1_, m1_ ] \[Wedge] grade[ g2_, m2_ ]:= binaryOperator[ Wedge, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
 
-ClearAll[ pmagnitude ]
-
 pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
 
 (* AngleBracket,single operand forms, enter with[ Esc ]<[ Esc ] \
@@ -372,7 +403,6 @@ grade /: AngleBracket[ grade[ 2, _ ] ] := 0
 grade /: AngleBracket[ grade[ 3, _ ] ] := 0
 grade /: AngleBracket[ grade[ _, m_ ] ] := ((pauliGradeSelect[ m, 0 ]) // pmagnitude)
 
-ClearAll[ ScalarValue ] ;
 ScalarValue[ m_grade ] := AngleBracket[ m ] ;
 
 (* AngleBracket,two operand forms. *)
@@ -391,10 +421,8 @@ grade /: AngleBracket[ grade[ _, _ ], grade[ 3, t1_ ] ] := 0 ;
 
 grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1.m2, 0 ] // pmagnitude) ;
 
-ClearAll[ ScalarProduct ] ;
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
-ClearAll[ displayMapping, bold, esub, GAdisplay ]
 bold = Style[ #, Bold ] & ;
 esub = Subscript[ bold[ "e" ], # ] & ;
 displayMapping = {
@@ -416,7 +444,6 @@ TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
 Format[ m_grade ] := GAdisplay[ m, 2 ] ;
 StandardForm[ m_grade ] := GAdisplay[ m, 3 ] ;
-ClearAll[oneTeXForm]
 
 oneTeXForm[m_, blade_, disp_] := Module[{p},
   p = AngleBracket[blade, m];
@@ -487,6 +514,6 @@ Protect[
    matrixreal,
    notComplexQ,
    real
-] ;
+]
 
 EndPackage[ ]

@@ -102,7 +102,6 @@ ClearAll[
    vs
 ]
 
-
 GA13::usage = "GA13: An implementation of a Minkowski (CL(1,3)) Geometric Algebra.
 
 Dirac matrices are used to represent the algebraic elements.  This provides an fairly efficient and compact representation
