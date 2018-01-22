@@ -2,6 +2,32 @@
 
 (* copy this module to a directory in $Path.  Then invoke with <<GA20` *)
 BeginPackage[ "GA20`" ]
+
+(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
+   been loaded:
+
+   http://mathematica.stackexchange.com/a/137007/10
+ *)
+{D, TraditionalForm, DisplayForm, StandardForm, Format};
+
+Unprotect[ 
+   Bivector,
+   BivectorSelection,
+   DisplayForm,
+   Format,
+   GradeSelection,
+   Scalar,
+   ScalarProduct,
+   ScalarSelection,
+   ScalarValue,
+   StandardForm,
+   TeXForm ,
+   TraditionalForm,
+   Vector,
+   VectorSelection,
+   e
+] ;
+
 GA20::usage = "GA20: An implementation of Euclidean (CL(2,0)) Geometric Algebra.
 
 Pauli matrices are used to represent the algebraic elements.  This provides an efficient and compact representation
@@ -69,11 +95,6 @@ TODO:
 
 3) proper packaging stuff:  private for internals.
 " ;
-
-Unprotect[ Scalar, Vector, Bivector,
-GradeSelection, ScalarSelection, VectorSelection, BivectorSelection, e,
-ScalarValue, ScalarProduct
-] ;
 
 ClearAll[ Vector, Scalar, Bivector, grade ]
 grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
@@ -248,14 +269,6 @@ GAdisplay[ v_grade, how_ ] :=
     displayMapping ] ;
 (*End[ "`Private`" ]*)
 
-(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
-   been loaded:
-
-   http://mathematica.stackexchange.com/a/137007/10
- *)
-{D, TraditionalForm, DisplayForm, StandardForm, Format};
-
-Unprotect[ TraditionalForm, DisplayForm, StandardForm, Format, TeXForm ] ;
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
 Format[ m_grade ] := GAdisplay[ m, 2 ] ;
