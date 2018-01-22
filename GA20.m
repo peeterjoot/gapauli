@@ -10,7 +10,7 @@ BeginPackage[ "GA20`" ]
  *)
 {D, TraditionalForm, DisplayForm, StandardForm, Format};
 
-Unprotect[ 
+Unprotect[
    Bivector,
    BivectorSelection,
    DisplayForm,
@@ -301,7 +301,7 @@ oneTeXForm[m_, blade_, disp_] := Module[{p},
 
 TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping ];
 
-Protect[ 
+Protect[
    TraditionalForm,
    DisplayForm,
    StandardForm,
