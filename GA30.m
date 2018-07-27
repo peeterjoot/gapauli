@@ -93,7 +93,9 @@ ClearAll[
    signedSymmetric,
    symmetric,
    trivectorQ,
-   vectorQ
+   vectorQ,
+   xVersionNumber,
+   trace
 ]
 
 GA30::usage = "GA30: An implementation of Euclidean (CL(3,0)) Geometric Algebra.
@@ -263,11 +265,20 @@ matriximag[ m_ ] := fMatrix[ m, imag ] ;
 
 matrixconj[ m_ ] := fMatrix[ m, conjugate ] ;
 
+(* Mathematica 4 (which Wolfgang has) doesn't appear to have PauliMatrix, nor Tr.
+
 pauliMatrix[ 1 ] := PauliMatrix[ 1 ] ;
 pauliMatrix[
    2 ] := (PauliMatrix[ 2 ] /. {Complex[ 0, 1 ] -> complexI,
      Complex[ 0, -1 ] -> -complexI}) ;
 pauliMatrix[ 3 ] := PauliMatrix[ 3 ] ;
+trace[m_] := Tr[m];
+*)
+pauliMatrix[ 1 ] := {{0, 1}, {1, 0}};
+pauliMatrix[ 2 ] := {{0, complex[0, -1]}, {complex[0, 1], 0}};
+pauliMatrix[ 3 ] := {{1, 0}, {0, -1}}
+trace[{{d1_, _}, {_, d2_}}] := d1 + d2;
+
 conjugateTranspose[ m_List ] := Transpose[ matrixconj[ m ] ] ;
 
 TraditionalForm[ z_complex ] := (((z // real) + I (z // imag)) // TraditionalForm)
@@ -303,10 +314,11 @@ antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 pauliGradeSelect[ ,x ]*)
 pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) & ;
 pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) & ;
-pauliGradeSelect[ m_, 0 ] := IdentityMatrix[ 2 ] (m/2 // Tr // real // Simplify) ;
+
+pauliGradeSelect[ m_, 0 ] := IdentityMatrix[ 2 ] (m/2 // trace // real // Simplify) ;
 pauliGradeSelect[ m_, 1 ] := ((pauliGradeSelect01[ m ] - pauliGradeSelect[ m, 0 ]) // Simplify) ;
 pauliGradeSelect[ m_, 2 ] := ((pauliGradeSelect23[ m ] - pauliGradeSelect[ m, 3 ]) // Simplify) ;
-pauliGradeSelect[ m_, 3 ] := complexI IdentityMatrix[ 2 ] (m/2 // Tr // imag // Simplify) ;
+pauliGradeSelect[ m_, 3 ] := complexI IdentityMatrix[ 2 ] (m/2 // trace // imag // Simplify) ;
 
 pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
 pauliGradeSelect1 := pauliGradeSelect[ #, 1 ] & ;
@@ -423,7 +435,13 @@ grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSele
 
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
-bold = Style[ #, Bold ] & ;
+xVersionNumber := $VersionNumber;
+(* 
+   xVersionNumber := 4.0;
+ *)
+
+bold = If[TrueQ[xVersionNumber >= 6.0], Style[ #, Bold ], # ] &;
+
 esub = Subscript[ bold[ "e" ], # ] & ;
 displayMapping = {
    {Scalar[ 1 ], 1, 1, 1},
