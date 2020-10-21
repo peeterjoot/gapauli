@@ -555,7 +555,7 @@ displayMapping = {
    {Vector[-1, 1], gsub[1], \[Gamma][1], "\\gamma_1"},
    {Vector[-1, 2], gsub[2], \[Gamma][2], "\\gamma_2"},
    {Vector[-1, 3], gsub[3], \[Gamma][3], "\\gamma_3"},
-   {Vector[1, 0], gsub[3], \[Gamma][0], "\\gamma_0"},
+   {Vector[1, 0], gsub[0], \[Gamma][0], "\\gamma_0"},
    {Bivector[-1, 1, 2], gsub["12"], \[Gamma][1] \[Gamma][2], "\\gamma_{12}"},
    {Bivector[-1, 1, 3], gsub["13"], \[Gamma][1] \[Gamma][3], "\\gamma_{13}"},
    {Bivector[-1, 2, 3], gsub["23"], \[Gamma][2] \[Gamma][3], "\\gamma_{23}"},
