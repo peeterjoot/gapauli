@@ -1,5 +1,11 @@
 PACKAGES := $(wildcard *.m)
-PACKAGEDIR := $(HOME)
+
+# MacOS:
+#PACKAGEDIR := $(HOME)
+
+# $UserBaseDirectory as viewed from WSL2 bash on Windows:
+#PACKAGEDIR := /mnt/c/Users/peete/AppData/Roaming/Mathematica
+PACKAGEDIR := /mnt/c/ProgramData/Mathematica
 
 PACKAGEDIR_FILES := $(foreach file,$(PACKAGES),$(PACKAGEDIR)/$(file))
 
