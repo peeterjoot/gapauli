@@ -209,6 +209,8 @@ grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 
 (* Times[ Scalar[], k ] *)
 grade /: Power[grade[ 0, s_ ], k_] := Scalar[ Power[pmagnitude[ s ], k] ]
+(* Vector inversion: Times[ Vector[], -1 ] *)
+grade /: Power[grade[ 1, s_ ], -1] := grade[ 1, s ] * Power[ pmagnitude[s.s], -1]
 
 (* Times *)
 grade /: (v_?notGradeQ) grade[ k_, m_ ] := grade[ k, v m ] ;
