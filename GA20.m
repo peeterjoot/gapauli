@@ -221,12 +221,12 @@ grade /: grade[ 1, s_ ] ** grade[ 1, s_ ] := grade[ 0, s.s ] ;
      (* grade /: grade[ 2, s_ ] ** grade[ 2, s_ ] := grade[ 0, s.s ] ; *)
 
 grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
-grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, s.m ] ;
+grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, m.s ] ;
 
    (* special cases for R2 *)
-grade /: grade[ 1_, m_ ] ** grade[ 2, s_ ] := grade[ 1, s.m ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 1, s_ ] := grade[ 1, s.m ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 2, s_ ] := grade[ 0, s.m ] ;
+grade /: grade[ 1_, m_ ] ** grade[ 2, s_ ] := grade[ 1, m.s ] ;
+grade /: grade[ 2_, m_ ] ** grade[ 1, s_ ] := grade[ 1, m.s ] ;
+grade /: grade[ 2_, m_ ] ** grade[ 2, s_ ] := grade[ 0, m.s ] ;
 
 (* We can't make any a-priori assumptions about any other grades, so code any other product as a multivector *)
 grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
