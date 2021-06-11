@@ -165,6 +165,7 @@ gradeAnyQ[ _ ] := False
 notGradeQ[ v_ ] := Not[ gradeAnyQ[ v ] ]
 
 directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last).(v2 // Last) ] ;
+(* t: new grade ; v1, v2: the input Pauli matrices, s: +-1. *)
 signedSymmetric[ t_, v1_, v2_, s_ ] :=
   Module[ {a = (v1 // Last), b = (v2 // Last)},
    grade[ t, (a.b + s b.a)/2 ] ] ;
@@ -206,13 +207,28 @@ grade /: grade[ _, v1_ ] + grade[ _, v2_ ] := grade[ -1, v1 + v2 ] ;
 (* Times[ -1, _ ] *)
 grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 
+(* Times[ Scalar[], k ] *)
+grade /: Power[grade[ 0, s_ ], k_] := Scalar[ Power[pmagnitude[ s ], k] ]
+
 (* Times *)
 grade /: (v_?notGradeQ) grade[ k_, m_ ] := grade[ k, v m ] ;
 grade /: grade[ 0, s_ ] grade[ k_, m_ ] := grade[ k, s.m ] ;
 
 (* NonCommutativeMultiply *)
+  (* vector times self *)
+grade /: grade[ 1, s_ ] ** grade[ 1, s_ ] := grade[ 0, s.s ] ;
+  (* bivector times self -- covered by more general case below. *)
+     (* grade /: grade[ 2, s_ ] ** grade[ 2, s_ ] := grade[ 0, s.s ] ; *)
+
 grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
 grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, s.m ] ;
+
+   (* special cases for R2 *)
+grade /: grade[ 1_, m_ ] ** grade[ 2, s_ ] := grade[ 1, s.m ] ;
+grade /: grade[ 2_, m_ ] ** grade[ 1, s_ ] := grade[ 1, s.m ] ;
+grade /: grade[ 2_, m_ ] ** grade[ 2, s_ ] := grade[ 0, s.m ] ;
+
+(* We can't make any a-priori assumptions about any other grades, so code any other product as a multivector *)
 grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
 
 (* Dot *)
@@ -221,9 +237,9 @@ grade /: grade[ k_, m_ ].(s_?notGradeQ) := grade[ k, s m ] ;
 grade /: grade[ 0, s_ ].grade[ k_, m_ ] := grade[ k, s m ] ;
 grade /: grade[ k_, m_ ].grade[ 0, s_ ] := grade[ k, s m ] ;
 
-grade /: (v1_?vectorQ).grade[ 1, v2_ ] := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
-grade /: (v_?vectorQ).grade[ 2, b_ ] := antisymmetric[ 1, v, grade[ 2, b ] ] ;
-grade /: (b_?bivectorQ).grade[ 1, v_ ] := antisymmetric[ 1, b, grade[ 1, v ] ] ;
+grade /: (v1_?vectorQ).grade[ 1, v2_ ]   := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
+grade /: (v_?vectorQ).grade[ 2, b_ ]     := antisymmetric[ 1, v, grade[ 2, b ] ] ;
+grade /: (b_?bivectorQ).grade[ 1, v_ ]   := antisymmetric[ 1, b, grade[ 1, v ] ] ;
 grade /: (b1_?bivectorQ).grade[ 2, b2_ ] := symmetric[ 0, b1, grade[ 2, b2 ] ] ;
 
 grade /: grade[ g1_, m1_ ] . grade[ g2_, m2_ ]:= binaryOperator[ Dot, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
@@ -235,6 +251,7 @@ grade[ _, {{0, 0}, {0, 0}} ] := 0
 
 (*Define a custom wedge operator*)
 
+(* grade /: 0 \[Wedge] 0 := 0; *)
 grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
 grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s.v ] ;
 grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
