@@ -169,9 +169,8 @@ TODO:
 3) proper packaging stuff:  private for internals.
 " ;
 complex::usage =
-  "complex.  A limited use complex number implementation to use internally in \
-a Pauli or Dirac matrix basis representation, independent of any Complex" ;
-norm::usage = "norm[ z ].  A Norm like function for complex[ ]" ;
+  "complex.  A limited use complex number implementation, independent of the Mathematica Complex" ;
+normsq::usage = "normsq[ z ].  A Norm like function for complex[ ]" ;
 complexQ::usage = "complexQ[ z ].  predicate pattern match for complex[ ]" ;
 notComplexQ::usage = "notComplexQ[ z ].  predicate pattern match for !complex[ ]" ;
 real::usage = "real[ z ].  Re[ z ] like function for complex[ ]" ;
@@ -232,14 +231,14 @@ complex /: complex[ re_, 0 ] := re ;
 
 complex /: complex[ r1_, i1_ ] complex[ r2_, i2_ ] := complex[ r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
 
-norm[ z_complex ] := ((z // First)^2 + (z // Last)^2) ;
+normsq[ z_complex ] := ((z // First)^2 + (z // Last)^2) ;
 
 (*special case this one to deal with the sort of products that are \
 generated multiplying pauli matrices*)
 
 complex /: Power[ z_complex, 2 ] := complex[ z ] complex[ z ] ;
 complex /: Power[ z_complex, n_ ] :=
-  Module[ {r = norm[ z ]^(n/2), theta = n ArcTan[ z // First, z // Last ]},
+  Module[ {r = normsq[ z ]^(n/2), theta = n ArcTan[ z // First, z // Last ]},
     r complex[ Cos[ theta ], Sin[ theta ] ] ] ;
 
 complexQ[ z_complex ] := True ;
@@ -310,7 +309,7 @@ signedSymmetric[ t_, v1_, v2_, s_ ] :=
 symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
 antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
 
-(*These operator on just the Pauli matrix portions x of \
+(*These operate on just the Pauli matrix portions x of \
 pauliGradeSelect[ ,x ]*)
 pauliGradeSelect01 := ((# + (# // conjugateTranspose))/2) & ;
 pauliGradeSelect23 := ((# - (# // conjugateTranspose))/2) & ;

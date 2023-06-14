@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
-(* copy this module to a directory in $Path.  Then invoke with <<GA20` *)
-BeginPackage[ "GA20`" ]
+(* copy this module to a directory in $Path.  Then invoke with <<Cl20` *)
+BeginPackage[ "Cl20`" ]
 
 (* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
    been loaded:
@@ -44,28 +44,29 @@ ClearAll[
    bivectorQ,
    bladeQ,
    bold,
-   directProduct,
    displayMapping,
    esub,
    grade,
    oneTeXForm,
-   pauliGradeSelect,
-   pauliGradeSelect0,
-   pauliGradeSelect1,
-   pauliGradeSelect2,
+   gradeSelect,
    pmagnitude,
    scalarQ,
    signedSymmetric,
    symmetric,
    vectorQ
 ]
+(*
+   gradeSelect0,
+   gradeSelect1,
+   gradeSelect2,
+ *)
 
-GA20::usage = "GA20: An implementation of Euclidean (CL(2,0)) Geometric Algebra.
+Cl20::usage = "Cl20: An implementation of Euclidean (CL(2,0)) Geometric Algebra.
 
-Pauli matrices are used to represent the algebraic elements.  This provides an efficient and compact representation
+A pair of complex numbers are used to represent the algebraic elements.  This provides an efficient and compact representation
 of the entire algebraic space.
 
-Internally, a multivector is represented by a pair (grade, pauli-representation).  The grade portion will be
+Internally, a multivector is represented by a triplet (grade, complex-odd, complex-even).  The grade portion will be
 obliterated when adding objects that have different grade, or multiplying vectors or bivectors.  When
 it is available, certain operations can be optimized.  Comparison ignores the cached grade if it exists.
 
@@ -127,6 +128,15 @@ TODO:
 
 3) proper packaging stuff:  private for internals.
 " ;
+complex::usage =
+  "complex.  A limited use complex number implementation, independent of the Mathematica Complex" ;
+normsq::usage = "normsq[ z ].  A Norm like function for complex[ ]" ;
+complexQ::usage = "complexQ[ z ].  predicate pattern match for complex[ ]" ;
+notComplexQ::usage = "notComplexQ[ z ].  predicate pattern match for !complex[ ]" ;
+real::usage = "real[ z ].  Re[ z ] like function for complex[ ]" ;
+imag::usage = "imag[ z ].  Im[ z ] like function for complex[ ]" ;
+conjugate::usage = "conjugate[ z ].  Conjugate[ z ] like function for complex[ ]" ;
+complexI::usage = "complexI.  I like unit imaginary for complex[ ]" ;
 grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
 Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
 Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quantity with value v in direction n." ;
@@ -150,10 +160,48 @@ ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [
 (* Begin Private Context *)
 Begin["`Private`"]
 
-Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
-Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, v PauliMatrix[ 1 ] ] ;
-Vector[ v_, k_Integer /; k == 2 ] := grade[ 1, v PauliMatrix[ 3 ] ] ;
-Bivector[ v_ ] := grade[ 2, v PauliMatrix[ 1 ] . PauliMatrix[ 3 ] ] ;
+complex /: complex[ r1_, i1_ ] + complex[ r2_, i2_ ] := complex[ r1 + r2, i1 + i2 ] ;
+complex /: r1_ + complex[ r2_, i2_ ] := complex[ r1 + r2, i2 ] ;
+
+complex /: -complex[ re_, im_ ] := complex[ -re, -im ] ;
+
+complex /: complex[ re_ ] := re ;
+complex /: complex[ re_, 0 ] := re ;
+
+complex /: complex[ r1_, i1_ ] complex[ r2_, i2_ ] := complex[ r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
+
+normsq[ z_complex ] := ((z // First)^2 + (z // Last)^2) ;
+
+(*special case this one to deal with the sort of products that are \
+generated multiplying pauli matrices*)
+
+complex /: Power[ z_complex, 2 ] := complex[ z ] complex[ z ] ;
+complex /: Power[ z_complex, n_ ] :=
+  Module[ {r = normsq[ z ]^(n/2), theta = n ArcTan[ z // First, z // Last ]},
+    r complex[ Cos[ theta ], Sin[ theta ] ] ] ;
+
+complexQ[ z_complex ] := True ;
+complexQ[ _ ] := False ;
+notComplexQ[ v_ ] := Not[ complexQ[ v ] ] ;
+
+complex /: (v_?notComplexQ) complex[ re_, im_ ] := complex[ v re, v im ] ;
+
+real[ z_complex ] := (z // First) ;
+imag[ z_complex ] := (z // Last) ;
+real[ ex_ ] := ex ;
+imag[ ex_ ] := 0 ;
+conjugate[ z_complex ] := complex[ z // First, -z // Last ] ;
+conjugate[ ex_ ] := ex ;
+
+complex0 := complex[ 0, 0 ] ;
+complex1 := complex[ 1, 0 ] ;
+complexI := complex[ 0, 1 ] ;
+
+(* grade[g, even-grades, odd-grade] *)
+Scalar[ v_ ] := grade[ 0, complex[v, 0], complex0 ] ;
+Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, complex0, complex[v, 0] ] ;
+Vector[ v_, k_Integer /; k == 2 ] := grade[ 1, complex0, complex[0, v] ] ;
+Bivector[ v_ ] := grade[ 2, complex[0, v], complex0 ] ;
 
 gradeQ[ m_grade, n_Integer ] := ((m // First) == n)
 scalarQ[ m_grade ] := gradeQ[ m, 0 ]
@@ -164,29 +212,14 @@ gradeAnyQ[ m_grade ] := True
 gradeAnyQ[ _ ] := False
 notGradeQ[ v_ ] := Not[ gradeAnyQ[ v ] ]
 
-directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last).(v2 // Last) ] ;
-(* t: new grade ; v1, v2: the input Pauli matrices, s: +-1. *)
-signedSymmetric[ t_, v1_, v2_, s_ ] :=
-  Module[ {a = (v1 // Last), b = (v2 // Last)},
-   grade[ t, (a.b + s b.a)/2 ] ] ;
-symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
-antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
-
-(*These operate on just the Pauli matrix portions x of \
-pauliGradeSelect[ ,x ]*)
-pauliGradeSelect[ {{a_,  _}, { _, d_}}, 0 ] := ( (1/2) (a + d) IdentityMatrix[ 2 ] )
-pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 1 ] := ( (1/2) (b + c) PauliMatrix[ 1 ] + (1/2)(a - d) PauliMatrix[ 3 ] )
-pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 2 ] := ( (1/2) (c - b) PauliMatrix[ 1 ].PauliMatrix[ 3 ] )
-
-
-pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
-pauliGradeSelect1 := pauliGradeSelect[ #, 1 ] & ;
-pauliGradeSelect2 := pauliGradeSelect[ #, 2 ] & ;
+gradeSelect[m_grade, 0] := grade[0, (m[[2]] // real), complex0]
+gradeSelect[m_grade, 1] := grade[1, complex0, m[[3]]]
+gradeSelect[m_grade, 2] := grade[2, complexI *(m[[2]] // imag), complex0]
 
 GradeSelection[ m_?scalarQ, 0 ] := m ;
 GradeSelection[ m_?vectorQ, 1 ] := m ;
 GradeSelection[ m_?bivectorQ, 2 ] := m ;
-GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := grade[ k, pauliGradeSelect[ m // Last, k ] ] ;
+GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := gradeSelect[ m, k ] ;
 ScalarSelection := GradeSelection[ #, 0 ] & ;
 VectorSelection := GradeSelection[ #, 1 ] & ;
 BivectorSelection := GradeSelection[ #, 2 ] & ;
@@ -198,93 +231,119 @@ binaryOperator[ f_, m1_grade, m2_grade ] := Total[ f[ # // First, # // Last ] & 
      GradeSelection[ m2, # ] & /@ (Range[ 2+1 ] - 1)} // Transpose) ]
 
 (* Plus *)
-grade /: (v1_?notGradeQ) + grade[ k_, v2_ ] := Scalar[ v1 ] + grade[ k, v2 ] ;
-grade /: grade[ 0, v1_ ] + grade[ 0, v2_ ] := grade[ 0, v1 + v2 ] ;
-grade /: grade[ 1, v1_ ] + grade[ 1, v2_ ] := grade[ 1, v1 + v2 ] ;
-grade /: grade[ 2, v1_ ] + grade[ 2, v2_ ] := grade[ 2, v1 + v2 ] ;
-grade /: grade[ _, v1_ ] + grade[ _, v2_ ] := grade[ -1, v1 + v2 ] ;
+grade /: (v1_?notGradeQ) + grade[k_, z1_, z2_] :=
+  Scalar[v1] + grade[k, z1, z2];
+grade /: grade[0, z1_, _] + grade[0, q1_, _] :=
+  grade[0, z1 + q1, complex0];
+grade /: grade[1, _, z2_] + grade[1, _, q2_] :=
+  grade[1, complex0, z2 + q2];
+grade /: grade[2, z1_, _] + grade[2, q1_, _] :=
+  grade[2, z1 + q1, complex0];
+grade /: grade[_, z1_, z2_] + grade[_, q1_, q2_] :=
+  grade[-1, z1 + q1, z2 + q2];
 
-(* Times[ -1, _ ] *)
-grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
-
+(*
 (* Times[ Scalar[], k ] *)
 grade /: Power[grade[ 0, s_ ], k_] := Scalar[ Power[pmagnitude[ s ], k] ]
 (* Vector inversion: Times[ Vector[], -1 ] *)
 grade /: Power[grade[ 1, s_ ], -1] := grade[ 1, s ] * Power[ pmagnitude[s.s], -1]
+*)
 
-(* Times *)
-grade /: (v_?notGradeQ) grade[ k_, m_ ] := grade[ k, v m ] ;
-grade /: grade[ 0, s_ ] grade[ k_, m_ ] := grade[ k, s.m ] ;
+(* Times[ -1, _ ] *)
+grade /: -grade[ k_, z1_, z2_ ] := grade[ k, -z1, -z2 ] ;
+
+(* Scalar Times Blade *)
+grade /: (v_?notGradeQ) grade[ k_, z1_, z2_ ] := grade[ k, v z1, v z2 ] ;
+grade /: grade[ 0, s_, _ ] grade[ k_, q1_, q2_ ] := grade[ k, s q1, s q2 ] ;
 
 (* NonCommutativeMultiply *)
-  (* vector times self *)
-grade /: grade[ 1, s_ ] ** grade[ 1, s_ ] := grade[ 0, s.s ] ;
-  (* bivector times self -- covered by more general case below. *)
-     (* grade /: grade[ 2, s_ ] ** grade[ 2, s_ ] := grade[ 0, s.s ] ; *)
 
-grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
-grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, m.s ] ;
+(* vector products: M N \sim \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj) *)
+(* vector squared *)
+grade /: grade[ 1, _, s_ ] ** grade[ 1, _, s_ ] := grade[ 0, s conjugate[s], complex0 ] ;
+(* vector ** vector *)
+grade /: grade[ 1, _, s_ ] ** grade[ 1, _, t_ ] := Module[{p}, p = s conjugate[t]; grade[ -1, complex[ p // real, -p // imag ], complex0 ] ] ;
 
-   (* special cases for R2 *)
-grade /: grade[ 1_, m_ ] ** grade[ 2, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 1, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 2, s_ ] := grade[ 0, m.s ] ;
+(* scalar or bivector or 0,2 multivector products: M N \sim m_1 n_1 *)
+(* scalar ** scalar *)
+grade /: grade[ 0, s_, _ ] ** grade[ 0, t_, _ ] := grade[ 0, s t, complex0 ] ;
+(* bivector ** bivector *)
+grade /: grade[ 2, s_, _ ] ** grade[ 2, t_, _ ] := grade[ 0, s t, complex0 ] ;
 
-(* We can't make any a-priori assumptions about any other grades, so code any other product as a multivector *)
-grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
+(* scalar times multivector *)
+grade /: grade[ 0, s_, _ ] ** grade[ k_, q1_, q2_ ] := grade[ k, s q1, s q2 ] ;
+grade /: grade[ k_, z1_, z2_ ] ** grade[ 0, s_, _ ] := grade[ k, s z1, s z2 ] ;
 
-(* Dot *)
-grade /: (s_?notGradeQ).grade[ k_, m_ ] := grade[ k, s m ] ;
-grade /: grade[ k_, m_ ].(s_?notGradeQ) := grade[ k, s m ] ;
-grade /: grade[ 0, s_ ].grade[ k_, m_ ] := grade[ k, s m ] ;
-grade /: grade[ k_, m_ ].grade[ 0, s_ ] := grade[ k, s m ] ;
+(* special cases for R2 *)
+(*  M_1 N_2 \sim \lr{ 0, n_{12} i m_2 }. *)
+grade /: grade[ 1, _, m2_ ] ** grade[ 2, n1_, _ ] := grade[ 1, complex0, (n1//imag) complexI m2 ]
+(* M_2 N_1 \sim \lr{ 0, - m_{12} i n_2 }. *)
+grade /: grade[ 2, m1_, _ ] ** grade[ 1, _, n2_ ] := grade[ 1, complex0, -(m1//imag) complexI n2 ]
 
-grade /: (v1_?vectorQ).grade[ 1, v2_ ]   := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
-grade /: (v_?vectorQ).grade[ 2, b_ ]     := antisymmetric[ 1, v, grade[ 2, b ] ] ;
-grade /: (b_?bivectorQ).grade[ 1, v_ ]   := antisymmetric[ 1, b, grade[ 1, v ] ] ;
-grade /: (b1_?bivectorQ).grade[ 2, b2_ ] := symmetric[ 0, b1, grade[ 2, b2 ] ] ;
+(*
+   M = (m_1, m_2)
+   N = (n_1, n_2)
+   M N \sim \lr{ m_1 n_1 + \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj), n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
+*)
+grade /: grade[ _, m1_, m2_ ] ** grade[ _, n1_, n2_ ] :=
+   grade[ -1,
+          m1 n1 + real[m2 conjugate[n2]] - complexI imag[ m2 conjugate[n2]],
+          real[n1] m2 + real[m1] n2 + imag[n1] complexI m2 - imag[m1] complexI n2 ]
 
-grade /: grade[ g1_, m1_ ] . grade[ g2_, m2_ ]:= binaryOperator[ Dot, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
+signedSymmetric[v1_, v2_, s_] := (1/2) v1 ** v2 + (1/2) s v2 ** v1
+symmetric[v1_, v2_] := signedSymmetric[v1, v2, 1];
+antisymmetric[v1_, v2_] := signedSymmetric[v1, v2, -1];
+
+(*Dot*)
+grade /: (s_?notGradeQ) . grade[k_, z1_, z2_] :=
+grade[k, s z1, s z2];
+grade /: grade[k_, z1_, z2_] . (s_?notGradeQ) :=
+grade[k, s z2, s z2];
+grade /: grade[0, s_, _] . grade[k_, z1_, z2_] := grade[k, s z1, s z2];
+grade /: grade[k_, z1_, z2_] . grade[0, s_, _] := grade[k, s z1, s s2];
+
+grade /: (v_?vectorQ) . grade[1, _, z2_] := symmetric[v, grade[1, complex0, z2]];
+grade /: (v_?vectorQ) . grade[2, z1_, _] := antisymmetric[v, grade[2, z1, complex0]];
+grade /: (b_?bivectorQ) . grade[1, _, z2_] := antisymmetric[b, grade[1, complex0, z2]];
+grade /: (b_?bivectorQ) . grade[2, z1_, _] := symmetric[b, grade[2, z1, complex0]];
+grade /: grade[ g1_, z1_, z2_ ] . grade[ g2_, q1_, q2_ ]:= binaryOperator[ Dot, grade[ g1, z1, z2 ], grade[ g2, q1, q2 ] ] ;
 
 (* == comparison operator *)
-grade /: grade[ _, m1_ ] == grade[ _, m2_ ] := (m1 == m2) ;
+grade /: grade[ _, z1_, z2_ ] == grade[ _, q1_, q2_ ] := ((z1 == q1) && (z2 == q2));
 
-grade[ _, {{0, 0}, {0, 0}} ] := 0
+grade[ _, complex0, complex0 ] := 0
 
 (*Define a custom wedge operator*)
 
-(* grade /: 0 \[Wedge] 0 := 0; *)
-grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
-grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s.v ] ;
-grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
+grade /: grade[ 0, s_, _ ] \[Wedge] grade[ k_, z1_, z2 ] := grade[ k, s z1, s z2 ] ;
+grade /: grade[ k_, z1_, z2_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s z1, s z2 ] ;
+grade /: grade[ 1, _, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ grade[ 1, complex0, v1 ], v2 ] ;
 
 (* Only e12 ^ scalar is non zero, and that is handled above *)
-grade /: grade[ 2, _ ] \[Wedge] b_?bladeQ := 0 ;
-grade /: b_?bladeQ \[Wedge] grade[ 2, _ ] := 0 ;
+grade /: grade[ 2, _, _ ] \[Wedge] b_?bladeQ := 0 ;
+grade /: b_?bladeQ \[Wedge] grade[ 2, _, _ ] := 0 ;
 
-grade /: grade[ g1_, m1_ ] \[Wedge] grade[ g2_, m2_ ]:= binaryOperator[ Wedge, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
+grade /: grade[ g1_, z1_, z2_ ] \[Wedge] grade[ g2_, q1_, q2_ ]:= binaryOperator[ Wedge, grade[ g1, z1, z2 ], grade[ g2, q1, q2 ] ] ;
 
-pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
+(*AngleBracket,single operand forms,enter with[Esc]<[Esc] \
+v[Esc]>[Esc]*)
+grade /: AngleBracket[grade[1, _, _]] := 0
+grade /: AngleBracket[grade[2, _, _]] := 0
+grade /: AngleBracket[grade[_, z1_, _]] := (z1 // real)
 
-(* AngleBracket,single operand forms, enter with[ Esc ]<[ Esc ] \
-v[ Esc ]>[ Esc ] *)
-grade /: AngleBracket[ grade[ 0, s_ ] ] := pmagnitude[ s ]
-grade /: AngleBracket[ grade[ 1, _ ]  ] := 0
-grade /: AngleBracket[ grade[ 2, _ ]  ] := 0
-grade /: AngleBracket[ grade[ _, m_ ] ] := ((pauliGradeSelect[ m, 0 ]) // pmagnitude)
-
-ScalarValue[ m_grade ] := AngleBracket[ m ] ;
+ScalarValue[m_grade] := AngleBracket[m];
 
 (* AngleBracket,two operand forms. *)
 
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ 0, s2_ ] ] := (pmagnitude[ s1 ] pmagnitude[ s2 ]) ;
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ -1, m_ ] ] := (pmagnitude[ s1 ] ((pauliGradeSelect[ m, 0 ]) // pmagnitude)) ;
-grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (pmagnitude[ s1 ] ((pauliGradeSelect[ m, 0 ]) // pmagnitude)) ;
+(* \gpgrade{M N}{0} = \Real\lr{m_1 n_1 + m_2 n_2^\conj} *)
+grade /: AngleBracket[ grade[  0, z1_, _ ], grade[  0, q1_, _ ] ] := real[ z1 q1 ]
+grade /: AngleBracket[ grade[  0, z1_, _ ], grade[ -1, q1_, q2_ ] ] := real[ z1 q1 ]
+grade /: AngleBracket[ grade[ -1, z1_, _ ], grade[  0, q1_, _ ] ] := real[ z1 q1 ]
 
-grade /: AngleBracket[ grade[ 0, s1_ ], grade[ _, _ ] ] := 0 ;
-grade /: AngleBracket[ grade[ _, _ ], grade[ 0, s1_ ] ] := 0 ;
+grade /: AngleBracket[ grade[ 0, z1_, _ ], grade[ _, _, _ ] ] := 0 ;
+grade /: AngleBracket[ grade[ _, _, _ ], grade[ 0, q1_, _ ] ] := 0 ;
 
-grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1.m2, 0 ] // pmagnitude) ;
+grade /: AngleBracket[ grade[ k1_, z1_, z2_ ], grade[ k2_, q1_, q2_ ] ] := real[ z1 q1 + z2 conjugate[q2] ]
 
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
@@ -310,7 +369,9 @@ oneTeXForm[m_, blade_, disp_] := Module[{p},
   p = AngleBracket[blade, m];
   If[ p // PossibleZeroQ, 0,
    If[ p === 1, disp,
-    Times[p // TeXForm, disp]]
+    Row[ {"(", p // TeXForm, ")(", disp, ")"} ]
+    (* Times[p // TeXForm, disp] *)
+     ]
    ]
   ]
 

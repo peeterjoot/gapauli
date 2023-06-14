@@ -179,7 +179,7 @@ TODO:
 
 complex::usage =
   "complex.  A limited use complex number implementation to use internally in a Dirac or Dirac matrix basis representation, independent of any Complex";
-norm::usage = "norm[ z ].  A Norm like function for complex[ ]";
+normsq::usage = "normsq[ z ].  A Norm like function for complex[ ]";
 complexQ::usage =
   "complexQ[ z ].  predicate pattern match for complex[ ]";
 notComplexQ::usage =
@@ -273,13 +273,13 @@ complex /: complex[re_, 0] := re;
 
 complex /: complex[r1_, i1_] complex[r2_, i2_] := complex[r1 r2 - i1 i2, r1 i2 + r2 i1];
 
-norm[z_complex] := ((z // First)^2 + (z // Last)^2);
+normsq[z_complex] := ((z // First)^2 + (z // Last)^2);
 
 (*special case this one to deal with the sort of products that are generated multiplying dirac matrices*)
 
 complex /: Power[z_complex, 2] := complex[z] complex[z];
 complex /: Power[z_complex, n_] :=
-  Module[{r = norm[z]^(n/2), theta = n ArcTan[z // First, z // Last]},
+  Module[{r = normsq[z]^(n/2), theta = n ArcTan[z // First, z // Last]},
     r complex[Cos[theta], Sin[theta]]];
 
 complexQ[z_complex] := True;
@@ -349,7 +349,7 @@ signedSymmetric[t_, v1_, v2_, s_] := Module[{a = (v1 // Last), b = (v2 // Last)}
 symmetric[t_, v1_, v2_] := signedSymmetric[t, v1, v2, 1];
 antisymmetric[t_, v1_, v2_] := signedSymmetric[t, v1, v2, -1];
 
-(* These operator on just the Dirac matrix portions x of diracGradeSelect[ ,x] *)
+(* These operate on just the Dirac matrix portions x of diracGradeSelect[ ,x] *)
 diracGradeSelect[m_, 0] := IdentityMatrix[4] (((m // Tr)/4) // Simplify);
 
 vs[m_, 0] :=           ( m[[1, 1]] + m[[2, 2]] - m[[3, 3]] - m[[4, 4]])/4;
