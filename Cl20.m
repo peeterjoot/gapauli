@@ -283,11 +283,14 @@ grade /: grade[ 2, m1_, _ ] ** grade[ 1, _, n2_ ] := grade[ 1, complex0, -(m1//i
 (*
    M = (m_1, m_2)
    N = (n_1, n_2)
+
    M N \sim \lr{ m_1 n_1 + \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj), n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
+   =
+            \lr{ m_1 n_1 + m_2^\conj n_2, n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
 *)
 grade /: grade[ _, m1_, m2_ ] ** grade[ _, n1_, n2_ ] :=
    grade[ -1,
-          m1 n1 + real[m2 conjugate[n2]] - complexI imag[ m2 conjugate[n2]],
+          m1 n1 + n2 conjugate[m2],
           real[n1] m2 + real[m1] n2 + imag[n1] complexI m2 - imag[m1] complexI n2 ]
 
 signedSymmetric[v1_, v2_, s_] := (1/2) v1 ** v2 + (1/2) s v2 ** v1
