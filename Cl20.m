@@ -262,7 +262,7 @@ grade /: grade[ 0, s_, _ ] grade[ k_, q1_, q2_ ] := grade[ k, s q1, s q2 ] ;
 (* vector squared *)
 grade /: grade[ 1, _, s_ ] ** grade[ 1, _, s_ ] := grade[ 0, s conjugate[s], complex0 ] ;
 (* vector ** vector *)
-grade /: grade[ 1, _, s_ ] ** grade[ 1, _, t_ ] := Module[{p}, p = s conjugate[t]; grade[ -1, complex[ p // real, -p // imag ], complex0 ] ] ;
+grade /: grade[ 1, _, s_ ] ** grade[ 1, _, t_ ] := grade[ -1, t conjugate[s], complex0 ] ;
 
 (* scalar or bivector or 0,2 multivector products: M N \sim m_1 n_1 *)
 (* scalar ** scalar *)
@@ -285,13 +285,13 @@ grade /: grade[ 2, m1_, _ ] ** grade[ 1, _, n2_ ] := grade[ 1, complex0, -(m1//i
    N = (n_1, n_2)
 
    M N \sim \lr{ m_1 n_1 + \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj), n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
-   =
+       =
             \lr{ m_1 n_1 + m_2^\conj n_2, n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
+       =
+            \lr{ m_1 n_1 + m_2^\conj n_2, n_1 m_2 + m_1^\conj n_2 }.
 *)
 grade /: grade[ _, m1_, m2_ ] ** grade[ _, n1_, n2_ ] :=
-   grade[ -1,
-          m1 n1 + n2 conjugate[m2],
-          real[n1] m2 + real[m1] n2 + imag[n1] complexI m2 - imag[m1] complexI n2 ]
+   grade[ -1, m1 n1 + conjugate[m2] n2, n1 m2 + conjugate[m1] n2 ]
 
 signedSymmetric[v1_, v2_, s_] := (1/2) v1 ** v2 + (1/2) s v2 ** v1
 symmetric[v1_, v2_] := signedSymmetric[v1, v2, 1];
