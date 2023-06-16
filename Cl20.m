@@ -64,9 +64,17 @@ ClearAll[
 Cl20::usage = "Cl20: An implementation of Euclidean (CL(2,0)) Geometric Algebra.
 
 A pair of Complex numbers are used to represent the algebraic elements.  This provides an efficient and compact representation
-of the entire algebraic space.
+of the entire algebraic space.  For details see:
 
-Internally, a multivector is represented by a triplet (grade, Complex-odd, Complex-even).  The grade portion will be
+https://peeterjoot.com/archives/math2023/bicomplexCl20.pdf
+
+with the motivational exploratory work leading to that here:
+
+https://peeterjoot.com/archives/math2023/bicomplexGA20.v3.pdf
+
+Internally, a multivector is represented by a triplet (grade, Complex, Complex), where
+ the first complex value encodes the even grades, and the second complex value encodes the odd (vector) grade.
+The numerical grade portion will be
 obliterated when adding objects that have different grade, or multiplying vectors or bivectors.  When
 it is available, certain operations can be optimized.  Comparison ignores the cached grade if it exists.
 
