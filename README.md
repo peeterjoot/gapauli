@@ -25,4 +25,6 @@ Some other ad-hoc demonstrations are also available:
 * lorentzForce.nb -- The Force and power components of the covariant (STA) Lorentz force equation are expanded symbolically.
 * shortCurrentFilament.nb -- don't remember.
 * ellipticParameterization.nb -- don't remember.
+* triangleInscribedCircle.nb -- This computes the center point vector and the radius for a circle inscribed in a triangle.  Graphical demonstration 
+  of the solution with Animate.  Uses Cl20
 
