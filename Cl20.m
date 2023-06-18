@@ -146,8 +146,6 @@ GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements fro
 ScalarSelection::usage = "ScalarSelection[ m, asMv: True ] selects the multivector 0 (scalar) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type (not just a number or an expression).  If asMv is true, the result will be returned as a multivector (multivector) object, not scalar." ;
 VectorSelection::usage = "VectorSelection[ m, asMv_Boolean : True ] selects the multivector 1 (vector) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type.  If asMv is False then the result will be converted to a List of coordinates." ;
 BivectorSelection::usage = "BivectorSelection[ m, asMv ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise as a scalar.." ;
-pmagnitude::usage = "pmagnitude[ ].  select the 1,1 element from a pauli matrix assuming it represents \
-a Scalar (i.e. scaled diagonal matrix)." ;
 ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
 ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
 
@@ -179,13 +177,13 @@ GradeSelection[ m_?bivectorQ, 2 ] := m ;
 GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := gradeSelect[ m, k ] ;
 ScalarSelection[ v_multivector ] := GradeSelection[ v, 0 ] ;
 ScalarSelection[ v_multivector, True ] := GradeSelection[ v, 0 ] ;
-ScalarSelection[ v_multivector, False ] := (GradeSelection[ v, 0 ][[2]]) // Real ;
+ScalarSelection[ v_multivector, False ] := (GradeSelection[ v, 0 ][[2]]) // Re ;
 VectorSelection[ v_multivector ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, True ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, False ] := (GradeSelection[ v, 1 ] // Last) // ReIm;
 BivectorSelection[ v_multivector ] := GradeSelection[ v, 2 ];
 BivectorSelection[ v_multivector, True ] := GradeSelection[ v, 2 ];
-BivectorSelection[ v_multivector, False ] := (GradeSelection[ v, 2 ][[2]]) // Imag;
+BivectorSelection[ v_multivector, False ] := (GradeSelection[ v, 2 ][[2]]) // Im;
 
 binaryOperator[ f_, b_?bladeQ, m_multivector ] := Total[ f[ b, # ] & /@ (GradeSelection[ m, # ] & /@ (Range[ 2+1 ] - 1)) ]
 binaryOperator[ f_, m_multivector, b_?bladeQ ] := Total[ f[ #, b ] & /@ (GradeSelection[ m, # ] & /@ (Range[ 2+1 ] - 1)) ]
@@ -205,12 +203,12 @@ multivector /: multivector[2, z1_, _] + multivector[2, q1_, _] :=
 multivector /: multivector[_, z1_, z2_] + multivector[_, q1_, q2_] :=
   multivector[-1, z1 + q1, z2 + q2];
 
-(*
 (* Times[ Scalar[], k ] *)
-multivector /: Power[multivector[ 0, s_ ], k_] := Scalar[ Power[pmagnitude[ s ], k] ]
+multivector /: Times[ multivector[ n_, z1_, z2_ ], k_ ] := multivector[ n, k z1, k z2 ]
+multivector /: Times[ k_, multivector[ n_, z1_, z2_ ] ] := multivector[ n, k z1, k z2 ]
+
 (* Vector inversion: Times[ Vector[], -1 ] *)
-multivector /: Power[multivector[ 1, s_ ], -1] := multivector[ 1, s ] * Power[ pmagnitude[s.s], -1]
-*)
+multivector /: Power[multivector[ 1, _, s_ ], -1] := multivector[ 1, 0, s ] * Power[ s Conjugate[s], -1]
 
 (* Times[ -1, _ ] *)
 multivector /: -multivector[ k_, z1_, z2_ ] := multivector[ k, -z1, -z2 ] ;
@@ -221,7 +219,7 @@ multivector /: multivector[ 0, s_, _ ] multivector[ k_, q1_, q2_ ] := multivecto
 
 (* NonCommutativeMultiply *)
 
-(* vector products: M N \sim \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj) *)
+(* vector products: M N \sim \Re(m_2 n_2^\conj) - i \Im(m_2 n_2^\conj) *)
 (* vector squared *)
 multivector /: multivector[ 1, _, s_ ] ** multivector[ 1, _, s_ ] := multivector[ 0, s Conjugate[s], 0 ] ;
 (* vector ** vector *)
@@ -247,7 +245,7 @@ multivector /: multivector[ 2, m1_, _ ] ** multivector[ 1, _, n2_ ] := multivect
    M = (m_1, m_2)
    N = (n_1, n_2)
 
-   M N \sim \lr{ m_1 n_1 + \Real(m_2 n_2^\conj) - i \Imag(m_2 n_2^\conj), n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
+   M N \sim \lr{ m_1 n_1 + \Re(m_2 n_2^\conj) - i \Im(m_2 n_2^\conj), n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
        =
             \lr{ m_1 n_1 + m_2^\conj n_2, n_{11} m_2 + m_{11} n_2 + n_{12} i m_2 - m_{12} i n_2 }.
        =
@@ -301,7 +299,7 @@ ScalarValue[m_multivector] := AngleBracket[m];
 
 (* AngleBracket,two operand forms. *)
 
-(* \gpgrade{M N}{0} = \Real\lr{m_1 n_1 + m_2 n_2^\conj} *)
+(* \gpgrade{M N}{0} = \Re\lr{m_1 n_1 + m_2 n_2^\conj} *)
 multivector /: AngleBracket[ multivector[  0, z1_, _ ], multivector[  0, q1_, _ ] ] := Re[ z1 q1 ]
 multivector /: AngleBracket[ multivector[  0, z1_, _ ], multivector[ -1, q1_, q2_ ] ] := Re[ z1 q1 ]
 multivector /: AngleBracket[ multivector[ -1, z1_, _ ], multivector[  0, q1_, _ ] ] := Re[ z1 q1 ]
