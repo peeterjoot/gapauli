@@ -439,7 +439,7 @@ grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSele
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
 xVersionNumber := $VersionNumber;
-(* 
+(*
    xVersionNumber := 4.0;
  *)
 
@@ -457,9 +457,19 @@ displayMapping = {
    {Trivector[ -1 ], esub[ "123" ], e[ 1 ]e[ 2 ]e[ 3 ], "\\mathbf{e}_{123}"}
 } ;
 
+(*
+As of 13.2 this displays: 0.00001 * e3 as: 0. + 0.00001 * e3
+
 GAdisplay[ v_grade, how_ ] :=
   Total[ (Times[ (AngleBracket[ # // First, v ] (*// Simplify*)), #[ [how ] ] ]) & /@
     displayMapping ] ;
+
+Try pre-filtering out all zero values before running Total:
+*)
+GAdisplay[ v_grade, how_ ] := Total[Times[#[[1]], #[[2]]] & /@ (
+    Cases[
+     {AngleBracket[# // First, v], #[[how]]} & /@
+      displayMapping, {a_, b_} /; ! PossibleZeroQ[a]])]
 
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;

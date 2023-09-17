@@ -572,9 +572,10 @@ displayMapping = {
    {Quadvector[1], gsub["0123"], \[Gamma][0] \[Gamma][1] \[Gamma][2] \[Gamma][3], "\\gamma_{0123}"}
 };
 
-GAdisplay[v_grade, how_] :=
-  Total[(Times[(AngleBracket[# // First, v] (*//
-        Simplify*)), #[[how]]]) & /@ displayMapping];
+GAdisplay[ v_grade, how_ ] := Total[Times[#[[1]], #[[2]]] & /@ (
+    Cases[
+     {AngleBracket[# // First, v], #[[how]]} & /@
+      displayMapping, {a_, b_} /; ! PossibleZeroQ[a]])]
 
 TraditionalForm[m_grade] := ((GAdisplay[m, 2]) // TraditionalForm);
 DisplayForm[m_grade] := GAdisplay[m, 2];

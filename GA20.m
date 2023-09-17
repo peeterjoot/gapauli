@@ -300,9 +300,10 @@ displayMapping = {
    {Bivector[ -1 ], esub[ "12" ], e[ 1 ]e[ 2 ], "\\mathbf{e}_{12}"}
 } ;
 
-GAdisplay[ v_grade, how_ ] :=
-  Total[ (Times[ AngleBracket[ # // First, v ], #[ [how ] ] ]) & /@
-    displayMapping ] ;
+GAdisplay[ v_grade, how_ ] := Total[Times[#[[1]], #[[2]]] & /@ (
+    Cases[
+     {AngleBracket[# // First, v], #[[how]]} & /@
+      displayMapping, {a_, b_} /; ! PossibleZeroQ[a]])]
 
 TraditionalForm[ m_grade ] := ((GAdisplay[ m, 2 ]) // TraditionalForm) ;
 DisplayForm[ m_grade ] := GAdisplay[ m, 2 ] ;
