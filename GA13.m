@@ -41,7 +41,8 @@ Unprotect[
    matriximag,
    matrixreal,
    notComplexQ,
-   real
+   real,
+   PossibleZeroQ
 ]
 
 ClearAll[
@@ -620,6 +621,8 @@ grade /: Curl[grade[2, m_], u_List] := Grad[grade[2, m], u] // TrivectorSelectio
 grade /: Curl[grade[3, m_], u_List] := Grad[grade[3, m], u] // QuadvectorSelection;
 grade /: Curl[grade[4, m_], u_List] := 0;
 
+PossibleZeroQ[complex[re_?PossibleZeroQ, im_?PossibleZeroQ]] := True;
+
 (* End Private Context *)
 End[]
 
@@ -655,7 +658,8 @@ Protect[
    matriximag,
    matrixreal,
    notComplexQ,
-   real
+   real,
+   PossibleZeroQ
 ]
 
 EndPackage[ ]

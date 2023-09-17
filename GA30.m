@@ -42,7 +42,8 @@ Unprotect[
    matriximag,
    matrixreal,
    notComplexQ,
-   real
+   real,
+   PossibleZeroQ
 ]
 
 ClearAll[
@@ -227,7 +228,8 @@ complex /: r1_ + complex[ r2_, i2_ ] := complex[ r1 + r2, i2 ] ;
 complex /: -complex[ re_, im_ ] := complex[ -re, -im ] ;
 
 complex /: complex[ re_ ] := re ;
-complex /: complex[ re_, 0 ] := re ;
+complex /: complex[ re_, im_?PossibleZeroQ ] := re ;
+(*complex /: complex[ re_?PossibleZeroQ, im_?PossibleZeroQ ] := 0 ;*)
 
 complex /: complex[ r1_, i1_ ] complex[ r2_, i2_ ] := complex[ r1 r2 - i1 i2, r1 i2 + r2 i1 ] ;
 
@@ -509,6 +511,8 @@ grade /: Curl[ grade[ 3, m_], u_List ] := 0
 
 Vcurl[ m_?vectorQ, u_List ] := -Trivector[1] Curl[ m, u ] ;
 
+PossibleZeroQ[complex[re_?PossibleZeroQ, im_?PossibleZeroQ]] := True;
+
 (* End Private Context *)
 End[]
 
@@ -544,7 +548,8 @@ Protect[
    matriximag,
    matrixreal,
    notComplexQ,
-   real
+   real,
+   PossibleZeroQ
 ]
 
 EndPackage[ ]
