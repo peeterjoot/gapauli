@@ -139,7 +139,7 @@ bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade." ;
 gradeAnyQ::usage = "gradeAnyQ[ ].  predicate pattern match for grade[ _ ]" ;
 notGradeQ::usage = "notGradeQ[ ].  predicate pattern match for !grade[ ]" ;
 GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number)." ;
-ScalarSelection::usage = "ScalarSelection[ m ] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[ ] type (not just a number or an expression)." ;
+ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation." ;
 VectorSelection::usage = "VectorSelection[ m ] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
 BivectorSelection::usage = "BivectorSelection[ m ] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type." ;
 pmagnitude::usage = "pmagnitude[ ].  select the 1,1 element from a pauli matrix assuming it represents \
@@ -183,11 +183,16 @@ pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
 pauliGradeSelect1 := pauliGradeSelect[ #, 1 ] & ;
 pauliGradeSelect2 := pauliGradeSelect[ #, 2 ] & ;
 
+pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
+
 GradeSelection[ m_?scalarQ, 0 ] := m ;
 GradeSelection[ m_?vectorQ, 1 ] := m ;
 GradeSelection[ m_?bivectorQ, 2 ] := m ;
 GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := grade[ k, pauliGradeSelect[ m // Last, k ] ] ;
-ScalarSelection := GradeSelection[ #, 0 ] & ;
+ScalarSelection[ v_grade ] := GradeSelection[ v, 0 ] ;
+ScalarSelection[ v_grade, True ] := GradeSelection[ v, 0 ] ;
+ScalarSelection[ v_grade, False ] := AngleBracket[ v ] ;
+
 VectorSelection := GradeSelection[ #, 1 ] & ;
 BivectorSelection := GradeSelection[ #, 2 ] & ;
 
@@ -226,9 +231,9 @@ grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
 grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, m.s ] ;
 
    (* special cases for R2 *)
-grade /: grade[ 1_, m_ ] ** grade[ 2, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 1, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2_, m_ ] ** grade[ 2, s_ ] := grade[ 0, m.s ] ;
+grade /: grade[ 1, m_ ] ** grade[ 2, s_ ] := grade[ 1, m.s ] ;
+grade /: grade[ 2, m_ ] ** grade[ 1, s_ ] := grade[ 1, m.s ] ;
+grade /: grade[ 2, m_ ] ** grade[ 2, s_ ] := grade[ 0, m.s ] ;
 
 (* We can't make any a-priori assumptions about any other grades, so code any other product as a multivector *)
 grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
@@ -263,8 +268,6 @@ grade /: grade[ 2, _ ] \[Wedge] b_?bladeQ := 0 ;
 grade /: b_?bladeQ \[Wedge] grade[ 2, _ ] := 0 ;
 
 grade /: grade[ g1_, m1_ ] \[Wedge] grade[ g2_, m2_ ]:= binaryOperator[ Wedge, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
-
-pmagnitude[ m_ ] := m[ [1, 1 ] ] ;
 
 (* AngleBracket,single operand forms, enter with[ Esc ]<[ Esc ] \
 v[ Esc ]>[ Esc ] *)

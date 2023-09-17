@@ -27,3 +27,7 @@ Some other ad-hoc demonstrations are also available:
 * ellipticParameterization.nb -- don't remember.
 * triangleInscribedCircle.nb -- This computes the center point vector and the radius for a circle inscribed in a triangle.  Graphical demonstration of the solution with Animate.  Uses Cl20
 
+
+TODO:
+
+Extend asMv_Boolean parameter for VectorSelection, BivectorSelection to all modules (Cl20 has it -- don't think that others do.)

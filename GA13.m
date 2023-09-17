@@ -241,8 +241,7 @@ triplets::usage = "Unique indexes for trivector components (internal)";
 trivectors::usage = "Set of all the trivector basis elements for a grade 3 blade, corresponding to indexes of the triplets variable. (internal)";
 GradeSelection::usage =
   "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number).";
-ScalarSelection::usage =
-  "ScalarSelection[ m ] selects the grade 0 (scalar) elements from the multivector m.  The selected result is represented internally as a grade[ ] type (not just a number or an expression).";
+ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation." ;
 VectorSelection::usage =
   "VectorSelection[ m ] selects the grade 1 (vector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type.";
 BivectorSelection::usage =
@@ -394,7 +393,11 @@ GradeSelection[m_?trivectorQ, 3] := m;
 GradeSelection[m_?quadvectorQ, 4] := m;
 GradeSelection[m_, k_Integer /; k >= 0 && k <= 4] :=
   grade[k, diracGradeSelect[m // Last, k]];
-ScalarSelection := GradeSelection[#, 0] &;
+
+ScalarSelection[ v_grade ] := GradeSelection[ v, 0 ] ;
+ScalarSelection[ v_grade, True ] := GradeSelection[ v, 0 ] ;
+ScalarSelection[ v_grade, False ] := AngleBracket[ v ];
+
 VectorSelection := GradeSelection[#, 1] &;
 BivectorSelection := GradeSelection[#, 2] &;
 TrivectorSelection := GradeSelection[#, 3] &;

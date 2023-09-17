@@ -143,9 +143,9 @@ bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade." ;
 multivectorQ::usage = "multivectorQ[ ].  predicate pattern match for multivector[ _ ]" ;
 notMultivectorQ::usage = "notMultivectorQ[ ].  predicate pattern match for !multivector[ ]" ;
 GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a multivector[ ] type (so scalar selection is not just a number)." ;
-ScalarSelection::usage = "ScalarSelection[ m, asMv: True ] selects the multivector 0 (scalar) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type (not just a number or an expression).  If asMv is true, the result will be returned as a multivector (multivector) object, not scalar." ;
+ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation." ;
 VectorSelection::usage = "VectorSelection[ m, asMv_Boolean : True ] selects the multivector 1 (vector) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type.  If asMv is False then the result will be converted to a List of coordinates." ;
-BivectorSelection::usage = "BivectorSelection[ m, asMv ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise as a scalar.." ;
+BivectorSelection::usage = "BivectorSelection[ m, asMv_Boolean ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise as a scalar.." ;
 ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
 ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
 
@@ -175,9 +175,12 @@ GradeSelection[ m_?scalarQ, 0 ] := m ;
 GradeSelection[ m_?vectorQ, 1 ] := m ;
 GradeSelection[ m_?bivectorQ, 2 ] := m ;
 GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := gradeSelect[ m, k ] ;
+
 ScalarSelection[ v_multivector ] := GradeSelection[ v, 0 ] ;
 ScalarSelection[ v_multivector, True ] := GradeSelection[ v, 0 ] ;
-ScalarSelection[ v_multivector, False ] := (GradeSelection[ v, 0 ][[2]]) // Re ;
+(*ScalarSelection[ v_multivector, False ] := (GradeSelection[ v, 0 ][[2]]) // Re ; *)
+ScalarSelection[ v_multivector, False ] := AngleBracket[ v ];
+
 VectorSelection[ v_multivector ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, True ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, False ] := (GradeSelection[ v, 1 ] // Last) // ReIm;
