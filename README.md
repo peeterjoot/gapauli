@@ -30,4 +30,4 @@ Some other ad-hoc demonstrations are also available:
 
 TODO:
 
-Extend asMv_Boolean parameter for VectorSelection, BivectorSelection to all modules (Cl20 has it -- don't think that others do.)
+Extend asMv_Boolean parameter for VectorSelection, BivectorSelection to all modules (Cl20,GA30 now has VectorSelection -- all else todo.)
