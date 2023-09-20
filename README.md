@@ -31,3 +31,4 @@ Some other ad-hoc demonstrations are also available:
 TODO:
 
 Extend asMv_Boolean parameter for VectorSelection, BivectorSelection to all modules (Cl20,GA30 now has VectorSelection -- all else todo.)
+GA30: Added Normalize, and Power[_, -1].  Do the same for the other modules.

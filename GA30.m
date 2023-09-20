@@ -11,6 +11,8 @@ BeginPackage[ "GA30`" ]
 {D, TraditionalForm, DisplayForm, StandardForm, Grad, Div, Curl, Format};
 
 Unprotect[
+   Normalize,
+   Power,
    Bivector,
    BivectorSelection,
    Curl,
@@ -359,6 +361,27 @@ grade /: grade[ 2, v1_ ] + grade[ 2, v2_ ] := grade[ 2, v1 + v2 ] ;
 grade /: grade[ 3, v1_ ] + grade[ 3, v2_ ] := grade[ 3, v1 + v2 ] ;
 grade /: grade[ _, v1_ ] + grade[ _, v2_ ] := grade[ -1, v1 + v2 ] ;
 
+(* Why don't these work?
+grade /: Power[ x_?scalarQ, -1 ] := (1 / ScalarValue[ x ** x ]) x ;
+grade /: Power[ x_?vectorQ, -1 ] := (1 / ScalarValue[ x ** x ]) x ;
+grade /: Power[ x_?bivectorQ, -1 ] := (1 / ScalarValue[ x ** x ]) x ;
+grade /: Power[ x_?trvectorQ, -1 ] := (1 / ScalarValue[ x ** x ]) x ;
+
+grade /: Normalize[ x_?scalarQ ] := 1 ;
+grade /: Normalize[ x_?vectorQ ] := x / Sqrt[ScalarValue[ x ** x ]] ;
+grade /: Normalize[ x_?bivectorQ ] := x / Sqrt[-ScalarValue[ x ** x ]] ;
+grade /: Normalize[ x_?trvectorQ ] := x / Sqrt[-ScalarValue[ x ** x ]] ;
+*)
+Power[ x_?scalarQ, -1 ] := (1/ScalarValue[ x ** x ]) x
+Power[ x_?vectorQ, -1 ] := (1/ScalarValue[ x ** x ]) x
+Power[ x_?bivectorQ, -1 ] := (1/ScalarValue[ x ** x ]) x
+Power[ x_?trvectorQ, -1 ] := (1/ScalarValue[ x ** x ]) x
+
+Normalize[ x_?scalarQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?vectorQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?bivectorQ ] := x/Sqrt[ -ScalarValue[ x ** x ] ]
+Normalize[ x_?trvectorQ ] := x/Sqrt[ -ScalarValue[ x ** x ] ]
+
 (* Times[ -1, _ ] *)
 grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 
@@ -520,6 +543,8 @@ PossibleZeroQ[complex[re_?PossibleZeroQ, im_?PossibleZeroQ]] := True;
 End[]
 
 Protect[
+   Normalize,
+   Power,
    Bivector,
    BivectorSelection,
    Curl,
