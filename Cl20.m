@@ -178,12 +178,12 @@ GradeSelection[ m_, k_Integer /; k >= 0 && k <= 2 ] := gradeSelect[ m, k ] ;
 
 ScalarSelection[ v_multivector ] := GradeSelection[ v, 0 ] ;
 ScalarSelection[ v_multivector, True ] := GradeSelection[ v, 0 ] ;
-(*ScalarSelection[ v_multivector, False ] := (GradeSelection[ v, 0 ][[2]]) // Re ; *)
 ScalarSelection[ v_multivector, False ] := AngleBracket[ v ];
 
 VectorSelection[ v_multivector ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, True ] := GradeSelection[ v, 1 ] ;
 VectorSelection[ v_multivector, False ] := (GradeSelection[ v, 1 ] // Last) // ReIm;
+
 BivectorSelection[ v_multivector ] := GradeSelection[ v, 2 ];
 BivectorSelection[ v_multivector, True ] := GradeSelection[ v, 2 ];
 BivectorSelection[ v_multivector, False ] := (GradeSelection[ v, 2 ][[2]]) // Im;

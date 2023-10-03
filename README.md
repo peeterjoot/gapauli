@@ -30,5 +30,6 @@ Some other ad-hoc demonstrations are also available:
 
 TODO:
 
-Extend asMv_Boolean parameter for VectorSelection, BivectorSelection to all modules (Cl20,GA30 now has VectorSelection -- all else todo.)
+Extend asMv_Boolean parameter for BivectorSelection to GA20, GA13, and TrivectorSelect, QuadVectorSelection GA13 
+
 GA30: Added Normalize, and Power[_, -1].  Do the same for the other modules.
