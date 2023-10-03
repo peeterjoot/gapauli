@@ -100,7 +100,10 @@ ClearAll[
    trivectors,
    ts,
    vectorQ,
-   vs
+   vs,
+   vReciprocalsSigns,
+   bReciprocalsSigns,
+   tReciprocalsSigns
 ]
 
 GA13::usage = "GA13: An implementation of a Minkowski (CL(1,3)) Geometric Algebra.
@@ -244,8 +247,7 @@ GradeSelection::usage =
   "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number).";
 ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation." ;
 VectorSelection::usage = "VectorSelection[ m, asMv_Boolean : True ] selects the multivector 1 (vector) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type.  If asMv is False then the result will be converted to a List of coordinates." ;
-BivectorSelection::usage =
-  "BivectorSelection[ m ] selects the grade 2 (bivector) elements from the multivector m.  The selected result is represented internally as a grade[ ] type.";
+BivectorSelection::usage = "BivectorSelection[ m, asMv_Boolean ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise displayed as a list of coordinatates with respect to bivector basis { \\gamma_{12}, \\gamma_{13}, \\gamma_{23}, \\gamma_{10}, \\gamma_{20}, \\gamma_{30} }." ;
 TrivectorSelection::usage =
   "TrivectorSelection[ m ] selects the grade 3 (trivector) element from the multivector m if it exists.  The selected result is represented internally as a grade[ ] type (not just an number or expression).";
 QuadvectorSelection::usage =
@@ -398,9 +400,36 @@ ScalarSelection[ v_grade ] := GradeSelection[ v, 0 ] ;
 ScalarSelection[ v_grade, True ] := GradeSelection[ v, 0 ] ;
 ScalarSelection[ v_grade, False ] := AngleBracket[ v ];
 
-BivectorSelection := GradeSelection[#, 2] &;
-TrivectorSelection := GradeSelection[#, 3] &;
-QuadvectorSelection := GradeSelection[#, 4] &;
+(* HACK: extracted from displayMapping *)
+vReciprocalsSigns := { {0, 1}, {1, -1}, {2, -1}, {3, -1} };
+bReciprocalsSigns := { {1, 2, -1}, {1, 3, -1}, {2, 3, -1}, {1, 0, 1}, {2, 0, 1}, {3, 0, 1} };
+tReciprocalsSigns := { {1, 2, 3, 1}, {1, 2, 0, -1}, {1, 3, 0, -1}, {2, 3, 0, -1} };
+
+VectorSelection[ v_grade ] := GradeSelection[ v, 1 ] ;
+VectorSelection[ v_grade, True ] := GradeSelection[ v, 1 ] ;
+(*
+Don't have a quick and dirty way to do 1 ** (1/Vector[1, #]), which would multiply by the reciprocals to pick out the coordinates.
+Did have something like that in displayMapping, copied above into *ReciprocalSigns
+
+Here I faked it by constructing the metric diagonal using: (-1)^(Boole[# > 0]), flipping the sign for any spatial coordinates.
+
+GA30.m has Power[, -1].  Should add that here and could use it (although this is probably faster.)  Alternatively, include an override parameter for
+Vector[1, n] to compute the reciprocals.
+VectorSelection[ v_grade, False ] := ((((-1)^(Boole[# > 0])) AngleBracket[v ** Vector[1, #] ]) & /@ (Range[4] - 1));
+*)
+VectorSelection[ v_grade, False ] := (AngleBracket[v, Vector[# // Last, #[[1]] ] ] &) /@ vReciprocalsSigns;
+
+BivectorSelection[ v_grade ] := GradeSelection[ v, 2 ] ;
+BivectorSelection[ v_grade, True ] := GradeSelection[ v, 2 ] ;
+BivectorSelection[ v_grade, False ] := (AngleBracket[v, Bivector[# // Last, # // First, #[[2]] ] ] &) /@ bReciprocalsSigns;
+
+TrivectorSelection[ v_grade ] := GradeSelection[ v, 3 ] ;
+TrivectorSelection[ v_grade, True ] := GradeSelection[ v, 3 ] ;
+TrivectorSelection[ v_grade, False ] := (AngleBracket[v, Trivector[# // Last, #[[1]], #[[2]], #[[3]] ] ] &) /@ tReciprocalsSigns;
+
+QuadvectorSelection[ v_grade ] := GradeSelection[ v, 4 ] ;
+QuadvectorSelection[ v_grade, True ] := GradeSelection[ v, 4 ] ;
+QuadvectorSelection[ v_grade, False ] := AngleBracket[ v, Quadvector[-1] ]
 
 binaryOperator[f_, b_?bladeQ, m_grade] := Total[f[b, #] & /@ (GradeSelection[m, #] & /@ (Range[4 + 1] - 1))]
 binaryOperator[f_, m_grade, b_?bladeQ] := Total[f[#, b] & /@ (GradeSelection[m, #] & /@ (Range[4 + 1] - 1))]
@@ -527,32 +556,21 @@ grade /: AngleBracket[grade[_, m_]] := ((diracGradeSelect[m, 0]) // smagnitude)
 
 ScalarValue[m_grade] := AngleBracket[m];
 
-VectorSelection[ v_grade ] := GradeSelection[ v, 1 ] ;
-VectorSelection[ v_grade, True ] := GradeSelection[ v, 1 ] ;
-(*
-don't have a quick and dirty way to do 1 ** (1/Vector[1, #]), which would multiply by the reciprocals to pick out the coordinates.  Fake it 
-by constructing the metric diagonal using: (-1)^(Boole[# > 0]), flipping the sign for any spatial coordinates.
-
-GA30.m has Power[, -1].  Should add that here and could use it (although this is probably faster.)  Alternatively, include an override parameter for
-Vector[1, n] to compute the reciprocals.
-*)
-VectorSelection[ v_grade, False ] := ((((-1)^(Boole[# > 0])) AngleBracket[v ** Vector[1, #] ]) & /@ (Range[4] - 1));
-
 (* AngleBracket,two operand forms. *)
 
 grade /: AngleBracket[grade[0, s1_], grade[0, s2_]] := (smagnitude[s1] smagnitude[s2]);
-grade /: AngleBracket[grade[0, s1_], grade[-1, m_]] := (smagnitude[ s1] ((diracGradeSelect[m, 0]) // smagnitude));
+grade /: AngleBracket[grade[0, s1_], grade[-1, m_]] := (smagnitude[s1] ((diracGradeSelect[m, 0]) // smagnitude));
 grade /: AngleBracket[grade[-1, m_], grade[0, s1_]] := (smagnitude[s1] ((diracGradeSelect[m, 0]) // smagnitude));
 
 grade /: AngleBracket[grade[0, s1_], grade[_, _]] := 0;
 grade /: AngleBracket[grade[-1, m_], grade[0, s1_]] := (smagnitude[s1] ((diracGradeSelect[m, 0]) // smagnitude));
 grade /: AngleBracket[grade[_, _], grade[0, s1_]] := 0;
 
-grade /: AngleBracket[grade[4, q1_], grade[4, q2_]] := (pmagnitude[q1] pmagnitude[q2])
-grade /: AngleBracket[grade[4, q1_], grade[-1, m_]] := (pmagnitude[ q1] ((diracGradeSelect[m, 4]) // pmagnitude));
+grade /: AngleBracket[grade[4, q1_], grade[4, q2_]] := (-pmagnitude[q1] pmagnitude[q2])
+grade /: AngleBracket[grade[4, q1_], grade[-1, m_]] := (-pmagnitude[q1] ((diracGradeSelect[m, 4]) // pmagnitude));
 grade /: AngleBracket[grade[4, q1_], grade[_, _]] := 0;
 
-grade /: AngleBracket[grade[-1, m_], grade[4, q1_]] := (smagnitude[q1] ((diracGradeSelect[m, 4]) // pmagnitude));
+grade /: AngleBracket[grade[-1, m_], grade[4, q1_]] := (-smagnitude[q1] ((diracGradeSelect[m, 4]) // pmagnitude));
 grade /: AngleBracket[grade[_, _], grade[4, t1_]] := 0;
 
 grade /: AngleBracket[grade[k1_, m1_], grade[k2_, m2_]] := (diracGradeSelect[m1.m2, 0] // smagnitude);
@@ -564,10 +582,10 @@ ScalarProduct[m1_grade, m2_grade] := AngleBracket[m1, m2];
 gsub = Subscript["\[Gamma]", #] &;
 displayMapping = {
    {Scalar[1], 1, 1, 1},
+   {Vector[1, 0], gsub[0], \[Gamma][0], "\\gamma_0"},
    {Vector[-1, 1], gsub[1], \[Gamma][1], "\\gamma_1"},
    {Vector[-1, 2], gsub[2], \[Gamma][2], "\\gamma_2"},
    {Vector[-1, 3], gsub[3], \[Gamma][3], "\\gamma_3"},
-   {Vector[1, 0], gsub[0], \[Gamma][0], "\\gamma_0"},
    {Bivector[-1, 1, 2], gsub["12"], \[Gamma][1] \[Gamma][2], "\\gamma_{12}"},
    {Bivector[-1, 1, 3], gsub["13"], \[Gamma][1] \[Gamma][3], "\\gamma_{13}"},
    {Bivector[-1, 2, 3], gsub["23"], \[Gamma][2] \[Gamma][3], "\\gamma_{23}"},
@@ -578,7 +596,7 @@ displayMapping = {
    {Trivector[-1, 1, 2, 0], gsub["120"], \[Gamma][1] \[Gamma][2] \[Gamma][0], "\\gamma_{120}"},
    {Trivector[-1, 1, 3, 0], gsub["130"], \[Gamma][1] \[Gamma][3] \[Gamma][0], "\\gamma_{130}"},
    {Trivector[-1, 2, 3, 0], gsub["230"], \[Gamma][2] \[Gamma][3] \[Gamma][0], "\\gamma_{230}"},
-   {Quadvector[1], gsub["0123"], \[Gamma][0] \[Gamma][1] \[Gamma][2] \[Gamma][3], "\\gamma_{0123}"}
+   {Quadvector[-1], gsub["0123"], \[Gamma][0] \[Gamma][1] \[Gamma][2] \[Gamma][3], "\\gamma_{0123}"}
 };
 
 GAdisplay[ v_grade, how_ ] := Total[Times[#[[1]], #[[2]]] & /@ (
