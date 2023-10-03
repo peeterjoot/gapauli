@@ -32,5 +32,7 @@ TODO:
 
 * Don't think I added tests for *ectorSelection[..., False] for all cases.
 
-* GA30: Added Normalize, and Power[_, -1].  Do the same for the other modules.
+* GA30: Added Power[_, -1].  Do the same for the other modules.
+
+* Added Normalize to GA20, Cl20, and GA13 -- but didn't test yet.
 

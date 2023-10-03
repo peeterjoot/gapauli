@@ -11,6 +11,7 @@ BeginPackage[ "GA20`" ]
 {D, TraditionalForm, DisplayForm, StandardForm, Format};
 
 Unprotect[
+   Normalize,
    Bivector,
    BivectorSelection,
    DisplayForm,
@@ -214,6 +215,10 @@ grade /: grade[ 1, v1_ ] + grade[ 1, v2_ ] := grade[ 1, v1 + v2 ] ;
 grade /: grade[ 2, v1_ ] + grade[ 2, v2_ ] := grade[ 2, v1 + v2 ] ;
 grade /: grade[ _, v1_ ] + grade[ _, v2_ ] := grade[ -1, v1 + v2 ] ;
 
+Normalize[ x_?scalarQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?vectorQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?bivectorQ ] := x/Sqrt[ -ScalarValue[ x ** x ] ]
+
 (* Times[ -1, _ ] *)
 grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 
@@ -329,6 +334,7 @@ TeXForm[m_grade] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayMapping
 End[]
 
 Protect[
+   Normalize,
    TraditionalForm,
    DisplayForm,
    StandardForm,

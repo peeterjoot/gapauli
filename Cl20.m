@@ -11,6 +11,7 @@ BeginPackage[ "Cl20`" ]
 {TraditionalForm, DisplayForm, StandardForm, Format};
 
 Unprotect[
+   Normalize,
    Bivector,
    BivectorSelection,
    DisplayForm,
@@ -213,6 +214,10 @@ multivector /: Times[ k_, multivector[ n_, z1_, z2_ ] ] := multivector[ n, k z1,
 (* Vector inversion: Times[ Vector[], -1 ] *)
 multivector /: Power[multivector[ 1, _, s_ ], -1] := multivector[ 1, 0, s ] * Power[ s Conjugate[s], -1]
 
+Normalize[ x_?scalarQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?vectorQ ] := x/Sqrt[ ScalarValue[ x ** x ] ]
+Normalize[ x_?bivectorQ ] := x/Sqrt[ -ScalarValue[ x ** x ] ]
+
 (* Times[ -1, _ ] *)
 multivector /: -multivector[ k_, z1_, z2_ ] := multivector[ k, -z1, -z2 ] ;
 
@@ -349,6 +354,7 @@ TeXForm[m_multivector] := Total[ oneTeXForm[m, # // First, #[[4]]] & /@ displayM
 End[]
 
 Protect[
+   Normalize,
    TraditionalForm,
    DisplayForm,
    StandardForm,
