@@ -1,65 +1,27 @@
 (* ::Package:: *)
 
 (* copy this module to a directory in $Path.  Then invoke with <<GA20` *)
-BeginPackage[ "GA20`" ]
 
-(* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
+BeginPackage["GA20`"]
+
+ (* Must reference any global symbol (or some of them) before Unprotecting it, since it may not have
    been loaded:
 
    http://mathematica.stackexchange.com/a/137007/10
  *)
+
 {D, TraditionalForm, DisplayForm, StandardForm, Format};
 
-Unprotect[
-   Normalize,
-   Bivector,
-   BivectorSelection,
-   DisplayForm,
-   Format,
-   GradeSelection,
-   Scalar,
-   ScalarProduct,
-   ScalarSelection,
-   ScalarValue,
-   StandardForm,
-   TeXForm ,
-   TraditionalForm,
-   Vector,
-   VectorSelection,
-   e
-]
+Unprotect[Normalize, Bivector, BivectorSelection, DisplayForm, Format,
+     GradeSelection, Scalar, ScalarProduct, ScalarSelection, ScalarValue,
+     StandardForm, TeXForm, TraditionalForm, Vector, VectorSelection, e]
 
-ClearAll[
-   Bivector,
-   BivectorSelection,
-   GAdisplay,
-   GradeSelection,
-   Scalar,
-   ScalarProduct,
-   ScalarSelection,
-   ScalarValue,
-   Vector,
-   VectorSelection,
-   antisymmetric,
-   binaryOperator,
-   bivectorQ,
-   bladeQ,
-   bold,
-   directProduct,
-   displayMapping,
-   esub,
-   grade,
-   oneTeXForm,
-   pauliGradeSelect,
-   pauliGradeSelect0,
-   pauliGradeSelect1,
-   pauliGradeSelect2,
-   pmagnitude,
-   scalarQ,
-   signedSymmetric,
-   symmetric,
-   vectorQ
-]
+ClearAll[Bivector, BivectorSelection, GAdisplay, GradeSelection, Scalar,
+     ScalarProduct, ScalarSelection, ScalarValue, Vector, VectorSelection,
+     antisymmetric, binaryOperator, bivectorQ, bladeQ, bold, directProduct,
+     displayMapping, esub, grade, oneTeXForm, pauliGradeSelect, pauliGradeSelect0,
+     pauliGradeSelect1, pauliGradeSelect2, pmagnitude, scalarQ, signedSymmetric,
+     symmetric, vectorQ]
 
 GA20::usage = "GA20: An implementation of Euclidean (CL(2,0)) Geometric Algebra.
 
@@ -127,57 +89,112 @@ TODO:
 2) Can a package have options (i.e. to define the name of the e[ ] operator used in StandardForm that represents a basis vector).
 
 3) proper packaging stuff:  private for internals.
-" ;
-grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors." ;
-Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v." ;
-Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quantity with value v in direction n." ;
-Bivector::usage = "Bivector[ v ], constructs a bivector grade quantity with value v in the plane e1,e2." ;
-gradeQ::usage = "gradeQ[ m, n ] tests if the multivector m is of grade n.  n = -1 is used internally to represent values of more than one grade." ;
-scalarQ::usage = "scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)" ;
-vectorQ::usage = "vectorQ[ m ] tests if the multivector m is of grade 1 (vector)" ;
-bivectorQ::usage = "bivectorQ[ m ] tests if the multivector m is of grade 2 (bivector)" ;
-bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade." ;
-gradeAnyQ::usage = "gradeAnyQ[ ].  predicate pattern match for grade[ _ ]" ;
-notGradeQ::usage = "notGradeQ[ ].  predicate pattern match for !grade[ ]" ;
-GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number)." ;
-ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation." ;
-VectorSelection::usage = "VectorSelection[ m, asMv_Boolean : True ] selects the multivector 1 (vector) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type.  If asMv is False then the result will be converted to a List of coordinates." ;
-BivectorSelection::usage = "BivectorSelection[ m, asMv_Boolean ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise as a scalar.." ;
+";
+
+grade::usage = "grade.  (internal) An upvalue type that represents a CL(2,0) algebraic element as a pair {grade, v}, where v is a sum of products of Pauli matrices.  These matrices may be scaled by arbitrary numeric or symbolic factors.";
+
+Scalar::usage = "Scalar[ v ] constructs a scalar grade quantity with value v.";
+
+Vector::usage = "Vector[ v, n ], where n = {1,2} constructs a vector grade quantity with value v in direction n.";
+
+Bivector::usage = "Bivector[ v ], constructs a bivector grade quantity with value v in the plane e1,e2.";
+
+gradeQ::usage = "gradeQ[ m, n ] tests if the multivector m is of grade n.  n = -1 is used internally to represent values of more than one grade.";
+
+scalarQ::usage = "scalarQ[ m ] tests if the multivector m is of grade 0 (scalar)";
+
+vectorQ::usage = "vectorQ[ m ] tests if the multivector m is of grade 1 (vector)";
+
+bivectorQ::usage = "bivectorQ[ m ] tests if the multivector m is of grade 2 (bivector)";
+
+bladeQ::usage = "bladeQ[ m ] tests if the multivector is of a single grade.";
+
+gradeAnyQ::usage = "gradeAnyQ[ ].  predicate pattern match for grade[ _ ]";
+
+notGradeQ::usage = "notGradeQ[ ].  predicate pattern match for !grade[ ]";
+
+GradeSelection::usage = "GradeSelection[ m, k ] selects the grade k elements from the multivector m.  The selected result is represented internally as a grade[ ] type (so scalar selection is not just a number).";
+
+ScalarSelection::usage = "ScalarSelection[ m, asMv_Boolean : True ] selects the multivector 0 (scalar) elements from the multivector m.  If asMv is True, then the selected result is represented internally as a multivector[ ] type, and if False, as a scalar.   ScalarSelection[m, False] is the same as AngleBracket[m] or ScalarValue[m], all returning a scalar, not multivector representation.";
+
+VectorSelection::usage = "VectorSelection[ m, asMv_Boolean : True ] selects the multivector 1 (vector) elements from the multivector m.  The selected result is represented internally as a multivector[ ] type.  If asMv is False then the result will be converted to a List of coordinates.";
+
+BivectorSelection::usage = "BivectorSelection[ m, asMv_Boolean ] selects the multivector 2 (bivector) elements from the multivector m.  If asMv is True, the selected result is represented internally as a multivector[ ] type (multivector), otherwise as a scalar..";
+
 pmagnitude::usage = "pmagnitude[ ].  select the 1,1 element from a pauli matrix assuming it represents \
-a Scalar (i.e. scaled diagonal matrix)." ;
-ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ]." ;
-ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ]." ;
+a Scalar (i.e. scaled diagonal matrix).";
+
+ScalarValue::usage = "ScalarValue[ m ].  Same as AngleBracket[ m ], aka [ Esc ]<[ Esc ] m1 [ Esc ]>[ Esc ].";
+
+ScalarProduct::usage = "ScalarProduct[ ].  Same as AngleBracket[ m1, m2 ], aka [ Esc ]<[ Esc ] m1, m2 [ Esc ]>[ Esc ].";
 
 (* Begin Private Context *)
+
 Begin["`Private`"]
 
-Scalar[ v_ ] := grade[ 0, v IdentityMatrix[ 2 ] ] ;
-Vector[ v_, k_Integer /; k == 1 ] := grade[ 1, v PauliMatrix[ 1 ] ] ;
-Vector[ v_, k_Integer /; k == 2 ] := grade[ 1, v PauliMatrix[ 3 ] ] ;
-Bivector[ v_ ] := grade[ 2, v PauliMatrix[ 1 ] . PauliMatrix[ 3 ] ] ;
+Scalar[v_] :=
+    grade[0, v IdentityMatrix[2]];
 
-gradeQ[ m_grade, n_Integer ] := ((m // First) == n)
-scalarQ[ m_grade ] := gradeQ[ m, 0 ]
-vectorQ[ m_grade ] := gradeQ[ m, 1 ]
-bivectorQ[ m_grade ] := gradeQ[ m, 2 ]
-bladeQ[ m_grade ] := ((m // First) >= 0)
-gradeAnyQ[ m_grade ] := True
-gradeAnyQ[ _ ] := False
-notGradeQ[ v_ ] := Not[ gradeAnyQ[ v ] ]
+Vector[v_, k_Integer /; k == 1] :=
+    grade[1, v PauliMatrix[1]];
 
-directProduct[ t_, v1_, v2_ ] := grade[ t, (v1 // Last).(v2 // Last) ] ;
+Vector[v_, k_Integer /; k == 2] :=
+    grade[1, v PauliMatrix[3]];
+
+Bivector[v_] :=
+    grade[2, v PauliMatrix[1] . PauliMatrix[3]];
+
+gradeQ[m_grade, n_Integer] :=
+    ((m // First) == n)
+
+scalarQ[m_grade] :=
+    gradeQ[m, 0]
+
+vectorQ[m_grade] :=
+    gradeQ[m, 1]
+
+bivectorQ[m_grade] :=
+    gradeQ[m, 2]
+
+bladeQ[m_grade] :=
+    ((m // First) >= 0)
+
+gradeAnyQ[m_grade] :=
+    True
+
+gradeAnyQ[_] :=
+    False
+
+notGradeQ[v_] :=
+    Not[gradeAnyQ[v]]
+
+directProduct[t_, v1_, v2_] :=
+    grade[t, (v1 // Last) . (v2 // Last)];
+
 (* t: new grade ; v1, v2: the input Pauli matrices, s: +-1. *)
-signedSymmetric[ t_, v1_, v2_, s_ ] :=
-  Module[ {a = (v1 // Last), b = (v2 // Last)},
-   grade[ t, (a.b + s b.a)/2 ] ] ;
-symmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, 1 ] ;
-antisymmetric[ t_, v1_, v2_ ] := signedSymmetric[ t, v1, v2, -1 ] ;
+
+signedSymmetric[t_, v1_, v2_, s_] :=
+    Module[{a = (v1 // Last), b = (v2 // Last)},
+        grade[t, (a . b + s b . a) / 2]
+    ];
+
+symmetric[t_, v1_, v2_] :=
+    signedSymmetric[t, v1, v2, 1];
+
+antisymmetric[t_, v1_, v2_] :=
+    signedSymmetric[t, v1, v2, -1];
 
 (*These operate on just the Pauli matrix portions x of \
 pauliGradeSelect[ ,x ]*)
-pauliGradeSelect[ {{a_,  _}, { _, d_}}, 0 ] := ( (1/2) (a + d) IdentityMatrix[ 2 ] )
-pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 1 ] := ( (1/2) (b + c) PauliMatrix[ 1 ] + (1/2)(a - d) PauliMatrix[ 3 ] )
-pauliGradeSelect[ {{a_, b_}, {c_, d_}}, 2 ] := ( (1/2) (c - b) PauliMatrix[ 1 ].PauliMatrix[ 3 ] )
+
+pauliGradeSelect[{{a_, _}, {_, d_}}, 0] :=
+    ((1/2) (a + d) IdentityMatrix[2])
+
+pauliGradeSelect[{{a_, b_}, {c_, d_}}, 1] :=
+    ((1/2) (b + c) PauliMatrix[1] + (1/2) (a - d) PauliMatrix[3])
+
+pauliGradeSelect[{{a_, b_}, {c_, d_}}, 2] :=
+    ((1/2) (c - b) PauliMatrix[1] . PauliMatrix[3])
 
 
 pauliGradeSelect0 := pauliGradeSelect[ #, 0 ] & ;
@@ -225,39 +242,39 @@ grade /: -grade[ k_, v_ ] := grade[ k, -v ] ;
 (* Times[ Scalar[], k ] *)
 grade /: Power[grade[ 0, s_ ], k_] := Scalar[ Power[pmagnitude[ s ], k] ]
 (* Vector inversion: Times[ Vector[], -1 ] *)
-grade /: Power[grade[ 1, s_ ], -1] := grade[ 1, s ] * Power[ pmagnitude[s.s], -1]
+grade /: Power[grade[ 1, s_ ], -1] := grade[ 1, s ] * Power[ pmagnitude[s . s], -1]
 
 (* Times *)
 grade /: (v_?notGradeQ) grade[ k_, m_ ] := grade[ k, v m ] ;
-grade /: grade[ 0, s_ ] grade[ k_, m_ ] := grade[ k, s.m ] ;
+grade /: grade[ 0, s_ ] grade[ k_, m_ ] := grade[ k, s . m ] ;
 
 (* NonCommutativeMultiply *)
   (* vector times self *)
-grade /: grade[ 1, s_ ] ** grade[ 1, s_ ] := grade[ 0, s.s ] ;
+grade /: grade[ 1, s_ ] ** grade[ 1, s_ ] := grade[ 0, s . s ] ;
   (* bivector times self -- covered by more general case below. *)
      (* grade /: grade[ 2, s_ ] ** grade[ 2, s_ ] := grade[ 0, s.s ] ; *)
 
-grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s.m ] ;
-grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, m.s ] ;
+grade /: grade[ 0, s_ ] ** grade[ k_, m_ ] := grade[ k, s . m ] ;
+grade /: grade[ k_, m_ ] ** grade[ 0, s_ ] := grade[ k, m . s ] ;
 
    (* special cases for R2 *)
-grade /: grade[ 1, m_ ] ** grade[ 2, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2, m_ ] ** grade[ 1, s_ ] := grade[ 1, m.s ] ;
-grade /: grade[ 2, m_ ] ** grade[ 2, s_ ] := grade[ 0, m.s ] ;
+grade /: grade[ 1, m_ ] ** grade[ 2, s_ ] := grade[ 1, m . s ] ;
+grade /: grade[ 2, m_ ] ** grade[ 1, s_ ] := grade[ 1, m . s ] ;
+grade /: grade[ 2, m_ ] ** grade[ 2, s_ ] := grade[ 0, m . s ] ;
 
 (* We can't make any a-priori assumptions about any other grades, so code any other product as a multivector *)
-grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1.m2 ] ;
+grade /: grade[ _, m1_ ] ** grade[ _, m2_ ] := grade[ -1, m1 . m2 ] ;
 
 (* Dot *)
-grade /: (s_?notGradeQ).grade[ k_, m_ ] := grade[ k, s m ] ;
-grade /: grade[ k_, m_ ].(s_?notGradeQ) := grade[ k, s m ] ;
-grade /: grade[ 0, s_ ].grade[ k_, m_ ] := grade[ k, s m ] ;
-grade /: grade[ k_, m_ ].grade[ 0, s_ ] := grade[ k, s m ] ;
+grade /: (s_?notGradeQ) . grade[ k_, m_ ] := grade[ k, s m ] ;
+grade /: grade[ k_, m_ ] . (s_?notGradeQ) := grade[ k, s m ] ;
+grade /: grade[ 0, s_ ] . grade[ k_, m_ ] := grade[ k, s m ] ;
+grade /: grade[ k_, m_ ] . grade[ 0, s_ ] := grade[ k, s m ] ;
 
-grade /: (v1_?vectorQ).grade[ 1, v2_ ]   := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
-grade /: (v_?vectorQ).grade[ 2, b_ ]     := antisymmetric[ 1, v, grade[ 2, b ] ] ;
-grade /: (b_?bivectorQ).grade[ 1, v_ ]   := antisymmetric[ 1, b, grade[ 1, v ] ] ;
-grade /: (b1_?bivectorQ).grade[ 2, b2_ ] := symmetric[ 0, b1, grade[ 2, b2 ] ] ;
+grade /: (v1_?vectorQ) . grade[ 1, v2_ ]   := symmetric[ 0, v1, grade[ 1, v2 ] ] ;
+grade /: (v_?vectorQ) . grade[ 2, b_ ]     := antisymmetric[ 1, v, grade[ 2, b ] ] ;
+grade /: (b_?bivectorQ) . grade[ 1, v_ ]   := antisymmetric[ 1, b, grade[ 1, v ] ] ;
+grade /: (b1_?bivectorQ) . grade[ 2, b2_ ] := symmetric[ 0, b1, grade[ 2, b2 ] ] ;
 
 grade /: grade[ g1_, m1_ ] . grade[ g2_, m2_ ]:= binaryOperator[ Dot, grade[ g1, m1 ], grade[ g2, m2 ] ] ;
 
@@ -269,8 +286,8 @@ grade[ _, {{0, 0}, {0, 0}} ] := 0
 (*Define a custom wedge operator*)
 
 (* grade /: 0 \[Wedge] 0 := 0; *)
-grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s.v ] ;
-grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s.v ] ;
+grade /: grade[ 0, s_ ] \[Wedge] grade[ k_, v_ ] := grade[ k, s . v ] ;
+grade /: grade[ k_, v_ ] \[Wedge] grade[ 0_, s_ ] := grade[ k, s . v ] ;
 grade /: grade[ 1, v1_ ] \[Wedge] (v2_?vectorQ) := antisymmetric[ 2, grade[ 1, v1 ], v2 ] ;
 
 (* Only e12 ^ scalar is non zero, and that is handled above *)
@@ -297,7 +314,7 @@ grade /: AngleBracket[ grade[ -1, m_ ], grade[ 0, s1_ ] ] := (pmagnitude[ s1 ] (
 grade /: AngleBracket[ grade[ 0, s1_ ], grade[ _, _ ] ] := 0 ;
 grade /: AngleBracket[ grade[ _, _ ], grade[ 0, s1_ ] ] := 0 ;
 
-grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1.m2, 0 ] // pmagnitude) ;
+grade /: AngleBracket[ grade[ k1_, m1_ ], grade[ k2_, m2_ ] ] := (pauliGradeSelect[ m1 . m2, 0 ] // pmagnitude) ;
 
 ScalarProduct[ m1_grade, m2_grade ] := AngleBracket[ m1, m2 ] ;
 
